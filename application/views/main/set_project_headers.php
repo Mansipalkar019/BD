@@ -31,8 +31,7 @@
                                   $id = $value['id'];
                                   $feild_access = getFeildsAccessByTaskType($id,$this->uri->segment(3, 0));
                                   $checked = ($feild_access>0) ? 'checked' : '' ;
-                                      
-
+                                
                                   ?>
                                     <div class="col-4">
                                       <div class="checkbox checkbox-primary" >

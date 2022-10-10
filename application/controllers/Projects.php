@@ -10,6 +10,7 @@ class Projects extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        $this->load->model(array('Projects_model'));
         if(empty($this->session->userdata('id'))){
             redirect(base_url("login"));
         }
@@ -57,22 +58,21 @@ class Projects extends CI_Controller{
         $writer->save("php://output");
     }
 
+
        public function upload_project(){
 
-
-
         // echo "<pre>";
-        // print_r();
+        // print_r($_POST['feild_access']);
         // die;
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
-        $this->form_validation->set_rules("project_type", "Project Type", array("required" => "%s is required"));
-        $this->form_validation->set_rules("task_type", "Task Type", "trim|[min_length[1]|max_length[100]|xss_clean", array("required" => "%s is required"));
+        $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
+        $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_breif", "Project Breif", "trim|min_length[2]|max_length[100]|xss_clean", array("required" => "%s is required"));
         if($this->form_validation->run() == true){
-
-            
+           
+      
             if(!empty($_FILES['uploaded_file']['name'])){
-
+               
                     $config['upload_path'] = './uploads/projects/';
                     $config['allowed_types'] = 'csv';
                     $config['file_ext_tolower'] = TRUE;
@@ -105,10 +105,22 @@ class Projects extends CI_Controller{
                     $project_breif = $this->security->xss_clean($this->input->post("project_breif"));
                     $created_by = $this->session->userdata('id');
                     $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by);
-                    echo $addProjectInfo  = $this->model->insertData('bdcrm_master_projects',$projects_info); die;
+                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects',$projects_info); 
 
-
-
+                    if(!empty($_POST['feild_access']))
+                    {
+                        foreach($_POST['feild_access'] as $field_access => $filed_access_key)
+                        {
+                            $projects_info=array(
+                                'field_id'=>$filed_access_key,
+                                'project_id'=>$addProjectInfo,
+                                
+                            );
+                            $addProjectinputfields = $this->model->insertData('bdcrm_master_projects_fields',$projects_info); 
+                           
+                        }
+                    }
+                   
                     for($i=1;$i<count($file_data);$i++){
                         $file_datas[$i]['suffix'] =  $file_data[$i][0];
                         $file_datas[$i]['first_name'] =  $file_data[$i][1];
@@ -160,11 +172,15 @@ class Projects extends CI_Controller{
 
 
                 }
+                redirect(base_url("projects/new_projects"));
             }else{
+                // echo "<pre>";
+                // print_r($_POST);
+                // die;
                 $data = array(
                     'error' => validation_errors()
                 );
-                $this->session->set_flashdata("error", $data['error']);
+                 $this->session->set_flashdata("error", $data['error']);
                 redirect(base_url("master/new_projects"));
             }
 
@@ -299,7 +315,14 @@ class Projects extends CI_Controller{
     } 
 }
 
+//mansi
 
+public function gettasktype()
+    {
+       $tasktypeid=$this->input->post('tasktypeid');
+       $tasktypefields=$this->Projects_model->get_task_fields($tasktypeid);   
+       echo json_encode($tasktypefields);  
+    }
 
 }
 

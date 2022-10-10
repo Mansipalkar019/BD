@@ -32,14 +32,14 @@
     </a> -->
 
 <!-- Vendor js -->
-
-    
 <script src="<?php echo base_url(); ?>assets/js/vendor.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/libs/morris-js/morris.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/libs/raphael/raphael.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/pages/dashboard.init.js"></script>
+
 <!-- App js -->
 <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script>
+
     <script src="<?php echo base_url(); ?>assets/libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.responsive.min.js"></script>
