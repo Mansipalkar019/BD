@@ -28,7 +28,7 @@
     <link href="<?php echo base_url();?>assets/libs/datatables/scroller.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url();?>assets/libs/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url();?>assets/libs/datatables/fixedColumns.bootstrap4.min.html" rel="stylesheet" type="text/css" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Nested Table -->
     <link href="assets/libs/nestable2/jquery.nestable.min.css" rel="stylesheet" type="text/css" />
 

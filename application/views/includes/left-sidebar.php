@@ -19,8 +19,7 @@
                                 $url = base_url($value['url']);
                             }
                            ?>
-
-                         <li>
+                            <li>
                             <a href="<?= ($url);?>" class="waves-effect waves-light">
                                 <i class="mdi mdi-diamond-stone"></i>
                                 <span class="badge badge-info badge-pill float-right"></span>

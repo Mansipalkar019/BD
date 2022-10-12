@@ -59,7 +59,9 @@
     <script src="<?php echo base_url(); ?>assets/js/pages/datatables.init.js"></script>
     <!-- App js -->
     <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script>
-
+    <script type="text/javascript">
+          var bases_url="<?=base_url() ?>";
+    </script>
 
     <!-- Nested Table  -->
     
