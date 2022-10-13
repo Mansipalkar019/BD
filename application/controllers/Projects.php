@@ -226,6 +226,7 @@ class Projects extends CI_Controller{
                         $check_country=$this->model->selectWhereData('bdcrm_countries',array('name'=>$lower),array('name'));
                         if(strcmp(strtolower($check_country['name']),$lower) != 0)
                         {
+                            
                           redirect(base_url().'projects/new_projects');
                         }
         
