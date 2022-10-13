@@ -364,7 +364,10 @@ public function upload_projectss(){
 public function gettasktype()
     {
        $tasktypeid=$this->input->post('tasktypeid');
-       $tasktypefields=$this->Projects_model->get_task_fields($tasktypeid);   
+       $tasktypefields=$this->Projects_model->get_task_fields($tasktypeid);  
+
+       // echo "<pre>";
+       // print_r($tasktypefields); die; 
        echo json_encode($tasktypefields);  
     }
 
@@ -372,7 +375,7 @@ public function gettasktype()
     {
        error_reporting(0);
        
-       $fileName = time().'bdcrm.xls'; 
+       $fileName = "BDCRM_SAMPLE_FILE".time().'bdcrm.xls'; 
        $this->load->library('excel');
        $objPHPExcel = new PHPExcel();
 
@@ -473,14 +476,12 @@ public function gettasktype()
        $objPHPExcel->getActiveSheet()->getStyle("AR1")->applyFromArray($styleArray);
        $objPHPExcel->getActiveSheet()->SetCellValue('AS1', 'Product Id'); 
        $objPHPExcel->getActiveSheet()->getStyle("AS1")->applyFromArray($styleArray);
-
-        $filename = FCPATH . "uploads/projects/".$fileName;
-        
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="01simple.xls"');
-        header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(trim($filename));
+       $filename = FCPATH . "uploads/projects/".$fileName;
+       header('Content-Type: application/vnd.ms-excel');
+       header('Content-Disposition: attachment;filename="01simple.xls"');
+       header('Cache-Control: max-age=0');
+       $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+       $objWriter->save(trim($filename));
         
        $data = base_url() . "uploads/projects/".$fileName;
        echo json_encode($data);

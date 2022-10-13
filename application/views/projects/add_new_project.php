@@ -41,7 +41,7 @@
                                             <label class="col-md-2 control-label" style="color:black;">Project Name</label>
                                             <div class="col-md-10">
                                                 <input type="text" class="form-control" value="" 
-                                                    placeholder="Enter Project Name" name="project_name" required="">
+                                                    placeholder="Ex: B2B-19" name="project_name" required="">
                                             </div>
                                         </div>
 
@@ -49,7 +49,6 @@
                                             <label class="col-sm-2 control-label" style="color:black;">Project Type</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" required="" name="project_type" id="project_type">
-                                                <option value="">Please Select Project Type</option>
                                                 <?php
                                                     foreach ($ProjType as $key => $value) { ?>
                                                         <option value="<?= $value['id'];?>"><?= $value['project_type'];?></option>
@@ -60,7 +59,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-md-2 control-label" style="color:black;">Project Breif</label>
+                                            <label class="col-md-2 control-label" style="color:black;">Project Brief</label>
                                             <div class="col-md-10">
                                                 <textarea class="form-control" name="project_breif" required="">
                                                 </textarea>
@@ -73,7 +72,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 control-label" style="color:black;">Select Task Type</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" required="" name="task_type" onchange="gettasktype(this.value)" id="task_type">
+                                                <select class="form-control" required="" name="task_type" id="task_type" onchange="gettasktype(this.value)" id="task_type">
                                                 <option value="">Please Select Task Type</option>
                                                     <?php
                                                     foreach ($TaskType as $key => $value) { ?>
@@ -83,19 +82,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group row">
-                                            <label class="col-sm-2 control-label" style="color:black;">Select Country</label>
-                                            <div class="col-sm-10">
-                                                <select class="form-control select2" required="" name="country" id="country">
-                                                <option value="">Please Select Country</option>
-                                                    <?php
-                                                    //foreach ($country as $key => $value) { ?>
-                                                        <option value="<?= $value['id'];?>"><?= $value['name'];?></option>
-                                                    <?php //}
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div> -->
                                         <div class="form-group row">
                                             <label class="col-md-2 control-label" style="color:black;">File Upload </label>
                                             <div class="col-md-10">
@@ -105,27 +91,20 @@
                                 </div>
                                 
                             </div>
-                            <label class="control-label" id="labelfield" style="color:black;display:none;">Select Input Fields</label>
+                            <center><label class="control-label" id="labelfield" style="color:black;display:none;"><h5 style="color:black;" id="tasktypname"></h5></label></center>
+
                             <div class="row taskinput">
                             
                             </div>
                                 
-                        
-                            <button type='submit' class='btn btn-purple waves-effect waves-light' style="margin-left: 3%;background-color: green;">Submit</button>
+                            <br><br>
+                            <button type='submit' class='btn btn-purple waves-effect waves-light' style="margin-left: 30%;background-color: green;">Submit</button>
                                 </form>
-                                <input type="button" id="exceldownload" title="" value="Download Sample File" data-loading-text="Loading..."  class="btn btn-purple waves-effect waves-light exceldownload" data-original-title="Add to Cart" style="margin-left:30%;background-color:crimson;color:white;float:right;">
-         
-                                    <!-- <button class='btn btn-purple waves-effect waves-light' type="submit" name="submit_button" id="submit_button"
-                                    style="margin-left:30%;background-color:crimson;color:white;float:right;">Download Sample File</button> -->
+                                <input type="button" id="exceldownload" title="" value="Download Sample File" data-loading-text="Loading..."  class="btn btn-purple waves-effect waves-light exceldownload" data-original-title="Add to Cart" style="margin-right:42%;background-color:crimson;color:white;float:right;">
                         </div>
                     </div>
                 </div>
                 
-                <!-- <div class="row">
-                <div class="taskinput">
-                                
-                </div>
-                </div> -->
     </div>
 </div>
 </div>
@@ -139,6 +118,11 @@
 
 
 function gettasktype(tasktypeid) {
+
+var task_type = jQuery('#task_type option:selected').text()
+var content = "Select Required Feilds For Task Type "+ task_type;
+$("#tasktypname").text(content);
+
 $('#labelfield').css("display","block")
 $.ajax({
 url: '<?php echo base_url(); ?>Projects/gettasktype',
@@ -148,7 +132,6 @@ data:{
     tasktypeid:tasktypeid
 },
 success: function( data ) {  
-console.log(data);
 $(".taskinput").empty();
 
 $.each(data,function(i,member){
@@ -156,13 +139,12 @@ html11='';
     
 if(member.input_name != '')
 {
-    
     if(member.access == 1)
     {
-        html11+='<div class="form-control col-3"><input id="tasktypecheck_'+member.task_type_id+'" type="checkbox" name="feild_access[]" value="'+member.feild_id+'" checked><label for="tasktypecheck_'+member.label_name+'" ><b><h6>'+member.label_name+'</h6></b></label></div>';
+        html11+='<div class="form-control col-3"><input id="tasktypecheck_'+member.task_type_id+'" type="checkbox" name="feild_access[]" value="'+member.feild_id+'" checked> <label for="tasktypecheck_'+  member.label_name+'" ><b ><h6 style="color:black;">&nbsp;&nbsp;'+member.label_name+'</h6></b></label></div>';
     
     }else{
-        html11+='<div class="form-control col-3"><input id="tasktypecheck_'+member.task_type_id+'" type="checkbox" name="feild_access[]" value="'+member.feild_id+'" ><label for="tasktypecheck_'+member.label_name+'"><b><h6>'+member.label_name+'</h6></b></label></div>';
+        html11+='<div class="form-control col-3"><input id="tasktypecheck_'+member.task_type_id+'" type="checkbox" name="feild_access[]" value="'+member.feild_id+'" ><label for="tasktypecheck_'+member.label_name+'"><b><h6>&nbsp;&nbsp;'+  member.label_name+'</h6></b></label></div>';
     
     }
     
@@ -178,10 +160,7 @@ $('.taskinput').append(html11);
 }
 });
 }
-$("#country").select2({
-placeholder: "Select country",
-allowClear: true,
-});
+
 $("#task_type").select2({
 placeholder: "Select Task Type",
 allowClear: true,

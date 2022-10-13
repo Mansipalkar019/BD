@@ -27,19 +27,51 @@ class Projects_Model extends CI_Model
     }
 
 
-//mansi
-public function get_task_fields($tasktypeid)
-	{
-        $this->db->select('bdcrm_default_feilds_access.*,bdcrm_feilds.label_name');
-        $this->db->from('bdcrm_default_feilds_access');
-        $this->db->join('bdcrm_feilds','bdcrm_feilds.id=bdcrm_default_feilds_access.feild_id','left');
-		$this->db->where('bdcrm_default_feilds_access.task_type_id',$tasktypeid);
-		$this->db->group_by('bdcrm_default_feilds_access.id');
-        $this->db->order_by('bdcrm_default_feilds_access.id',"DESC");
+
+
+    public function get_task_fields($tasktypeid){
+        $this->db->select('id,label_name');
+        $this->db->from('bdcrm_feilds');
+        $this->db->where('status','1');
         $query=$this->db->get();
-		//echo $this->db->last_query();die();
-		return $query->result_array();
+        $data =  $query->result_array();
+
+        foreach ($data as $key => $value) {
+            $feild_id= $value['id'];
+            $label_name = $value['label_name'];
+            $this->db->select('id,feild_id,task_type_id');
+            $this->db->from('bdcrm_default_feilds_access');
+            $this->db->where('feild_id',$feild_id);
+            $this->db->where('task_type_id',$tasktypeid);
+            $this->db->where('status',1);
+            $querys=$this->db->get();
+            $datas =  $querys->row_array();
+          
+            if(!empty($datas)){
+                $fdata[$key]= $datas;
+                $fdata[$key]['access'] = 1;
+                $fdata[$key]['label_name'] = $label_name;
+            }else{
+                $fdata[$key]['id'] = $feild_id;
+                $fdata[$key]['feild_id'] = $feild_id;
+                $fdata[$key]['task_type_id'] = $tasktypeid;
+                $fdata[$key]['access'] = 0;
+                $fdata[$key]['label_name'] = $label_name;
+            }
+
+        }
+
+        return $fdata;
     }
+
+
+
+
+
+
+
+
+
 
 function getprojectrecord($rowno="",$rowperpage="",$search_text="")
     {
