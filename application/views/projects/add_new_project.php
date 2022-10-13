@@ -113,7 +113,7 @@
                         
                             <button type='submit' class='btn btn-purple waves-effect waves-light' style="margin-left: 3%;background-color: green;">Submit</button>
                                 </form>
-                                <input type="button" id="exceldownload" title="" value="Download Sample File" data-loading-text="Loading..."  class="btn btn-purple waves-effect waves-light exceldownload" data-original-title="Add to Cart" style="margin-left:30%;background-color:crimson;color:white;float:right;">
+                                <a type="button"  title="" value="Download Sample File" data-loading-text="Loading..."  class="btn btn-purple waves-effect waves-light exceldownload" style="margin-left:30%;background-color:crimson;color:white;float:right;" href="<?php echo base_url()?>uploads/sampledoc/bdcrm.xls">Download Sample File</a>
          
                                     <!-- <button class='btn btn-purple waves-effect waves-light' type="submit" name="submit_button" id="submit_button"
                                     style="margin-left:30%;background-color:crimson;color:white;float:right;">Download Sample File</button> -->
@@ -121,17 +121,11 @@
                     </div>
                 </div>
                 
-                <!-- <div class="row">
-                <div class="taskinput">
-                                
-                </div>
-                </div> -->
     </div>
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<script src="<?= base_url();?>assets/js/exceldownload.js"></script>
 
 <script>
 

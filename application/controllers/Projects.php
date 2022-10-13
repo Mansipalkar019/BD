@@ -14,6 +14,7 @@ class Projects extends CI_Controller{
         if(empty($this->session->userdata('id'))){
             redirect(base_url("login"));
         }
+        date_default_timezone_set('Asia/Kolkata');
     }
 
     public function index()
@@ -64,7 +65,7 @@ class Projects extends CI_Controller{
        
         foreach($totalData as $category_details_key => $data_row)
         {
-            $download_excel = '<span><button class="btn btn-danger" onclick="window.location.replace('.trim($data_row['file_path']).')">'.$data_row['file_name'].'</button></span>&nbsp;&nbsp;';
+            $download_excel = '<span><a class="btn btn-danger" href="'.base_url().$data_row['file_path'].'">'.$data_row['file_name'].'</a></span>&nbsp;&nbsp;';
 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
@@ -154,10 +155,10 @@ class Projects extends CI_Controller{
                     $this->load->library('upload');
                     $this->upload->initialize($config);
 
-
                     $upload_file=$_FILES['uploaded_file']['name'];
                     $filename=time().$upload_file;
-                    $filepath=trim(FCPATH.'uploads/projects/'.$filename);
+                    $filepath='uploads/projects/'.$filename;
+                    $filepath1=trim(FCPATH.$filepath);
                     $extension=pathinfo($upload_file,PATHINFO_EXTENSION);
                    
                     if($extension=='csv')
@@ -174,7 +175,7 @@ class Projects extends CI_Controller{
 
                     //mansi
                     $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
-                    $writer->save($filepath);
+                    $writer->save($filepath1);
                     //mansi
                     $file_data=$spreadsheet->getActiveSheet()->toArray();
 
@@ -184,7 +185,7 @@ class Projects extends CI_Controller{
                     $project_breif = $this->security->xss_clean($this->input->post("project_breif"));
                     //$country=$this->security->xss_clean($this->input->post("country"));
                     $created_by = $this->session->userdata('id');
-                    $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by,'file_path'=>$filepath,'file_name'=>$filename);
+                    $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by,'created_at'=>date('Y-m-d H:i:s'),'file_path'=>$filepath,'file_name'=>$filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects',$projects_info); 
 
                     if(!empty($_POST['feild_access']))
@@ -201,7 +202,9 @@ class Projects extends CI_Controller{
                            
                         }
                     }
+                    
                     for($i=1;$i<count($file_data);$i++){
+                        
                         $file_datas[$i]['suffix'] =  $file_data[$i][0];
                         $file_datas[$i]['first_name'] =  $file_data[$i][1];
                         $file_datas[$i]['last_name'] = $file_data[$i][2];
@@ -219,6 +222,13 @@ class Projects extends CI_Controller{
                         $file_datas[$i]['postal_code'] = $file_data[$i][14]; 
                         $file_datas[$i]['provided_country'] = $file_data[$i][15]; 
                         $file_datas[$i]['country'] = $file_data[$i][16];
+                        $lower=strtolower($file_data[$i][16]);
+                        $check_country=$this->model->selectWhereData('bdcrm_countries',array('name'=>$lower),array('name'));
+                        if(strcmp(strtolower($check_country['name']),$lower) != 0)
+                        {
+                          redirect(base_url().'projects/new_projects');
+                        }
+        
                         $file_datas[$i]['region'] = $file_data[$i][17];
                         $file_datas[$i]['provided_staff_email'] = $file_data[$i][18];
                         $file_datas[$i]['staff_email'] = $file_data[$i][19];
@@ -250,8 +260,10 @@ class Projects extends CI_Controller{
                         $addDept  = $this->model->insertData('bdcrm_uploaded_feildss',$file_datas[$i]);
                 
                     }
+                    die();
 
                 }
+             
                 redirect(base_url("projects/new_projects"));
             }else{
                 // echo "<pre>";
@@ -482,7 +494,7 @@ public function gettasktype()
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save(trim($filename));
         
-       $data = base_url() . "uploads/projects/".$fileName;
+       $data = "uploads/projects/".$fileName;
        echo json_encode($data);
     }
 
