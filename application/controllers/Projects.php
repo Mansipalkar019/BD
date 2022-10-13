@@ -64,7 +64,7 @@ class Projects extends CI_Controller{
        
         foreach($totalData as $category_details_key => $data_row)
         {
-            $download_excel = '<span><a href="" class="btn btn-danger" >'.$data_row['file_path'].'</a></span>&nbsp;&nbsp;';
+            $download_excel = '<span><button class="btn btn-danger" onclick="window.location.replace('.trim($data_row['file_path']).')">'.$data_row['file_name'].'</button></span>&nbsp;&nbsp;';
 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
@@ -156,8 +156,8 @@ class Projects extends CI_Controller{
 
 
                     $upload_file=$_FILES['uploaded_file']['name'];
-                    $filepath=$this->input->post("project_name").'_country_'.$this->input->post("country").'_'.$upload_file;
-                    $filepath=FCPATH.'uploads/projects/'.$filepath;
+                    $filename=time().$upload_file;
+                    $filepath=trim(FCPATH.'uploads/projects/'.$filename);
                     $extension=pathinfo($upload_file,PATHINFO_EXTENSION);
                    
                     if($extension=='csv')
@@ -184,8 +184,7 @@ class Projects extends CI_Controller{
                     $project_breif = $this->security->xss_clean($this->input->post("project_breif"));
                     //$country=$this->security->xss_clean($this->input->post("country"));
                     $created_by = $this->session->userdata('id');
-                    
-                    $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by,'file_path'=>$filepath);
+                    $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by,'file_path'=>$filepath,'file_name'=>$filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects',$projects_info); 
 
                     if(!empty($_POST['feild_access']))
@@ -251,7 +250,6 @@ class Projects extends CI_Controller{
                         $addDept  = $this->model->insertData('bdcrm_uploaded_feildss',$file_datas[$i]);
                 
                     }
-
 
                 }
                 redirect(base_url("projects/new_projects"));
@@ -374,7 +372,7 @@ public function gettasktype()
     {
        error_reporting(0);
        
-       $fileName = 'bdcrm.xls'; 
+       $fileName = time().'bdcrm.xls'; 
        $this->load->library('excel');
        $objPHPExcel = new PHPExcel();
 
@@ -476,16 +474,15 @@ public function gettasktype()
        $objPHPExcel->getActiveSheet()->SetCellValue('AS1', 'Product Id'); 
        $objPHPExcel->getActiveSheet()->getStyle("AS1")->applyFromArray($styleArray);
 
-        $filename = FCPATH . "uploads/projects/bdcrm.xls";
+        $filename = FCPATH . "uploads/projects/".$fileName;
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="01simple.xls"');
         header('Cache-Control: max-age=0');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save($filename);
+        $objWriter->save(trim($filename));
         
-       $data = base_url() . "uploads/projects/bdcrm.xls";
-       print_r($data);die();
+       $data = base_url() . "uploads/projects/".$fileName;
        echo json_encode($data);
     }
 
