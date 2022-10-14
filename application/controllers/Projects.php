@@ -54,47 +54,34 @@ class Projects extends CI_Controller{
     {
        
         $data[] = json_encode($_POST);  
-       
         $rowno = $_POST['start'];
         $rowperpage = $_POST['length'];
         $search_text = $_POST['search']['value'];   
         $totalData=$this->Projects_model->getprojectrecord($rowno,$rowperpage,$search_text);   
         $count_filtered=$this->Projects_model->get_projectrecord_count_filtered($rowno,$rowperpage,$search_text);
         $count_all = $this->Projects_model->get_projectrecord_count_all($rowno,$rowperpage,$search_text);
-         $data_array=array();
+        $data_array=array();
        
         foreach($totalData as $category_details_key => $data_row)
         {
-            $download_excel = '<span><a class="btn btn-danger" href="'.base_url().$data_row['file_path'].'">'.$data_row['file_name'].'</a></span>&nbsp;&nbsp;';
-
+            $download_excel = '<a  href="'.base_url().$data_row['file_path'].'"><i class="fas fa-edit"></a>';
+            $comp_count = '<span><a class="badge rounded-pill bg-success" href="'.base_url().$data_row['file_path'].'">'.$data_row['noofcompanyname'].'</a></span>&nbsp;&nbsp;';
+            $staff_count = '<span><a class="badge rounded-pill bg-dark" href="'.base_url().$data_row['file_path'].'">'.$data_row['noofstaff'].'</a></span>&nbsp;&nbsp;';
+            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().$data_row['file_path'].'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
-                $nestedData[] = $data_row['noofcompanyname'];
-                $nestedData[] = $data_row['noofstaff'];
-                $nestedData[] = $data_row['project_name'];
-                $nestedData[] = '';
-                $nestedData[] = '';
+                $nestedData[] = $comp_count;
+                $nestedData[] = $staff_count;
+                $nestedData[] = $project_name;
                 $nestedData[] = $data_row['project_type'];
                 $nestedData[] = $data_row['task_type'];
-                $nestedData[] = '';
-                $nestedData[] = '';
                 $nestedData[] = $data_row['project_breif'];
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = $download_excel;
                 $nestedData[] = $data_row['username'];
-                $nestedData[] = '';
-                $nestedData[] = '';
-                $nestedData[] = $data_row['created_at'];
-               
+                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_at']));
+                $nestedData[] = $download_excel;
                 $data_array[] = $nestedData;
               
        }
-       
       $output = array(
             "draw" => intval($_POST['draw']),
             "recordsTotal" => intval($count_all),
@@ -187,6 +174,8 @@ class Projects extends CI_Controller{
                     $created_by = $this->session->userdata('id');
                     $projects_info = array('project_name'=> $project_name,'project_type'=>$project_type,'task_type'=>$task_type,'project_breif'=>$project_breif,'created_by'=>$created_by,'created_at'=>date('Y-m-d H:i:s'),'file_path'=>$filepath,'file_name'=>$filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects',$projects_info); 
+
+                  
 
                     if(!empty($_POST['feild_access']))
                     {
