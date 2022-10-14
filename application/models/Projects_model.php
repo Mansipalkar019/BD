@@ -65,14 +65,6 @@ class Projects_Model extends CI_Model
     }
 
 
-
-
-
-
-
-
-
-
 function getprojectrecord($rowno="",$rowperpage="",$search_text="")
     {
 		$this->db->select('bdcrm_master_projects.*,COUNT(Distinct(bdcrm_uploaded_feildss.company_name)) as noofcompanyname,COUNT(bdcrm_uploaded_feildss.company_name) as noofstaff,bdcrm_uploaded_feildss.*,bdcrm_project_types.project_type as project_type,bdcrm_project_type.project_type as task_type,users.username');

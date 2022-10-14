@@ -26,7 +26,7 @@ background-color: #F5F7FA;
 <div style="overflow-y: auto;">
     <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
     <div class="form-group" style="float:right;">
-    <input class="btn btn-success btn-sm" type="button" id="btn-excel-download" ><i class="fa fa-search" aria-hidden="true" style="width: 200px;">&nbsp;<span>Export to Excel</span> </i></a>
+    <!-- <input class="btn btn-success btn-sm" type="button" id="btn-excel-download" ><i class="fa fa-search" aria-hidden="true" style="width: 200px;">&nbsp;<span>Export to Excel</span> </i></a> -->
     </div>
     <thead>
         <tr>
@@ -34,24 +34,13 @@ background-color: #F5F7FA;
             <th>Companies</th>
             <th>Staffs</th>
             <th>Project Name</th>
-            <th>Is Delivered</th>
-            <th>Parent Id</th>
             <th>Project Type</th>
             <th>Task Type</th>
-            <th>List Name</th>
-            <th>Activity</th>
             <th>Company Brief</th>
-            <th>Source</th>
-            <th>Reference Code</th>
-            <th>Event Name</th>
-            <th>Event Link</th>
-            <th>Event Industry</th>
-            <th>Event Date</th>
-            <th>Uploaded Project File</th>
             <th>Uploaded By</th>
-            <th>Updated By</th>
-            <th>Updated At</th>
             <th>Created At</th>
+            <th>Action</th>
+
         </tr>
         </thead>
 </table>
