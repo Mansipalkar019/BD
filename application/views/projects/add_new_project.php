@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- end page title -->
-            <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
+            
 
                 <?php if (!empty($this->session->flashdata('error'))) {
                     $data[] = $this->session->flashdata('error'); 
@@ -45,7 +45,9 @@
                         }
                     } ?>
                     </div>
+                     <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
                     <div class="row">
+
                         <div class="col-sm-12">
                             <div class="card-box">
                                

@@ -11,39 +11,57 @@ background-color: #F5F7FA;
 <div class="content">
 <div class="container-fluid">
 
+    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <h4 class="page-title">Project List</h4>
             </div>
         </div>
-
-        
     </div>
-<!--  <p><?php echo $this->session->flashdata("error");?></p>
- --> <p><?php echo $this->session->flashdata("success");?></p>
+    <!-- end page title -->
+ <p><?php echo $this->session->flashdata("error");?></p>
+ <p><?php echo $this->session->flashdata("success");?></p>
 <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
-<div class="grey-bg container-fluid">
+<div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
 <div style="overflow-y: auto;">
-    <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
-    <div class="form-group" style="float:right;">
-    </div>
+    <table id="datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Companies</th>
-            <th>Staffs</th>
             <th>Project Name</th>
-            <th>Project Type</th>
-            <th>Task Type</th>
-            <th>Company Brief</th>
-            <th>Uploaded By</th>
+            <th>Staff Name</th>
+            <th>Company Received</th>
+            <th>Provided Job Title</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Postal Code</th>
+            <th>Country</th>
             <th>Created At</th>
             <th>Action</th>
-
         </tr>
         </thead>
+        <tbody>
+            <?php
+            foreach ($ProjectInfo as $key => $value) { ?>
+              <tr>
+                <td><?= $key+1;?></td>
+                <td><?= $value['project_name'];?></td>
+                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$value['project_id'].'/'.$value['id'];?>" title="Open Record"><?= $value['first_name'].' '.$value['last_name'];?></a></span></td>
+                <td><?= $value['received_company_name'];?></td>
+                <td><?= $value['provided_job_title'];?></td>
+                <td><?= $value['address1'];?></td>
+                <td><?= $value['city'];?></td>
+                <td><?= $value['postal_code'];?></td>
+                <td><?= $value['provided_country'];?></td>
+                <td><?= date(('d-m-Y h:i A'),strtotime($value['created_date']));?></td>
+                <td></td>
+              </tr>
+            <?php }
+            ?>
+            
+        </tbody>
 </table>
 </div>
 </section>
@@ -59,26 +77,5 @@ background-color: #F5F7FA;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
-    var simpletable = $('#doc_list_datatable').DataTable({
-    "responsive": true,
-    'processing': true,
-    'serverSide': true,
-    'serverMethod': 'post',
-    'language': {
-        'processing': '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>',
-        searchPlaceholder: ""
-        
-    },
-   'ajax': {
-       'url': "<?= base_url() ?>Projects/getprojectrecord",
-       'method': "POST",
-       'dataType':'json',
-       "data": function (data) {
-         
-       }
-   }, 
-   createdRow: function (row, data, index) {
-        $('td', row).eq(2).addClass('text-capitalize');
-    },
-});
+    var simpletable = $('datatable').DataTable();
 </script>

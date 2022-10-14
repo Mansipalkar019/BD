@@ -25,22 +25,12 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-    public function my_projects()
-    {
-        $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
-        $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
-        $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
-        $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
-        $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
-        $this->load->view("main/add_info", $data);
-    }
-
     public function project_list()
     {
         $main_content = "projects/project_list";
         $projectlist = $this->model->getData('bdcrm_master_projects', array('status' => '1'));
+        if(!empty($projectlist)){
         foreach ($projectlist as $data_key => $data_row) {
-            $projectlist[$data_key]['countryname'] = $this->model->selectWhereData('bdcrm_countries', array('id' => $data_row['country']), array('name'));
             $projectlist[$data_key]['project_type'] = $this->model->selectWhereData('bdcrm_project_types', array('id' => $data_row['project_type']), array('project_type'));
             $projectlist[$data_key]['task_type'] = $this->model->selectWhereData('bdcrm_project_type', array('id' => $data_row['task_type']), array('project_type'));
         }
@@ -48,8 +38,12 @@ class Projects extends CI_Controller
             'projectlist' => $projectlist,
             'main_content' => $main_content
         );
-        // echo "<pre>";
-        // print_r($data);die();
+    }else{
+        $data = array(
+            'projectlist' => "",
+            'main_content' => $main_content
+        );
+    }
         $this->load->view("includes/template", $data);
     }
 
@@ -67,10 +61,10 @@ class Projects extends CI_Controller
        
         foreach($totalData as $category_details_key => $data_row)
         {
-            $download_excel = '<a  href="'.base_url().$data_row['file_path'].'"><i class="fas fa-edit"></a>';
-            $comp_count = '<span><a class="badge rounded-pill bg-success" href="'.base_url().$data_row['file_path'].'">'.$data_row['noofcompanyname'].'</a></span>&nbsp;&nbsp;';
-            $staff_count = '<span><a class="badge rounded-pill bg-dark" href="'.base_url().$data_row['file_path'].'">'.$data_row['noofstaff'].'</a></span>&nbsp;&nbsp;';
-            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().$data_row['file_path'].'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
+            $download_excel = '<a  href="'.base_url().$data_row['file_path'].'"><i class="fas fa-download"></a>';
+            $comp_count = '<span><a class="badge rounded-pill bg-success" href="#">'.$data_row['company_count'].'</a></span>&nbsp;&nbsp;';
+            $staff_count = '<span><a class="badge rounded-pill bg-dark" href="#">'.$data_row['no_of_staff'].'</a></span>&nbsp;&nbsp;';
+            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/ProjectInfo/'.$data_row['id'].'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $comp_count;
@@ -92,9 +86,9 @@ class Projects extends CI_Controller
             "data" => $data_array,
         );
 
-        // Output to JSON format
         echo json_encode($output);
     }
+
 
     public function new_projects($id = 0)
     {
@@ -123,9 +117,7 @@ class Projects extends CI_Controller
     }
 
 
-    public function upload_project()
-    {
-
+    public function upload_project(){
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -165,12 +157,10 @@ class Projects extends CI_Controller
                 $project_type = $this->security->xss_clean($this->input->post("project_type"));
                 $task_type = $this->security->xss_clean($this->input->post("task_type"));
                 $project_breif = $this->security->xss_clean($this->input->post("project_breif"));
-                //$country=$this->security->xss_clean($this->input->post("country"));
                 $created_by = $this->session->userdata('id');
                 $valid = 1;
                 $error = [];
                 for ($i = 1; $i < count($file_data); $i++) {
-
                     $lower = strtolower($file_data[$i][16]);
                     $check_country = $this->model->selectWhereData('bdcrm_countries', array('name' => $lower), array('name'));
                     $db_country_name = (!empty($check_country)) ? $check_country['name'] : '';
@@ -183,11 +173,19 @@ class Projects extends CI_Controller
                         $error[] = $data;
                     }
                 }
+
+
                 $data['error'] = $error;
                 $new=[];
                 $this->session->set_flashdata('error', $data);
+
+               if($valid > 0) {
                 for ($i = 1; $i < count($file_data); $i++) {
-                    $file_datas[$i]['suffix'] =  $file_data[$i][0];
+
+                    $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
+                   //echo  $suffix_id  = (!empty($file_data[$i][0])) ? $this->getSuffixInfoByName($file_data[$i][0])['id'] : ''; 
+                    // $file_datas[$i]['suffix'] =  (!empty($suffix_id)) ? $suffix_id : '';
+                    $file_datas[$i]['first_name'] =  $file_data[$i][0];
                     $file_datas[$i]['first_name'] =  $file_data[$i][1];
                     $file_datas[$i]['last_name'] = $file_data[$i][2];
                     $file_datas[$i]['provided_job_title'] = $file_data[$i][3];
@@ -202,7 +200,8 @@ class Projects extends CI_Controller
                     $file_datas[$i]['city'] = $file_data[$i][12];
                     $file_datas[$i]['state_county'] = $file_data[$i][13];
                     $file_datas[$i]['postal_code'] = $file_data[$i][14];
-                    $file_datas[$i]['provided_country'] = $file_data[$i][15];
+                    $file_datas[$i]['provided_country'] = $c_id = (!empty($fInfo)) ? $fInfo['id'] : '';
+                    $file_datas[$i]['country_code'] = $phone_code = (!empty($fInfo)) ? $fInfo['phonecode'] : '';
                     $file_datas[$i]['country'] = $file_data[$i][16];
                     $file_datas[$i]['region'] = $file_data[$i][17];
                     $file_datas[$i]['provided_staff_email'] = $file_data[$i][18];
@@ -231,16 +230,13 @@ class Projects extends CI_Controller
                     $file_datas[$i]['sa3'] = $file_data[$i][41];
                     $file_datas[$i]['sa4'] = $file_data[$i][42];
                     $file_datas[$i]['sa5'] = $file_data[$i][43];
+                    $new[] = $file_datas[$i];
                    
-                   $new[] = $file_datas[$i];
-                   
-
                 }
-                if ($valid > 0) {
 
+               
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
-                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info);
-
+                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info); 
                    
                     if (!empty($_POST['feild_access'])) {
                         foreach ($_POST['feild_access'] as $field_access => $filed_access_key) {
@@ -252,10 +248,18 @@ class Projects extends CI_Controller
                             );
                             $addProjectinputfields = $this->model->insertData('bdcrm_master_projects_fields', $projects_info);
                         }
-                        foreach ($new as $key => $val) {
-                             $val['project_id'] = $addProjectInfo;
-                            $this->model->insertData('bdcrm_uploaded_feildss', $val);
-                        }
+                            if($addProjectinputfields){
+                                foreach ($new as $key => $val) {
+                                    $val['project_id'] = $addProjectInfo;
+                                    $this->model->insertData('bdcrm_uploaded_feildss', $val);
+                                }
+                                $this->session->set_flashdata("success", "Records Uploaded Successfully.");  
+                                redirect(base_url("projects/project_list"), $data);
+
+                            }
+                       
+                        
+                      
                     } else {
                         $this->session->set_flashdata("error", "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.");
                         redirect(base_url("projects/new_projects"), $data);
@@ -272,94 +276,22 @@ class Projects extends CI_Controller
         }
     }
 
-    public function upload_projectss()
-    {
-        if (!empty($_FILES['uploaded_file']['name'])) {
-
-            $config['upload_path'] = './uploads/projects/';
-            $config['allowed_types'] = 'csv';
-            $config['file_ext_tolower'] = TRUE;
-            $config['max_size'] = '10000';
-            $config['max_filename_increment'] = 11111;
-            $config['remove_spaces'] = TRUE;
-            $this->load->library('upload');
-            $this->upload->initialize($config);
-
-            if (!$this->upload->do_upload('uploaded_file')) {
-                echo "Wrong";
-                return;
-            } else {
-
-                $uploadedData = $this->upload->data();
-                $file_name = base_url() . "uploads/projects/" . $uploadedData['file_name'];
-                $opts = array('http' => array('follow_location' => false));
-
-
-                if (($handle = fopen($file_name, "r", false, stream_context_create($opts))) !== false) {
-                    $file_data = fgetcsv($handle, 1000, ',');
-
-                    echo "<pre>";
-                    print_r($file_data);
-                    die;
-
-
-                    // foreach ($file_data as $key => $value) {
-
-                    //     echo "<pre>";
-                    //     print_r($file_data);
-                    //     die;
-
-                    // }
-
-                    // $headers = [];
-                    // echo "<pre>";
-                    // print_r()
-
-
-
-
-
-                    // $file_data[$i]['suffix'] = $file_data[$i]['suffix'];
-                    // $file_data[$i]['first_name'] = 
-                    // $file_data[$i]['lastname'] = 
-                    // $file_data[$i]['provided_job_title'] = 
-                    // $file_data[$i]['updated_job_title'] = 
-                    // $file_data[$i]['staff_linkedin_con'] = 
-                    // $file_data[$i]['staff_url'] = 
-                    // $file_data[$i]['company_name'] = 
-                    // $file_data[$i]['address1'] = 
-                    // $file_data[$i]['address2'] = 
-                    // $file_data[$i]['address3'] = 
-                    // $file_data[$i]['city'] = 
-                    // $file_data[$i]['state_county'] = 
-                    // $file_data[$i]['postal_code'] = 
-                    // $file_data[$i]['country'] = 
-                    // $file_data[$i]['region'] = 
-
-                    // $file_data[$i]['staff_email'] = //NTC
-                    // $file_data[$i]['staff_email'] = 
-                    // $file_data[$i]['staff_email_harvesting'] = 
-                    // $file_data[$i]['staff_direct_tel'] = 
-                    // $file_data[$i]['tel_number'] = 
-                    // $file_data[$i]['alternate_number'] = 
-
-                    // $file_data[$i]['staff_mobile'] = 
-                    // $file_data[$i]['website_url'] = 
-                    // $file_data[$i]['alternate_number'] = 
-                    // $file_data[$i]['alternate_number'] = 
-                    // $file_data[$i]['alternate_number'] = 
-                    // $file_data[$i]['alternate_number'] = 
-                    // $file_data[$i]['alternate_number'] = 
-
-
-
-                    // }
-
-
-                }
-            }
-        }
+   
+    public function getCountryInfoByName($country){
+            $country_name = strtolower($country);
+            $sql = "SELECT id,phonecode FROM `bdcrm_countries` WHERE lower(name) = '$country_name' AND status='1'"; 
+            $query = $this->db->query($sql);
+            return $row = $query->row_array();
     }
+
+    public function getSuffixInfoByName($suffix){
+            $suffix = strtolower($suffix);
+            $sql = "SELECT id FROM `bdcrm_name_prefix` WHERE lower(prefix) = '$suffix' AND status='1'"; 
+            $query = $this->db->query($sql);
+            $row = $query->row_array();
+            return $row;
+    }
+
 
     //mansi
 
@@ -367,9 +299,6 @@ class Projects extends CI_Controller
     {
         $tasktypeid = $this->input->post('tasktypeid');
         $tasktypefields = $this->Projects_model->get_task_fields($tasktypeid);
-
-        // echo "<pre>";
-        // print_r($tasktypefields); die; 
         echo json_encode($tasktypefields);
     }
 
@@ -489,4 +418,27 @@ class Projects extends CI_Controller
         $data = "uploads/projects/" . $fileName;
         echo json_encode($data);
     }
+
+
+    public function ProjectInfo($id){
+         $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
+         $data['main_content'] = "projects/project_info";   
+         $this->load->view("includes/template", $data);
+    }
+
+    public function my_projects($pid,$rid)
+    {
+        $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
+        $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
+        $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
+        $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
+        $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
+        $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
+        $this->load->view("main/add_info", $data);
+    }
+
+
+
+
+
 }
