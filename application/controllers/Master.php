@@ -341,7 +341,7 @@ class Master  extends CI_Controller
             );
             if(empty($country_id)){
                 $addCountry = $this->model->insertData('bdcrm_countries',$data);
-                if($addProjects){
+                if($addCountry){
                     $this->session->set_flashdata("success","Country has been successfully added.");
                 }
             }else{

@@ -27,12 +27,14 @@ class Projects extends CI_Controller
 
     public function my_projects()
     {
+        $project_id=$_GET['id'];
+        $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
         $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
         $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
-        $this->load->view("main/add_info", $data);
+        $this->load->view("main/add_info",$data);
     }
 
     public function project_list()
@@ -125,7 +127,6 @@ class Projects extends CI_Controller
 
     public function upload_project()
     {
-
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -240,7 +241,6 @@ class Projects extends CI_Controller
 
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info);
-
                    
                     if (!empty($_POST['feild_access'])) {
                         foreach ($_POST['feild_access'] as $field_access => $filed_access_key) {

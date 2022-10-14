@@ -100,10 +100,13 @@
         }
     }
 
-
-
-
-
+    if (!function_exists('div_access')) {
+        function div_access($all_data,$check_data)
+        {
+           $data=count(array_intersect($all_data,$check_data));
+           return $data;
+        }
+    }
 
 
     

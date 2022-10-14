@@ -22,15 +22,19 @@
 
             <!-- start page title -->
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="page-title-box">
                         <h4 class="page-title">Add New Project</h4>
                     </div>
                 </div>
+                <div class="col-6" >
+                    <div class="page-title-box">
+                    <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:10px;">View Project List</a>
+                    </div>
+                </div>
             </div>
             <!-- end page title -->
-            <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
-
+           
                 <?php if (!empty($this->session->flashdata('error'))) {
                     $data[] = $this->session->flashdata('error'); 
                     if (!empty($data[0]['error'])) {
@@ -46,6 +50,8 @@
                     } ?>
                     </div>
                     <div class="row">
+                        <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
+
                         <div class="col-sm-12">
                             <div class="card-box">
                                
@@ -117,8 +123,8 @@
 
                                 <br><br>
                                 <button type='submit' class='btn btn-purple waves-effect waves-light' style="margin-left: 30%;background-color: green;">Submit</button>
-            </form>
-            <a type="button" title="" value="Download Sample File" data-loading-text="Loading..." class="btn btn-purple waves-effect waves-light exceldownload" style="margin-left:30%;background-color:crimson;color:white;float:right;" href="<?php echo base_url() ?>uploads/sampledoc/bdcrm.xls">Download Sample File</a>
+                        </form>
+                    <a type="button" title="" value="Download Sample File" data-loading-text="Loading..." class="btn btn-purple waves-effect waves-light exceldownload" style="background-color:crimson;color:white;" href="<?php echo base_url() ?>uploads/sampledoc/bdcrm.xls">Download Sample File</a>
 
             <!-- <button class='btn btn-purple waves-effect waves-light' type="submit" name="submit_button" id="submit_button"
                                     style="margin-left:30%;background-color:crimson;color:white;float:right;">Download Sample File</button> -->
