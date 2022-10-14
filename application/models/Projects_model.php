@@ -144,8 +144,27 @@ function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
 		}
 		$this->db->group_by('bdcrm_master_projects.id');
         $this->db->order_by('bdcrm_master_projects.id',"DESC");
+		return $this->db->count_all_results();
+    }
+
+    function get_project_input_fields($project_id)
+    {
+		$this->db->select('bdcrm_master_projects_fields.field_id,bdcrm_feilds.label_name,bdcrm_feilds.input_name');
+		$this->db->from('bdcrm_master_projects_fields');
+        $this->db->join('bdcrm_feilds','bdcrm_feilds.id=bdcrm_master_projects_fields.field_id','left');
+        $this->db->where('bdcrm_master_projects_fields.project_id',$project_id);	
+
+		$this->db->group_by('bdcrm_master_projects_fields.id');
+        $this->db->order_by('bdcrm_master_projects_fields.id');
 		$query=$this->db->get();
-		return $query->num_rows();
+        $data=$query->result_array();
+        foreach($data as $data_key =>$data_val)
+        {
+            $fdata[]=$data_val['input_name'];
+           
+        }
+        return $fdata;
+       
     }
 
 

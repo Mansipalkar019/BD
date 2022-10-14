@@ -12,7 +12,7 @@ background-color: #F5F7FA;
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <div class="page-title-box">
                 <h4 class="page-title">Project List</h4>
             </div>
