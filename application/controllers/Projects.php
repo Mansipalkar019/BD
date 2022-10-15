@@ -25,21 +25,18 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-<<<<<<< HEAD
-=======
-    public function my_projects()
-    {
-        $project_id=$_GET['id'];
-        $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
-        $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
-        $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
-        $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
-        $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
-        $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
-        $this->load->view("main/add_info",$data);
-    }
+    // public function my_projects()
+    // {
+    //     $project_id=$_GET['id'];
+    //     $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
+    //     $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
+    //     $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
+    //     $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
+    //     $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
+    //     $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
+    //     $this->load->view("main/add_info",$data);
+    // }
 
->>>>>>> 9447ece64c0a4108c023637c4a4a76160b485f76
     public function project_list()
     {
         $main_content = "projects/project_list";
@@ -72,6 +69,7 @@ class Projects extends CI_Controller
         $totalData=$this->Projects_model->getprojectrecord($rowno,$rowperpage,$search_text);   
         $count_filtered=$this->Projects_model->get_projectrecord_count_filtered($rowno,$rowperpage,$search_text);
         $count_all = $this->Projects_model->get_projectrecord_count_all($rowno,$rowperpage,$search_text);
+
         $data_array=array();
        
         foreach($totalData as $category_details_key => $data_row)
@@ -448,8 +446,15 @@ class Projects extends CI_Controller
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
         $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
         $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
+        $data['webDispos'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
+        $data['VoiceDispos'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
+        $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
+        $data['project_info']=$this->Projects_model->get_project_input_fields($pid);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
-        $this->load->view("main/add_info", $data);
+        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['company_name']);
+        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($pid);
+    
+        $this->load->view("projects/add_info", $data);
     }
 
 

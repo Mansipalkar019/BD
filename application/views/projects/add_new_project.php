@@ -57,7 +57,6 @@
                                
                                 <p><?php echo $this->session->flashdata("success"); ?></p>
 
-
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group row">

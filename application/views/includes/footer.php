@@ -62,6 +62,7 @@
     <script type="text/javascript">
           var bases_url="<?=base_url() ?>";
     </script>
+   
 
     <!-- Nested Table  -->
     

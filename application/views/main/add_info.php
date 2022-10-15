@@ -72,7 +72,7 @@ body { padding: 1px;  }
 }
 
 </style>
-
+<?php print_r($allInfo);die(); ?>"
 <main class="container-fluid" style="background-color: #FFFFEA;">
     <div class="row row1">
         <div class="col">
@@ -84,7 +84,7 @@ body { padding: 1px;  }
                     <label for="company_received" class="col-form-label">Co. Name Recd:</label>
                 </div>
                 <div class="col">
-                    <input type="text" value="" title="" id="company_received"  name='company_received' class="form-control form-control-sm" disabled>
+                    <input type="text" title="" id="company_received"  name='company_received' class="form-control form-control-sm" value="<?php echo $allInfo[0]['received_company_name']; ?>" disabled >
                 </div>
             </div>
             <?php } ?>
