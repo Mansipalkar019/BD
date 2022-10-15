@@ -28,8 +28,7 @@ background-color: #F5F7FA;
 
         
     </div>
-<!--  <p><?php echo $this->session->flashdata("error");?></p>
- --> <p><?php echo $this->session->flashdata("success");?></p>
+ <?php echo $this->session->flashdata("success");?>
 <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
 <div class="grey-bg container-fluid">
 <section id="minimal-statistics">
@@ -49,9 +48,34 @@ background-color: #F5F7FA;
             <th>Uploaded By</th>
             <th>Created At</th>
             <th>Action</th>
-
         </tr>
         </thead>
+        <tbody>
+            <?php 
+                foreach ($projects as $key => $value) { ?>
+                    <tr>
+                        <td><?= $key+1; ?></td>
+                        <td><span><a href='<?= base_url().'Projects/ProjectInfo/'.$value['id']; ?>'class="badge btn btn-primary btn-sm" href="#"><?= $value['project_name'];?></a></span></td>
+                        <td><span><a class="badge rounded-pill bg-success" href="#"><?= $value['company_count'];?></a></span></td>
+                        <td><span><a class="badge rounded-pill bg-dark" href="#"><?= $value['no_of_staff'];?></a></span></td>
+                        <td><?= $value['project_type'];?></td>
+                        <td><?= $value['task_type'];?></td>
+                        <td><?= $value['project_breif'];?></td>
+                        <td><?= $value['username'];?></td>
+                        <td><?= date(('d-m-Y h:i A'),strtotime($value['created_at']));?></td>
+                        <td>
+                            <a href="<?= base_url().$value['file_path']; ?>" title='Download File'><i class="fas fa-download"></i></a>
+                           &nbsp; <a href="<?= base_url().$value['file_path']; ?>"><i class="fa-solid fa-pen-to-square"></i></i></a>
+                           &nbsp; <a onclick=" return confirm('are you sure you want to delete this project')" href="<?= base_url().'Projects/DeleteProjects/'.$value['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+
+                    </tr>
+                    
+                <?php }
+
+
+            ?>
+        </tbody>
 </table>
 </div>
 </section>
@@ -67,26 +91,5 @@ background-color: #F5F7FA;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
-    var simpletable = $('#doc_list_datatable').DataTable({
-    "responsive": true,
-    'processing': true,
-    'serverSide': true,
-    'serverMethod': 'post',
-    'language': {
-        'processing': '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>',
-        searchPlaceholder: ""
-        
-    },
-   'ajax': {
-       'url': "<?= base_url() ?>Projects/getprojectrecord",
-       'method': "POST",
-       'dataType':'json',
-       "data": function (data) {
-         
-       }
-   }, 
-   createdRow: function (row, data, index) {
-        $('td', row).eq(2).addClass('text-capitalize');
-    },
-});
+    var simpletable = $('#doc_list_datatable').DataTable();
 </script>
