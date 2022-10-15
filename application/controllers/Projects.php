@@ -451,7 +451,7 @@ class Projects extends CI_Controller
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
         $data['project_info']=$this->Projects_model->get_project_input_fields($pid);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
-        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['company_name']);
+        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($pid);
     
         $this->load->view("projects/add_info", $data);
