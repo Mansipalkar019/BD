@@ -119,6 +119,7 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
 		{
 			$this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
 		}
+            $fData= [];
 		    $query=$this->db->get();
             $data = $query->result_array();
             foreach ($data as $key => $value) {
@@ -131,7 +132,7 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
         return $fData;
     }
 
-function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
+    function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
     {
 		$this->db->select('bmp.id,bmp.project_name,bmp.project_breif,bpt.project_type,bpts.project_type as task_type,bmp.created_at,bmp.created_by,bmp.file_name,bmp.file_path,us.username');
         $this->db->from('bdcrm_master_projects as bmp');
@@ -141,7 +142,7 @@ function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
         $this->db->where('bmp.status','1');
         $this->db->order_by("bmp.id", "DESC");
         $this->db->limit($rowperpage,$rowno);
-
+        $fData = [];
         if($search_text != '')
         {
             $this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
@@ -195,17 +196,35 @@ function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
 
     function getProjectInfoByStaffId($pid,$sid){
 
-        $this->db->select('buf.*,bmp.project_name');
+        $this->db->select('buf.*,bmp.project_name,bmp.project_breif');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->where('buf.project_id',$pid);
         $this->db->where('buf.id',$sid);
         $this->db->where('bmp.status',1);
         $query=$this->db->get();
-        return $data = $query->result_array();
-
+        $data = $query->result_array();
+        $info = $this->getCompanyInfoByProjectId($pid);
+        $data[0]['company_count']=$info['company_count'];
+        $data[0]['no_of_staff']=$info['no_of_staff'];
+        return $data;
     }
 
+    function getStaffInfoDetails($project_id,$company_name){
+        $this->db->select('first_name,last_name,company_disposition');
+        $this->db->from('bdcrm_uploaded_feildss');
+        $this->db->where('project_id',$project_id);
+        $this->db->where('received_company_name',$company_name);
+        $querys=$this->db->get();
+        return $datas =  $querys->result_array();
+    }
 
-
+    function getCompanyInfoDetails($project_id){
+        $this->db->select('received_company_name,company_disposition');
+        $this->db->from('bdcrm_uploaded_feildss');
+        $this->db->distinct('received_company_name');
+        $this->db->where('project_id',$project_id);
+        $querys=$this->db->get();
+        return $datas =  $querys->result_array();
+    }
 }
