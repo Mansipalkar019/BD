@@ -67,7 +67,7 @@ class Projects extends CI_Controller
             $download_excel = '<a  href="'.base_url().$data_row['file_path'].'"><i class="fas fa-download"></a>';
             $comp_count = '<span><a class="badge rounded-pill bg-success" href="#">'.$data_row['company_count'].'</a></span>&nbsp;&nbsp;';
             $staff_count = '<span><a class="badge rounded-pill bg-dark" href="#">'.$data_row['no_of_staff'].'</a></span>&nbsp;&nbsp;';
-            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/ProjectInfo/'.$data_row['id'].'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
+            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/ProjectInfo/'.base64_encode($data_row['id']).'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $project_name;
@@ -186,7 +186,8 @@ class Projects extends CI_Controller
                 for ($i = 1; $i < count($file_data); $i++) {
 
                     $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
-                    $suffix_id  = (!empty($file_data[$i][0])) ? $this->getSuffixInfoByName($file_data[$i][0])['id'] : ''; 
+                    $suffix=$this->getSuffixInfoByName($file_data[$i][0]);
+                    $suffix_id  = (!empty($suffix)) ? $suffix['id'] : ''; 
                     $file_datas[$i]['suffix'] = $suffix_id;
                     $file_datas[$i]['first_name'] =  $file_data[$i][0];
                     $file_datas[$i]['first_name'] =  $file_data[$i][1];
@@ -421,13 +422,18 @@ class Projects extends CI_Controller
 
 
     public function ProjectInfo($id){
+         $id=base64_decode($id);
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['main_content'] = "projects/project_info";   
          $this->load->view("includes/template", $data);
     }
 
-    public function my_projects($pid,$rid)
+    public function my_projects($pid,$rid,$cmp_name)
     {
+        $productid=base64_decode($pid);
+        $rowid=base64_decode($rid);
+        $cmp_name=base64_decode($cmp_name);
+        $data['minmax'] =  $this->Projects_model->getProjectInfoByStaffId($productid,$rowid);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
@@ -438,11 +444,12 @@ class Projects extends CI_Controller
         $data['webDispos'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
         $data['VoiceDispos'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
-        $data['project_info']=$this->Projects_model->get_project_input_fields($pid);
-        $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
-        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['received_company_name']);
-        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($pid);
-    
+        $data['project_info']=$this->Projects_model->get_project_input_fields($productid);
+        $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($productid,$rowid);
+        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($productid,$data['allInfo'][0]['received_company_name']);
+        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($productid);
+        // echo "<pre>";
+        // print_r($data['company_list']);die();
         $this->load->view("projects/add_info", $data);
     }
 

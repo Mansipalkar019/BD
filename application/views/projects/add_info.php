@@ -770,7 +770,7 @@
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
                               <tr class="" <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="https://192.168.0.55/dbp/allinfo/index?project_name=BTB-02-T&records_relation=r12&staff_id=80&company_id=80&project_id=80&staff_name=Zeina+Thabet"><i class="fas fa-eye"></i></a></td>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.$staff_list_val['project_id'].'/'.$staff_list_val['id'];?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name']; ?></td>
                               <td><?= $staff_list_val['last_name']; ?></td>
                               <td><?= $staff_list_val['company_disposition']; ?></td>
@@ -790,7 +790,7 @@
                            <?php 
                            foreach($company_list as $company_list_key => $company_list_val) {?>
                            <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="https://192.168.0.55/dbp/allinfo/index?project_name=BTB-02-T&records_relation=r12&staff_id=56&company_id=56&project_id=56&staff_name=Shinny+Simmons+"><i class="fas fa-eye"></i></a></td>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.$company_list_val['project_id'].'/'.$company_list_val['id'];?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $company_list_val['received_company_name']; ?></td>
                               <td></td>
                            </tr>

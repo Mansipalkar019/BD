@@ -78,9 +78,9 @@ function getprojectrecord($rowno="",$rowperpage="",$search_text=""){
 		$this->db->where('bmp.status','1');
         $this->db->order_by("bmp.id", "DESC");
         $this->db->limit($rowperpage,$rowno);
-		if($search_text != ''){
-			$this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
-		}
+		// if($search_text != ''){
+		// 	$this->db->where("(bmp.project_name LIKE '%".$search_text."%' OR bmp.project_breif LIKE '%".$search_text."%' OR bmp.task_type LIKE '%".$search_text."%')", NULL, FALSE); 
+		// }
 		$query=$this->db->get();
         $data = $query->result_array();
 
@@ -211,7 +211,7 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
     }
 
     function getStaffInfoDetails($project_id,$company_name){
-        $this->db->select('first_name,last_name,company_disposition');
+        $this->db->select('first_name,last_name,company_disposition,project_id,id');
         $this->db->from('bdcrm_uploaded_feildss');
         $this->db->where('project_id',$project_id);
         $this->db->where('received_company_name',$company_name);
@@ -220,10 +220,12 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
     }
 
     function getCompanyInfoDetails($project_id){
-        $this->db->select('received_company_name,company_disposition');
-        $this->db->from('bdcrm_uploaded_feildss');
+        $this->db->select('received_company_name,company_disposition,project_id,id');
         $this->db->distinct('received_company_name');
+        $this->db->from('bdcrm_uploaded_feildss');
+
         $this->db->where('project_id',$project_id);
+        $this->db->group_by('received_company_name');
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }

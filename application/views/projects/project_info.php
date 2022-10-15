@@ -44,7 +44,7 @@ background-color: #F5F7FA;
               <tr>
                 <td><?= $key+1;?></td>
                 <td><?= $value['project_name'];?></td>
-                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$value['project_id'].'/'.$value['id'];?>" title="Open Record"><?= $value['salutation'].'. '. $value['first_name'].' '.$value['last_name'];?></a></span></td>
+                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($value['project_id']).'/'.base64_encode($value['id']).'/'.base64_encode($value['received_company_name']);?>" title="Open Record"><?= $value['salutation'].'. '. $value['first_name'].' '.$value['last_name'];?></a></span></td>
                 <td><?= $value['received_company_name'];?></td>
                 <td><?= $value['provided_job_title'];?></td>
                 <td><?= $value['address1'];?></td>
