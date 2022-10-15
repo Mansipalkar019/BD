@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-6" >
                     <div class="page-title-box">
-                    <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:10px;">View Project List</a>
+                    <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:20px;margin-right:3%;background-image: linear-gradient(to right,#ff4156,#FF9A49);">Project List</a>
                     </div>
                 </div>
             </div>
@@ -70,6 +70,7 @@
                                             <label class="col-sm-2 control-label" style="color:black;">Project Type</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" required="" name="project_type" id="project_type">
+                                                    <option value="">Please Select Project Type</option>
                                                     <?php
                                                     foreach ($ProjType as $key => $value) { ?>
                                                         <option value="<?= $value['id']; ?>"><?= $value['project_type']; ?></option>
@@ -125,8 +126,7 @@
                         </form>
                     <a type="button" title="" value="Download Sample File" data-loading-text="Loading..." class="btn btn-purple waves-effect waves-light exceldownload" style="background-color:crimson;color:white;" href="<?php echo base_url() ?>uploads/sampledoc/bdcrm.xls">Download Sample File</a>
 
-            <!-- <button class='btn btn-purple waves-effect waves-light' type="submit" name="submit_button" id="submit_button"
-                                    style="margin-left:30%;background-color:crimson;color:white;float:right;">Download Sample File</button> -->
+   
         </div>
     </div>
 </div>
@@ -160,6 +160,7 @@
 
                 $.each(data, function(i, member) {
                     html11 = '';
+
 
                     if (member.input_name != '') {
                         if (member.access == 1) {

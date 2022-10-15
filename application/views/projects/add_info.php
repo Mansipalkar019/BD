@@ -477,7 +477,7 @@
                             <option value=''>select a title</option>
                             <?php 
                             foreach ($name_prefix as $key => $val) { ?>
-                            <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['salutation'] == $val['prefix']){?>selected<?php } ?>><?= $val['prefix']; ?></option>
+                            <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['suffix'] == $val['prefix']){?>selected<?php } ?>><?= $val['prefix']; ?></option>
                             <?php }
                             ?>
                          </select>
@@ -747,6 +747,7 @@
                </div>
                <br><br><br>
             </div>
+            
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">

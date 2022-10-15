@@ -40,13 +40,12 @@
                         
                           <?php }
 
-
-
-
-
-
                         ?>
-                     
+
+
+
+
+
                       <!--   <li>
                             <a href="<?php echo base_url('dashboard'); ?>" class="waves-effect waves-light">
                                 <i class="mdi mdi-view-dashboard"></i>

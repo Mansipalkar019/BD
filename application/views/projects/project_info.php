@@ -10,19 +10,15 @@ background-color: #F5F7FA;
 <div class="content-page">
 <div class="content">
 <div class="container-fluid">
-
-    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="page-title">Project List</h4>
+                <center><h4 class="page-title" style="color: black">Staff Informations of Project : <?= $ProjectInfo[0]['project_name'];?></h4></center>
             </div>
         </div>
     </div>
-    <!-- end page title -->
  <p><?php echo $this->session->flashdata("error");?></p>
  <p><?php echo $this->session->flashdata("success");?></p>
-<form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
 <div style="overflow-y: auto;">
@@ -48,19 +44,18 @@ background-color: #F5F7FA;
               <tr>
                 <td><?= $key+1;?></td>
                 <td><?= $value['project_name'];?></td>
-                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$value['project_id'].'/'.$value['id'];?>" title="Open Record"><?= $value['first_name'].' '.$value['last_name'];?></a></span></td>
+                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$value['project_id'].'/'.$value['id'];?>" title="Open Record"><?= $value['salutation'].'. '. $value['first_name'].' '.$value['last_name'];?></a></span></td>
                 <td><?= $value['received_company_name'];?></td>
                 <td><?= $value['provided_job_title'];?></td>
                 <td><?= $value['address1'];?></td>
                 <td><?= $value['city'];?></td>
                 <td><?= $value['postal_code'];?></td>
-                <td><?= $value['provided_country'];?></td>
+                <td><?= $value['country_name'];?></td>
                 <td><?= date(('d-m-Y h:i A'),strtotime($value['created_date']));?></td>
                 <td></td>
               </tr>
             <?php }
             ?>
-            
         </tbody>
 </table>
 </div>

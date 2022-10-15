@@ -33,6 +33,8 @@ class Projects_Model extends CI_Model
         $this->db->select('id,label_name');
         $this->db->from('bdcrm_feilds');
         $this->db->where('status','1');
+        $this->db->order_by("sort_order");
+
         $query=$this->db->get();
         $data =  $query->result_array();
 
@@ -44,6 +46,7 @@ class Projects_Model extends CI_Model
             $this->db->where('feild_id',$feild_id);
             $this->db->where('task_type_id',$tasktypeid);
             $this->db->where('status',1);
+
             $querys=$this->db->get();
             $datas =  $querys->row_array();
           
@@ -80,6 +83,7 @@ function getprojectrecord($rowno="",$rowperpage="",$search_text=""){
 		}
 		$query=$this->db->get();
         $data = $query->result_array();
+
         $fData=[];
         foreach ($data as $key => $value) {
             $project_id = $value['id'];
@@ -88,7 +92,6 @@ function getprojectrecord($rowno="",$rowperpage="",$search_text=""){
             $value['no_of_staff'] = $info['no_of_staff'];
             $fData[] = $value;
         }
-       
      return $fData;
     }
 
@@ -178,9 +181,13 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
 
 
     function getProjectInfo($project_id){
-        $this->db->select('buf.*,bmp.project_name');
+        $this->db->select('buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
+        $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
+        $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
+        
+
         $this->db->where('bmp.id',$project_id);
         $this->db->where('bmp.status',1);
         $query=$this->db->get();
