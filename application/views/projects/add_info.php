@@ -477,7 +477,7 @@
                             <option value=''>select a title</option>
                             <?php 
                             foreach ($name_prefix as $key => $val) { ?>
-                            <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['salutation'] == $val['prefix']){?>selected<?php } ?>><?= $val['prefix']; ?></option>
+                            <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['suffix'] == $val['prefix']){?>selected<?php } ?>><?= $val['prefix']; ?></option>
                             <?php }
                             ?>
                          </select>
@@ -747,10 +747,11 @@
                </div>
                <br><br><br>
             </div>
+            
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['company_name'])) ?  $allInfo[0]['company_name'] : ''  ?><?=  (!empty($allInfo[0]['no_of_staff'])) ?  '('.$allInfo[0]['no_of_staff'].')' : '(0)' ?></button>
+                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($allInfo[0]['no_of_staff'])) ?  '('.$allInfo[0]['no_of_staff'].')' : '(0)' ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($allInfo[0]['project_name'])) ?  $allInfo[0]['project_name'] : ''  ?> <?=  (!empty($allInfo[0]['company_count'])) ?  '('.$allInfo[0]['company_count'].')' : '(0)' ?></button>

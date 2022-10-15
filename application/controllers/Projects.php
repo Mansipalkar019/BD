@@ -25,17 +25,7 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-    // public function my_projects()
-    // {
-    //     $project_id=$_GET['id'];
-    //     $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
-    //     $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
-    //     $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
-    //     $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
-    //     $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
-    //     $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
-    //     $this->load->view("main/add_info",$data);
-    // }
+  
 
     public function project_list()
     {
@@ -450,7 +440,7 @@ class Projects extends CI_Controller
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
         $data['project_info']=$this->Projects_model->get_project_input_fields($pid);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
-        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['company_name']);
+        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($pid,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($pid);
     
         $this->load->view("projects/add_info", $data);
