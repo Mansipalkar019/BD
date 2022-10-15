@@ -433,7 +433,7 @@ class Projects extends CI_Controller
         $productid=base64_decode($pid);
         $rowid=base64_decode($rid);
         $cmp_name=base64_decode($cmp_name);
-        $data['minmax'] =  $this->Projects_model->getProjectInfoByStaffId($productid,$rowid);
+        //$data['minmax'] =  $this->Projects_model->getProjectInfoByStaffId($productid,$rowid);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
