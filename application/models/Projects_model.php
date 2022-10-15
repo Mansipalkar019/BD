@@ -27,8 +27,6 @@ class Projects_Model extends CI_Model
     }
 
 
-
-
     public function get_task_fields($tasktypeid){
         $this->db->select('id,label_name');
         $this->db->from('bdcrm_feilds');
@@ -68,19 +66,15 @@ class Projects_Model extends CI_Model
     }
 
 
-function getprojectrecord($rowno="",$rowperpage="",$search_text=""){
+function getprojectrecord(){
 
 		$this->db->select('bmp.id,bmp.project_name,bmp.project_breif,bpt.project_type,bpts.project_type as task_type,bmp.created_at,bmp.created_by,bmp.file_name,bmp.file_path,us.username');
         $this->db->from('bdcrm_master_projects as bmp');
-		$this->db->join('bdcrm_project_type bpt','bmp.project_type = bpt.id','left');
-        $this->db->join('bdcrm_project_types bpts','bmp.task_type = bpts.id','left');
+		$this->db->join('bdcrm_project_type bpt','bmp.task_type = bpt.id','left');
+        $this->db->join('bdcrm_project_types bpts','bmp.project_type = bpts.id','left');
         $this->db->join('users us','bmp.created_by = us.id','left');
 		$this->db->where('bmp.status','1');
         $this->db->order_by("bmp.id", "DESC");
-        $this->db->limit($rowperpage,$rowno);
-		if($search_text != ''){
-			$this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
-		}
 		$query=$this->db->get();
         $data = $query->result_array();
 
@@ -104,60 +98,6 @@ function getprojectrecord($rowno="",$rowperpage="",$search_text=""){
             return $datas =  $querys->row_array();
     }
 
-function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text="")
-    {
-		$this->db->select('bmp.id,bmp.project_name,bmp.project_breif,bpt.project_type,bpts.project_type as task_type,bmp.created_at,bmp.created_by,bmp.file_name,bmp.file_path,us.username');
-        $this->db->from('bdcrm_master_projects as bmp');
-        $this->db->join('bdcrm_project_type bpt','bmp.project_type = bpt.id','left');
-        $this->db->join('bdcrm_project_types bpts','bmp.task_type = bpts.id','left');
-        $this->db->join('users us','bmp.created_by = us.id','left');
-        $this->db->where('bmp.status','1');
-        $this->db->order_by("bmp.id", "DESC");
-        $this->db->limit($rowperpage,$rowno);
-
-		if($search_text != '')
-		{
-			$this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
-		}
-            $fData= [];
-		    $query=$this->db->get();
-            $data = $query->result_array();
-            foreach ($data as $key => $value) {
-            $project_id = $value['id'];
-            $info = $this->getCompanyInfoByProjectId($project_id);
-            $value['company_count'] = $info['company_count'];
-            $value['no_of_staff'] = $info['no_of_staff'];
-            $fData[] = $value;
-        }
-        return $fData;
-    }
-
-    function get_projectrecord_count_all($rowno="",$rowperpage="",$search_text="")
-    {
-		$this->db->select('bmp.id,bmp.project_name,bmp.project_breif,bpt.project_type,bpts.project_type as task_type,bmp.created_at,bmp.created_by,bmp.file_name,bmp.file_path,us.username');
-        $this->db->from('bdcrm_master_projects as bmp');
-        $this->db->join('bdcrm_project_type bpt','bmp.project_type = bpt.id','left');
-        $this->db->join('bdcrm_project_types bpts','bmp.task_type = bpts.id','left');
-        $this->db->join('users us','bmp.created_by = us.id','left');
-        $this->db->where('bmp.status','1');
-        $this->db->order_by("bmp.id", "DESC");
-        $this->db->limit($rowperpage,$rowno);
-        $fData = [];
-        if($search_text != '')
-        {
-            $this->db->where("(bmp.project_name LIKE '%".$search_text."%')", NULL, FALSE); 
-        }
-            $query=$this->db->get();
-            $data = $query->result_array();
-            foreach ($data as $key => $value) {
-            $project_id = $value['id'];
-            $info = $this->getCompanyInfoByProjectId($project_id);
-            $value['company_count'] = $info['company_count'];
-            $value['no_of_staff'] = $info['no_of_staff'];
-            $fData[] = $value;
-        }
-        return $fData;
-    }
 
     function get_project_input_fields($project_id)
     {
