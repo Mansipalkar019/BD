@@ -821,6 +821,14 @@
          placeholder: " Select Co. Voice Disposition",
          allowClear: true
          });
+         $("#web_staff_disposition").select2({
+         placeholder: " Select Co. Voice Disposition",
+         allowClear: true
+         });
+         $("#voice_staff_disposition").select2({
+         placeholder: " Select Co. Voice Disposition",
+         allowClear: true
+         });
          $(document).ready(function() {
          
          $('.row1').css({
