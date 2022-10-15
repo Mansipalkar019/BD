@@ -766,6 +766,131 @@ class Master  extends CI_Controller
     }
 
 
+    // Started By Raj Namdev
+
+       public function add_staff_web_disposition($id=0){
+
+         if($id!='' AND $id!=0){
+            $data['getFormStaffWebDispo'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1','id'=>$id))[0];  
+         }
+         $data['getStaffWebDispo'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));  
+         $data['main_content'] = "main/add_staff_web_disposition";
+         $this->load->view("includes/template", $data);
+    }
+
+    public function submit_staff_web_dispositions(){
+        $this->form_validation->set_rules("staff_web_dispostions_name","Staff Web Dispostions","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
+        if($this->form_validation->run()==true){
+            $staff_web_disposition_name = $this->security->xss_clean($this->input->post("staff_web_dispostions_name"));
+            $data = array(
+                "dispositions" => $staff_web_disposition_name,
+            );
+
+            $wid = $this->input->post("w_id");
+            if(empty($wid)){
+                $addWebDisposition = $this->model->insertData('bdcrm_staff_web_disposition',$data);
+                if($addWebDisposition){
+                    $this->session->set_flashdata("success","Staff Web Disposition Successfullly Added");
+                }
+            }else{
+                $updateWebDis = $this->model->updateData("bdcrm_staff_web_disposition", $data, array('id' => $wid));
+                if($updateWebDis){
+                    $this->session->set_flashdata("success","Staff Web Disposition Successfullly Updated.");
+                }
+
+            }
+            
+        }
+        else
+        {
+            $data = array(
+                'error' => validation_errors()
+            );
+            $this->session->set_flashdata("error",$data['error']);
+        }
+         redirect(base_url("master/add_staff_web_disposition"));
+
+    }
+
+    public function DeleteStaffWebDisposition($id=0){
+        if($id!='' && $id!=0){
+         if(!empty($id)){
+            $deleteStaffWebDispostion = $this->model->updateData("bdcrm_staff_web_disposition", array('status'=>0),
+            array('id' => $id));
+            if($deleteStaffWebDispostion){
+               $this->session->set_flashdata("success","Staff Web disposition has been successfullly deleted.");
+            }
+         }
+        }
+       redirect(base_url("master/add_staff_web_disposition"));
+    }
+
+
+
+
+
+    public function add_staff_voice_dispositions($id=0){
+
+         if($id!='' AND $id!=0){
+            $data['getFormStaffVoiceDispo'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1','id'=>$id))[0];  
+         }
+         $data['getStaffVoiceDispo'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));  
+         $data['main_content'] = "main/add_staff_voice_disposition";
+         $this->load->view("includes/template", $data);
+    }
+
+    public function submit_staff_voice_dispositions(){
+        $this->form_validation->set_rules("staff_voice_dispostions_name","Staff Voice Dispostions","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
+        if($this->form_validation->run()==true){
+            $staff_voice_disposition_name = $this->security->xss_clean($this->input->post("staff_voice_dispostions_name"));
+            $data = array(
+                "voice_dispositions" => $staff_voice_disposition_name,
+            );
+
+            $wid = $this->input->post("w_id");
+            if(empty($wid)){
+                $addWebDisposition = $this->model->insertData('bdcrm_staff_voice_dispositions',$data);
+                if($addWebDisposition){
+                    $this->session->set_flashdata("success","Staff Voice Disposition Successfullly Added");
+                }
+            }else{
+                $updateWebDis = $this->model->updateData("bdcrm_staff_voice_dispositions", $data, array('id' => $wid));
+                if($updateWebDis){
+                    $this->session->set_flashdata("success","Staff Voice Disposition Successfullly Updated.");
+                }
+
+            }
+            
+        }
+        else
+        {
+            $data = array(
+                'error' => validation_errors()
+            );
+            $this->session->set_flashdata("error",$data['error']);
+        }
+         redirect(base_url("master/add_staff_voice_dispositions"));
+
+    }
+
+    public function DeleteStaffVoiceDisposition($id=0){
+        if($id!='' && $id!=0){
+         if(!empty($id)){
+            $deleteStaffWebDispostion = $this->model->updateData("bdcrm_staff_voice_dispositions", array('status'=>0),
+            array('id' => $id));
+            if($deleteStaffWebDispostion){
+               $this->session->set_flashdata("success","Staff Web disposition has been successfullly deleted.");
+            }
+         }
+        }
+       redirect(base_url("master/add_staff_voice_dispositions"));
+    }
+
+
+
+
+
+
     
 
 

@@ -25,21 +25,6 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-<<<<<<< HEAD
-=======
-    public function my_projects()
-    {
-        $project_id=$_GET['id'];
-        $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
-        $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
-        $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
-        $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
-        $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
-        $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
-        $this->load->view("main/add_info",$data);
-    }
-
->>>>>>> 9447ece64c0a4108c023637c4a4a76160b485f76
     public function project_list()
     {
         $main_content = "projects/project_list";
@@ -72,6 +57,7 @@ class Projects extends CI_Controller
         $totalData=$this->Projects_model->getprojectrecord($rowno,$rowperpage,$search_text);   
         $count_filtered=$this->Projects_model->get_projectrecord_count_filtered($rowno,$rowperpage,$search_text);
         $count_all = $this->Projects_model->get_projectrecord_count_all($rowno,$rowperpage,$search_text);
+
         $data_array=array();
        
         foreach($totalData as $category_details_key => $data_row)
@@ -82,11 +68,11 @@ class Projects extends CI_Controller
             $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/ProjectInfo/'.$data_row['id'].'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
+                $nestedData[] = $project_name;
                 $nestedData[] = $comp_count;
                 $nestedData[] = $staff_count;
-                $nestedData[] = $project_name;
-                $nestedData[] = $data_row['project_type'];
                 $nestedData[] = $data_row['task_type'];
+                $nestedData[] = $data_row['project_type'];
                 $nestedData[] = $data_row['project_breif'];
                 $nestedData[] = $data_row['username'];
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_at']));
@@ -198,8 +184,8 @@ class Projects extends CI_Controller
                 for ($i = 1; $i < count($file_data); $i++) {
 
                     $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
-                   //echo  $suffix_id  = (!empty($file_data[$i][0])) ? $this->getSuffixInfoByName($file_data[$i][0])['id'] : ''; 
-                    // $file_datas[$i]['suffix'] =  (!empty($suffix_id)) ? $suffix_id : '';
+                    $suffix_id  = (!empty($file_data[$i][0])) ? $this->getSuffixInfoByName($file_data[$i][0])['id'] : ''; 
+                    $file_datas[$i]['suffix'] = $suffix_id;
                     $file_datas[$i]['first_name'] =  $file_data[$i][0];
                     $file_datas[$i]['first_name'] =  $file_data[$i][1];
                     $file_datas[$i]['last_name'] = $file_data[$i][2];
@@ -248,11 +234,8 @@ class Projects extends CI_Controller
                     $new[] = $file_datas[$i];
                    
                 }
-
-               
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info); 
-                   
                     if (!empty($_POST['feild_access'])) {
                         foreach ($_POST['feild_access'] as $field_access => $filed_access_key) {
                             $projects_info = array(
@@ -446,14 +429,14 @@ class Projects extends CI_Controller
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
+        $data['StaffWebDispo'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
+        $data['StaffVoiceDispo'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
         $data['country'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
         $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
+        $data['project_info']=$this->Projects_model->get_project_input_fields($pid);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($pid,$rid);
-        $this->load->view("main/add_info", $data);
+        $this->load->view("projects/add_info", $data);
     }
-
-
-
 
 
 }

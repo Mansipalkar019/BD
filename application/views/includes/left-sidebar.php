@@ -40,20 +40,7 @@
                         
                           <?php }
 
-
-
-
-
-
                         ?>
-
-                        <li>
-                            <a href="<?php echo base_url()?>Projects/my_projects?id=2" class="waves-effect waves-light">
-                                <span> Project Info </span>
-                            </a>
-                        </li>
-
-
 
 
 
