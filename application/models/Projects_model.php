@@ -151,7 +151,7 @@ function getprojectrecord(){
     }
 
     function getStaffInfoDetails($project_id,$company_name){
-        $this->db->select('first_name,last_name,company_disposition');
+        $this->db->select('first_name,last_name,company_disposition,project_id,id');
         $this->db->from('bdcrm_uploaded_feildss');
         $this->db->where('project_id',$project_id);
         $this->db->where('received_company_name',$company_name);
@@ -160,10 +160,12 @@ function getprojectrecord(){
     }
 
     function getCompanyInfoDetails($project_id){
-        $this->db->select('received_company_name,company_disposition');
-        $this->db->from('bdcrm_uploaded_feildss');
+        $this->db->select('received_company_name,company_disposition,project_id,id');
         $this->db->distinct('received_company_name');
+        $this->db->from('bdcrm_uploaded_feildss');
+
         $this->db->where('project_id',$project_id);
+        $this->db->group_by('received_company_name');
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
