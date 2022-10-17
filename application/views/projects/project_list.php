@@ -55,7 +55,7 @@ background-color: #F5F7FA;
                 foreach ($projects as $key => $value) { ?>
                     <tr>
                         <td><?= $key+1; ?></td>
-                        <td><span><a href='<?= base_url().'Projects/ProjectInfo/'.$value['id']; ?>'class="badge btn btn-primary btn-sm" href="#"><?= $value['project_name'];?></a></span></td>
+                        <td><span><a href='<?= base_url().'Projects/ProjectInfo/'.base64_encode($value['id']); ?>'class="badge btn btn-primary btn-sm" href="#"><?= $value['project_name'];?></a></span></td>
                         <td><span><a class="badge rounded-pill bg-success" href="#"><?= $value['company_count'];?></a></span></td>
                         <td><span><a class="badge rounded-pill bg-dark" href="#"><?= $value['no_of_staff'];?></a></span></td>
                         <td><?= $value['project_type'];?></td>

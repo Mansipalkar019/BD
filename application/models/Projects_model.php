@@ -105,7 +105,6 @@ function getprojectrecord(){
 		$this->db->from('bdcrm_master_projects_fields');
         $this->db->join('bdcrm_feilds','bdcrm_feilds.id=bdcrm_master_projects_fields.field_id','left');
         $this->db->where('bdcrm_master_projects_fields.project_id',$project_id);	
-
 		$this->db->group_by('bdcrm_master_projects_fields.id');
         $this->db->order_by('bdcrm_master_projects_fields.id');
 		$query=$this->db->get();
@@ -126,8 +125,6 @@ function getprojectrecord(){
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
         $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
-        
-
         $this->db->where('bmp.id',$project_id);
         $this->db->where('bmp.status',1);
         $query=$this->db->get();
@@ -151,7 +148,7 @@ function getprojectrecord(){
     }
 
     function getStaffInfoDetails($project_id,$company_name){
-        $this->db->select('first_name,last_name,company_disposition,project_id,id');
+        $this->db->select('first_name,last_name,received_company_name as comp_name,company_disposition,project_id,id');
         $this->db->from('bdcrm_uploaded_feildss');
         $this->db->where('project_id',$project_id);
         $this->db->where('received_company_name',$company_name);
@@ -168,5 +165,16 @@ function getprojectrecord(){
         $this->db->group_by('received_company_name');
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
+    }
+
+    function getPreLastInfo($project_id,$rowid,$cmp_name){
+            $this->db->select('min(id) as myfirst,max(id) as mylast,project_id,received_company_name');
+            $this->db->from('bdcrm_uploaded_feildss');
+            $this->db->where('project_id',$project_id);
+            $this->db->where('received_company_name',$cmp_name);
+            $querys=$this->db->get();
+            return $datas =  $querys->row_array();  
+
+
     }
 }
