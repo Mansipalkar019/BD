@@ -19,9 +19,9 @@ background-color: #F5F7FA;
         </div>
 
         <div class="col-6" >
-                    <div class="page-title-box">
-                    <a type='submit' href="<?php echo base_url(); ?>projects/new_projects" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:20px;margin-right:3%;background-image: linear-gradient(to right,#ff4156,#FF9A49);">New Project</a>
-                    </div>
+           <div class="page-title-box">
+              <a type='submit' href="<?php echo base_url(); ?>projects/new_projects" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:20px;margin-right:3%;background-image: linear-gradient(to right,#ff4156,#FF9A49);">New Project</a>
+            </div>
         </div>
 
 

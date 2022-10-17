@@ -39,7 +39,11 @@
 
 <!-- App js -->
     <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script>
-    <script src="assets/js/pages/sweetalerts.init.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/pages/sweetalerts.init.js"></script>
+    <script src="<?php echo base_url(); ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+
+    
     <script src="<?php echo base_url(); ?>assets/libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.responsive.min.js"></script>

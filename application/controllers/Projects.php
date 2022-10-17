@@ -66,7 +66,7 @@ class Projects extends CI_Controller
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
-        $this->form_validation->set_rules("project_breif", "Project Breif", "trim|min_length[2]|max_length[100]|xss_clean", array("required" => "%s is required"));
+        $this->form_validation->set_rules("project_breif", "Project Breif", "trim|min_length[2]|xss_clean", array("required" => "%s is required"));
         if ($this->form_validation->run() == true) {
 
             if (!empty($_FILES['uploaded_file']['name'])) {
@@ -106,7 +106,7 @@ class Projects extends CI_Controller
                 $valid = 1;
                 $error = [];
                 for ($i = 1; $i < count($file_data); $i++) {
-                    $lower = strtolower($file_data[$i][16]);
+                    $lower = trim(strtolower($file_data[$i][16]));
                     $check_country = $this->model->selectWhereData('bdcrm_countries', array('name' => $lower), array('name'));
                     $db_country_name = (!empty($check_country)) ? $check_country['name'] : '';
                     $check = strcmp(strtolower($db_country_name), $lower);
@@ -118,15 +118,12 @@ class Projects extends CI_Controller
                         $error[] = $data;
                     }
                 }
-
-
                 $data['error'] = $error;
                 $new=[];
                 $this->session->set_flashdata('error', $data);
 
                if($valid > 0) {
                 for ($i = 1; $i < count($file_data); $i++) {
-
                     $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
                     $suffix=$this->getSuffixInfoByName($file_data[$i][0]);
                     $suffix_id  = (!empty($suffix)) ? $suffix['id'] : ''; 
@@ -201,7 +198,10 @@ class Projects extends CI_Controller
                             }
                         
                     } else {
-                        $this->session->set_flashdata("error", "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.");
+
+                        $errors[0]['error'] = "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.";
+                        $errors[0]['class']="Danger";
+                        $this->session->set_flashdata("error", $errors);
                         redirect(base_url("projects/new_projects"), $data);
                     }
                 }
@@ -372,12 +372,6 @@ class Projects extends CI_Controller
     }
 
 
-    public function ProjectInfo($id){
-         $id=base64_decode($id);
-         $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
-         $data['main_content'] = "projects/project_info";   
-         $this->load->view("includes/template", $data);
-    }
 
     public function my_projects($pid,$rid,$cmp_name='')
     {
@@ -399,10 +393,35 @@ class Projects extends CI_Controller
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
-        // echo "<pre>";
-        // print_r($data['compDispo']);die();
+        $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
+        $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
+        $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
         $this->load->view("projects/add_info", $data);
     }
+    public function getIndexInfo($staff,$rowid){
+        foreach($staff as $k =>$val){
+            if($val['id']==$rowid){
+                $key = $k+1;
+            }
+        }
+        $next = (!empty($staff[$key]['id'])) ? $staff[$key]['id'] : $rowid ;
+        $final = $key-2;
+        $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
+        $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
+        return $data;
+    }
+
+    public function ProjectInfo($id){
+         $id=base64_decode($id);
+         $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
+         $data['main_content'] = "projects/project_info";   
+         $this->load->view("includes/template", $data);
+    }
+
+  
+
+    
+
 
 
 }

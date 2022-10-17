@@ -54,7 +54,6 @@
 
                         <div class="col-sm-12">
                             <div class="card-box">
-                               
                                 <p><?php echo $this->session->flashdata("success"); ?></p>
 
                                 <div class="row">
@@ -65,7 +64,6 @@
                                                 <input type="text" class="form-control" value="" placeholder="Ex: B2B-19" name="project_name" required="">
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <label class="col-sm-2 control-label" style="color:black;">Project Type</label>
                                             <div class="col-sm-10">
@@ -79,7 +77,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <label class="col-md-2 control-label" style="color:black;">Project Brief</label>
                                             <div class="col-md-10">
@@ -88,7 +85,6 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group row">
@@ -107,7 +103,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-2 control-label" style="color:black;">File Upload </label>
                                             <div class="col-md-10">
-                                                <input type="file" name="uploaded_file" class="form-control" value="" required="">
+                                                <input type="file" name="uploaded_file" class="form-control" value="" accept=".xls,.xlsx" required="">
                                             </div>
                                         </div>
                                     </div>

@@ -33,7 +33,7 @@
          $(function() {});
       </script>
    </head>
-   <body class="">
+   <body class="" >
       <style>
          pre {
          /* white-space:pre-line; */
@@ -73,6 +73,7 @@
                   <div class="col">
                      <label for="company_received" class="col-form-label">Co. Name Recd:</label>
                   </div>
+
                   <div class="col">
                      <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" disabled>
                   </div>
@@ -212,7 +213,10 @@
                </div>
             </div>
             <div class="col">
-               <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)</div>
+               <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
+                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #ff0740;margin-top:-3px;margin-right:3%;"><i class="fa fa-arrow-left" aria-hidden="true"></i>Home</a>
+               </div>
+
                <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
                   <div class="modal-dialog">
                      <div class="modal-content">
@@ -224,6 +228,7 @@
                      </div>
                   </div>
                </div>
+
                <!-- check input access for company_disposition -->
                <?php 
                   $div_count=div_access($project_info,array('company_disposition'));
@@ -346,11 +351,11 @@
                <div class="row g3 justify-content-md-center mt-4">
                   <div class="col-auto">
                      <div class="input-group mb-3">
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="First" id="first"><<</a>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Previous" id="prev"><</a>
-                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="<?= $allInfo[0]['id']; ?>" title="<?= $allInfo[0]['id']; ?>" disabled>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Next" id="next">></a>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Last" id="last">>></a>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['myfirst']).'/'.base64_encode($minmax['received_company_name']);?>" title="First" id=""><<</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['prev']).'/'.base64_encode($minmax['received_company_name']);?>" title="Previous" id=""><</a>
+                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="<?= $minmax['current']; ?>" disabled>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['next']).'/'.base64_encode($minmax['received_company_name']);?>" title="Next" id="">></a>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['mylast']).'/'.base64_encode($minmax['received_company_name']);?>" title="Last" id="">>></a>
                      </div>
                   </div>
                   <div class="col-auto">
@@ -472,17 +477,23 @@
                   $access12 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access12; ?>>
+                   <?php if(in_array('suffix',$project_info)){ ?>
                   <div class="col">
                      <label for="title" class="col-form-label">Title:</label>
                          <select class='form-control form-control-sm' id="title"  name='title'>
                             <option value=''>select a title</option>
                             <?php 
+
+
                             foreach ($name_prefix as $key => $val) { ?>
-                            <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['suffix'] == $val['prefix']){?>selected<?php } ?>><?= $val['prefix']; ?></option>
+                            <option value='<?= $val['id']; ?>'
+                              <?php if($allInfo[0]['suffix'] == $val['id']){ echo "selected"; } ?>><?= $val['prefix']; ?></option>
                             <?php }
                             ?>
                          </select>
                      </div>
+                    <?php } ?> 
+
                   <?php if(in_array('first_name',$project_info)){ ?>
                   <div class="col">
                      <label for="first_name" class="col-form-label">First Name:</label>
@@ -769,9 +780,8 @@
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
-
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
-                              <tr class="" <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <tr  <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name']; ?></td>
                               <td><?= $staff_list_val['last_name']; ?></td>
@@ -808,6 +818,11 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
       <script>
+
+
+         function myFunction(a){
+            alert (a);
+         }
          $("#country").select2({
          placeholder: " Select Country",
          allowClear: true
@@ -838,11 +853,11 @@
              height: ($('body').height() - 11) / 2 //divide the body into to 2 rows
          });
          
-         // populate href of first,prev,next & last buttons...
-         $('#first').attr('href', $('table#company_table').first().find('a').attr('href'));
-         $('#prev').attr('href', $('table#company_table tr.bg-warning').prev().find('a').attr('href'));
-         $('#next').attr('href', $('table#company_table tr.bg-warning').next().find('a').attr('href'));
-         $('#last').attr('href', $('table#company_table tr').last().find('a').attr('href'));
+         // // populate href of first,prev,next & last buttons...
+         // $('#first').attr('href', $('table#company_table').first().find('a').attr('href'));
+         // $('#prev').attr('href', $('table#company_table tr.bg-warning').prev().find('a').attr('href'));
+         // $('#next').attr('href', $('table#company_table tr.bg-warning').next().find('a').attr('href'));
+         // $('#last').attr('href', $('table#company_table tr').last().find('a').attr('href'));
          
          $('#voice_disposition').change(function(){
              var disposition = $(this).val();
