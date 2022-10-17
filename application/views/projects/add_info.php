@@ -64,6 +64,7 @@
          }
       </style>
       <main class="container-fluid" style="background-color: #FFFFEA;">
+      <?php echo form_open('Sales/save_deal', array('id' => 'sale_report_form')) ?>
          <div class="row row1">
             <div class="col">
                <!-- check input access for company received -->
@@ -76,6 +77,8 @@
 
                   <div class="col">
                      <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" disabled>
+                     <input type="hidden" value="<?=  (!empty($allInfo[0]['project_id'])) ?  $allInfo[0]['project_id'] : ''  ?>" title="" id="project_id"  name='project_id' class="form-control form-control-sm">
+                     <input type="hidden" value="<?=  (!empty($allInfo[0]['id'])) ?  $allInfo[0]['id'] : ''  ?>" title="" id="staff_id"  name='staff_id' class="form-control form-control-sm">
                   </div>
                </div>
                <?php } ?>
@@ -149,7 +152,7 @@
                   <?php if(in_array('country',$project_info)){ ?>
                   <div class="col">
                      <label for="country" class="col-form-label">Country:</label>
-                     <select class='form-control form-control-sm' id="country"  name='country'>
+                     <select class='form-control form-control-sm' id="country"  name='country' onchange="getcountrycode(this.value)">
                         <option value=''>Select Country</option>
                         <?php 
                            foreach ($country as $key => $val) { ?>
@@ -349,6 +352,9 @@
                   <?php } ?>
                </div>
                <div class="row g3 justify-content-md-center mt-4">
+               <div class="col-auto">
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company">Copy</button>
+                  </div>
                   <div class="col-auto">
                      <div class="input-group mb-3">
                         <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['myfirst']).'/'.base64_encode($minmax['received_company_name']);?>" title="First" id=""><<</a>
@@ -360,6 +366,9 @@
                   </div>
                   <div class="col-auto">
                      <button class="btn btn-outline-primary btn-sm" type="button" id="update_company">Update</button>
+                  </div>
+                  <div class="col-auto">
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none">Paste</button>
                   </div>
                </div>
             </div>
@@ -469,6 +478,7 @@
                </div>
             </div>
          </div>
+         <?php echo form_close() ?>
          <div class="row row1">
             <div class="col">
                <!-- check input access for first_name,last_name -->
@@ -697,7 +707,7 @@
                         <option value=''>select Voice Staff Disposition</option>
                         <?php 
                         foreach ($VoiceDispos as $key => $val) { ?>
-                        <option value='<?= $val['caller_disposition']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['caller_disposition']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <option value='<?= $val['voice_dispositions']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['voice_dispositions']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -742,7 +752,7 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for voice_staff_disposition -->
+               <!-- check input access for staff_remark-->
                <?php 
                   $div_count=div_access($project_info,array('staff_remark'));
                   $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
@@ -827,18 +837,18 @@
          placeholder: " Select Country",
          allowClear: true
          });
-         $("#company_disposition").select2({
-         placeholder: " Select Co. Disposition",
-         allowClear: true
-         });
-         $("#company_web_dispositon").select2({
-         placeholder: " Select Co. Web Disposition",
-         allowClear: true
-         });
-         $("#company_voice_disposition").select2({
-         placeholder: " Select Co. Voice Disposition",
-         allowClear: true
-         });
+         // $("#company_disposition").select2({
+         // placeholder: " Select Co. Disposition",
+         // allowClear: true
+         // });
+         // $("#company_web_dispositon").select2({
+         // placeholder: " Select Co. Web Disposition",
+         // allowClear: true
+         // });
+         // $("#company_voice_disposition").select2({
+         // placeholder: " Select Co. Voice Disposition",
+         // allowClear: true
+         // });
          $("#web_staff_disposition").select2({
          placeholder: " Select Co. Voice Disposition",
          allowClear: true
@@ -868,8 +878,95 @@
          $('ul.revenue_currency li').click(function(){
              $('#revenue_currency').text($(this).text());
          });
-         
+         if(localStorage.getItem('company_details') != '')
+         {
+            $('#paste_company').css("display","block");
+         }
+        
          });
+
+         $('#copy_company').click(function(){
+
+            var items = [{
+               company_received:$('#company_received').val(),
+               company_name:$('#company_name').val(),
+               address_1:$('#address_1').val(),
+               address_2:$('#address_2').val(),
+               address_3:$('#address_3').val(),
+               city_name:$('#city_name').val(),
+               postal_code:$('#postal_code').val(),
+               state_name:$('#state_name').val(),         
+               country:$("#country option:selected").val(), 
+               region_name:$('#region_name').val(),      
+               address_source_url:$('#address_source_url').val(), 
+               ca1:$('#ca1').val(), 
+               ca2:$('#ca2').val(), 
+               ca3:$('#ca3').val(), 
+               ca4:$('#ca4').val(), 
+               company_disposition:$("#company_disposition option:selected").val(), 
+               company_web_dispositon:$("#company_web_dispositon option:selected").val(), 
+               company_voice_disposition:$("#company_voice_disposition option:selected").val(),
+               company_genaral_notes:$('#company_genaral_notes').val(),
+               company_remark:$('#company_remark').val(),
+               country_code:$('#country_code').val(),
+               tel_number:$('#tel_number').val(),
+               alternate_number:$('#alternate_number').val(),
+               industry:$('#industry').val(),
+               revenue:$('#revenue').val(),
+               revenue_currency:$('#revenue_currency').text(),
+               }];
+            localStorage.setItem('company_details',JSON.stringify(items));
+          
+         });
+
+         $('#paste_company').click(function(){
+            var getitems=JSON.parse(localStorage.getItem('company_details'));
+            console.log(getitems);
+            console.log(getitems[0].company_name);
+            $('#company_received').val(getitems[0].company_received);
+            $('#company_name').val(getitems[0].company_name);
+            $('#address_1').val(getitems[0].address_1);
+            $('#address_2').val(getitems[0].address_2);
+            $('#address_3').val(getitems[0].address_3);
+            $('#city_name').val(getitems[0].city_name);
+            $('#postal_code').val(getitems[0].postal_code);
+            $('#state_name').val(getitems[0].state_name);
+            $('#country').val(getitems[0].country).trigger('change');
+            $('#region_name').val(getitems[0].region_name);
+            $('#address_source_url').val(getitems[0].address_source_url);
+            $('#ca1').val(getitems[0].ca1);
+            $('#ca2').val(getitems[0].ca2);
+            $('#ca3').val(getitems[0].ca3);
+            $('#ca4').val(getitems[0].ca4);
+            $('#company_disposition').val(getitems[0].company_disposition).trigger('change');
+            //$("#company_disposition").val(getitems[0].company_disposition);
+            //$('#company_disposition').val(getitems[0].company_disposition);
+            //$('#company_disposition').trigger('change.select2');
+            $('#company_web_dispositon').val(getitems[0].company_web_dispositon).trigger('change');
+            $('#company_voice_disposition').val(getitems[0].company_voice_disposition).trigger('change');
+            $('#company_genaral_notes').val(getitems[0].company_genaral_notes);
+            $('#company_remark').val(getitems[0].company_remark);
+            $('#country_code').val(getitems[0].country_code);
+            $('#tel_number').val(getitems[0].tel_number);
+            $('#alternate_number').val(getitems[0].alternate_number);
+            $('#industry').val(getitems[0].industry);
+            $('#revenue').val(getitems[0].revenue);
+            $('#revenue_currency').text(getitems[0].revenue_currency).trigger('change');
+         });
+
+         function getcountrycode(country) {
+            $.ajax({
+               url: '<?php echo base_url(); ?>Projects/getcountrycode',
+               type: 'post',
+               dataType: "json",
+               data: {
+                  country: country
+               },
+               success: function (data) {
+                  $("#country_code").val(data.phonecode);
+               }
+            });
+         }
       </script>
    </body>
 </html>
