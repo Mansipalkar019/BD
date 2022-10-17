@@ -399,10 +399,32 @@ class Projects extends CI_Controller
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
+        $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
+        $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
+        $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
         // echo "<pre>";
-        // print_r($data['compDispo']);die();
+        // print_r($data['allInfo']);die();
         $this->load->view("projects/add_info", $data);
     }
 
+    public function getIndexInfo($staff,$rowid){
+        foreach($staff as $k =>$val){
+            if($val['id']==$rowid){
+                $key = $k+1;
+            }
+        }
+        $next = (!empty($staff[$key]['id'])) ? $staff[$key]['id'] : $rowid ;
+        $final = $key-2;
+        $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
+        $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
+        return $data;
+    }
+
+    public function getcountrycode()
+    {
+        $country = $this->input->post('country');
+        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('phonecode'));
+        echo json_encode($check_country);
+    }
 
 }
