@@ -26,6 +26,15 @@
          min-height: 45rem;
          padding-top: 4.5rem;
          }
+         .swal-text {
+         padding: 17px;
+         border: 1px solid #F0E1A1;
+         display: block;
+         margin: 22px;
+         font-size: 17px;;
+         text-align: center;
+         color: #61534e;
+         }
       </style>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -64,7 +73,7 @@
          }
       </style>
       <main class="container-fluid" style="background-color: #FFFFEA;">
-      <?php echo form_open('Sales/save_deal', array('id' => 'sale_report_form')) ?>
+      <?php echo form_open('Projects/update_company_details', array('id' => 'update_company_details_form')) ?>
          <div class="row row1">
             <div class="col">
                <!-- check input access for company received -->
@@ -76,7 +85,7 @@
                   </div>
 
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" disabled>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" readonly>
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['project_id'])) ?  $allInfo[0]['project_id'] : ''  ?>" title="" id="project_id"  name='project_id' class="form-control form-control-sm">
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['id'])) ?  $allInfo[0]['id'] : ''  ?>" title="" id="staff_id"  name='staff_id' class="form-control form-control-sm">
                   </div>
@@ -353,7 +362,7 @@
                </div>
                <div class="row g3 justify-content-md-center mt-4">
                <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company">Copy</button>
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
                   </div>
                   <div class="col-auto">
                      <div class="input-group mb-3">
@@ -365,10 +374,10 @@
                      </div>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="update_company">Update</button>
+                     <button class="btn btn-outline-primary btn-sm" type="submit" id="update_company">Update</button>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none">Paste</button>
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
                   </div>
                </div>
             </div>
@@ -648,6 +657,43 @@
                   </div>
                   <?php } ?>
                </div>
+               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+               <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('sa1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa1" class="col-form-label">SA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa2" class="col-form-label">SA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa3" class="col-form-label">SA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa4" class="col-form-label">SA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa5" class="col-form-label">SA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+               </div>
                <br><br><br>
             </div>
             <div class="col">
@@ -827,6 +873,8 @@
       <script src="<?php echo base_url();?>public/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+      <script src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>
+      <script src="<?= base_url();?>assets/js/update_company_details.js"></script>
       <script>
 
 
@@ -903,6 +951,7 @@
                ca2:$('#ca2').val(), 
                ca3:$('#ca3').val(), 
                ca4:$('#ca4').val(), 
+               ca5:$('#ca5').val(), 
                company_disposition:$("#company_disposition option:selected").val(), 
                company_web_dispositon:$("#company_web_dispositon option:selected").val(), 
                company_voice_disposition:$("#company_voice_disposition option:selected").val(),
@@ -916,7 +965,11 @@
                revenue_currency:$('#revenue_currency').text(),
                }];
             localStorage.setItem('company_details',JSON.stringify(items));
-          
+            swal({
+                     text: 'Company Details Copied Successfully',
+                     dangerMode: true,
+                     timer: 1500
+                  });
          });
 
          $('#paste_company').click(function(){
@@ -938,10 +991,8 @@
             $('#ca2').val(getitems[0].ca2);
             $('#ca3').val(getitems[0].ca3);
             $('#ca4').val(getitems[0].ca4);
+            $('#ca5').val(getitems[0].ca5);
             $('#company_disposition').val(getitems[0].company_disposition).trigger('change');
-            //$("#company_disposition").val(getitems[0].company_disposition);
-            //$('#company_disposition').val(getitems[0].company_disposition);
-            //$('#company_disposition').trigger('change.select2');
             $('#company_web_dispositon').val(getitems[0].company_web_dispositon).trigger('change');
             $('#company_voice_disposition').val(getitems[0].company_voice_disposition).trigger('change');
             $('#company_genaral_notes').val(getitems[0].company_genaral_notes);

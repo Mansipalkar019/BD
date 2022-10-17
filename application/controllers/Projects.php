@@ -396,6 +396,7 @@ class Projects extends CI_Controller
         $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
         $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
+      
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -418,14 +419,86 @@ class Projects extends CI_Controller
          $this->load->view("includes/template", $data);
     }
 
-  
-
-
     public function getcountrycode()
     {
         $country = $this->input->post('country');
         $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('phonecode'));
         echo json_encode($check_country);
+    }
+
+    public function update_company_details()
+    {
+        //print_r($_POST);die();
+        $project_id=$this->input->post('project_id');
+        $staff_id=$this->input->post('staff_id');
+        $company_recieved_name=$this->input->post('company_received');
+        $company_name=$this->input->post('company_name');
+        $address_1=$this->input->post('address_1');
+        $address_2=$this->input->post('address_2');
+        $address_3=$this->input->post('address_3');
+        $city_name=$this->input->post('city_name');
+        $postal_code=$this->input->post('postal_code');
+        $state_name=$this->input->post('state_name');
+        $country=$this->input->post('country');
+        $region_name=$this->input->post('region_name');
+        $address_source_url=$this->input->post('address_source_url');
+        $ca1=$this->input->post('ca1');
+        $ca2=$this->input->post('ca2');
+        $ca3=$this->input->post('ca3');
+        $ca4=$this->input->post('ca4');
+        $ca5=$this->input->post('ca5');
+        $company_disposition=$this->input->post('company_disposition');
+        $company_web_dispositon=$this->input->post('company_web_dispositon');
+        $company_voice_disposition=$this->input->post('company_voice_disposition');
+        $company_genaral_notes=$this->input->post('company_genaral_notes');
+        $company_remark=$this->input->post('company_remark');
+        $country_code=$this->input->post('country_code');
+        $tel_number=$this->input->post('tel_number');
+        $alternate_number=$this->input->post('alternate_number');
+        $industry=$this->input->post('industry');
+        $revenue=$this->input->post('revenue');
+        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
+        $company_details=array(
+            'received_company_name'=>$company_recieved_name,
+            'company_name'=>$company_name,
+            'address1'=>$address_1,
+            'address2'=>$address_2,
+            'address3'=>$address_3,
+            'city'=>$city_name,
+            'postal_code'=>$postal_code,
+            'state_county'=>$state_name,
+            'country'=>$check_country['name'],
+            'country_code'=>$country_code,
+            'region'=>$region_name,
+            'address_souce_url'=>$address_source_url,
+            'ca1'=>$ca1,
+            'ca2'=>$ca2,
+            'ca3'=>$ca3,
+            'ca4'=>$ca4,
+            'ca5'=>$ca5,
+            'company_disposition'=>$company_disposition,
+            'web_disposition'=>$company_web_dispositon,
+            'voice_disposition'=>$company_voice_disposition,
+            'genral_notes'=>$company_genaral_notes,
+            'remarks'=>$company_remark,
+            'tel_number'=>$tel_number,
+            'alternate_number'=>$alternate_number,
+            'industry'=>$industry,
+            'revenue'=>$revenue,
+         
+        );
+        if( $this->model->updateData('bdcrm_uploaded_feildss',$company_details,array('project_id'=>$project_id,'id'=>$staff_id)))
+        {
+            $response['status']='success';
+            $response['error']=array('msg' => "Company Details Updated Successfully !");
+        }
+        else{
+            $response['status']='failure';
+            $response['error']=array('msg' => "Company Details Updated  UnSuccessfully !"); 
+
+        }
+        
+     echo json_encode($response);
     }
 
 }
