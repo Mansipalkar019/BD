@@ -731,7 +731,7 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for voice_staff_disposition -->
+               <!-- check input access for staff_remark-->
                <?php 
                   $div_count=div_access($project_info,array('staff_remark'));
                   $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
