@@ -420,21 +420,6 @@ class Projects extends CI_Controller
 
   
 
-    
-
-
-    public function getIndexInfo($staff,$rowid){
-        foreach($staff as $k =>$val){
-            if($val['id']==$rowid){
-                $key = $k+1;
-            }
-        }
-        $next = (!empty($staff[$key]['id'])) ? $staff[$key]['id'] : $rowid ;
-        $final = $key-2;
-        $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
-        $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
-        return $data;
-    }
 
     public function getcountrycode()
     {
