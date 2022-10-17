@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2022 at 07:59 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Oct 17, 2022 at 06:53 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bdcrm`
+-- Database: `bdcrm_new`
 --
 
 -- --------------------------------------------------------
@@ -7743,12 +7743,60 @@ INSERT INTO `bdcrm_default_feilds_access` (`id`, `feild_id`, `task_type_id`, `ac
 (187, 1, 5, 1, 1, '2022-10-12 12:28:46', 1),
 (188, 2, 5, 1, 1, '2022-10-12 12:28:46', 1),
 (189, 3, 5, 1, 1, '2022-10-12 12:28:46', 1),
-(193, 1, 2, 1, 1, '2022-10-12 12:47:23', 1),
-(194, 2, 2, 1, 1, '2022-10-12 12:47:23', 1),
-(195, 3, 2, 1, 1, '2022-10-12 12:47:23', 1),
-(196, 4, 2, 1, 1, '2022-10-12 12:47:23', 1),
-(197, 5, 2, 1, 1, '2022-10-12 12:47:23', 1),
-(198, 6, 2, 1, 1, '2022-10-12 12:47:23', 1);
+(207, 1, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(208, 2, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(209, 3, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(210, 4, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(211, 5, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(212, 6, 2, 1, 1, '2022-10-14 14:14:36', 1),
+(213, 7, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(214, 8, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(215, 9, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(216, 10, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(217, 11, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(218, 12, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(219, 13, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(220, 14, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(221, 15, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(222, 16, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(223, 17, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(224, 18, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(225, 19, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(226, 20, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(227, 21, 2, 1, 1, '2022-10-14 14:14:37', 1),
+(228, 22, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(229, 23, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(230, 24, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(231, 25, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(232, 26, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(233, 27, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(234, 28, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(235, 29, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(236, 30, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(237, 31, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(238, 32, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(239, 33, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(240, 34, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(241, 35, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(242, 36, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(243, 37, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(244, 39, 2, 1, 1, '2022-10-14 14:14:38', 1),
+(245, 40, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(246, 41, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(247, 42, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(248, 43, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(249, 44, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(250, 45, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(251, 48, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(252, 51, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(253, 52, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(254, 55, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(255, 56, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(256, 59, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(257, 60, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(258, 61, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(259, 65, 2, 1, 1, '2022-10-14 14:14:39', 1),
+(260, 66, 2, 1, 1, '2022-10-14 14:14:39', 1);
 
 -- --------------------------------------------------------
 
@@ -7785,6 +7833,87 @@ INSERT INTO `bdcrm_feilds` (`id`, `label_name`, `input_type`, `input_name`, `has
 (6, 'City: ', 'text', 'city_name', 0, '', 0, 6, 1, 0, '2022-10-01 11:07:55', '2022-10-01 15:26:41', 0),
 (7, 'Postal Code:', 'number', 'postal_code', 0, '', 0, 7, 1, 0, '2022-10-01 11:07:58', '2022-10-01 15:32:12', 0),
 (8, 'State/County:', 'text', 'state_name', 0, '', 0, 8, 1, 0, '2022-10-01 11:08:02', '2022-10-01 15:32:12', 0),
+(9, 'Country:', 'select', 'country', 1, 'bdcrm_countries', 0, 9, 1, 0, '2022-10-14 09:35:19', '2022-10-01 15:32:12', 0),
+(10, 'Region:', 'text', 'region_name', 0, '', 0, 10, 1, 0, '2022-10-01 11:08:23', '2022-10-01 15:32:12', 0),
+(11, 'Address Source URL:', 'text', 'address_source_url', 0, '', 0, 11, 1, 0, '2022-10-01 11:10:16', '2022-10-01 15:32:12', 0),
+(12, 'CA1:', 'text', 'ca1', 0, '', 0, 12, 1, 0, '2022-10-01 11:10:28', '2022-10-01 15:32:12', 0),
+(13, 'CA2:', 'text', 'ca2', 0, '', 0, 13, 1, 0, '2022-10-01 11:10:32', '2022-10-01 15:32:12', 0),
+(14, 'CA3:', 'text', 'ca3', 0, '', 0, 14, 1, 0, '2022-10-01 11:10:34', '2022-10-01 15:32:12', 0),
+(15, 'CA4:', 'text', 'ca4', 0, '', 0, 15, 1, 0, '2022-10-01 11:10:36', '2022-10-01 15:32:12', 0),
+(16, 'CA5:', 'ca5', 'text', 0, '', 0, 16, 1, 0, '2022-10-01 11:10:38', '2022-10-01 15:46:56', 0),
+(17, 'Co. Disposition:', 'select', 'company_disposition', 1, 'bdcrm_company_disposition', 0, 17, 1, 0, '2022-10-01 11:12:48', '2022-10-01 15:46:56', 0),
+(18, 'Co. Web Disposition:', 'company_web_dispositon', 'company_web_dispositon', 1, 'bdcrm_web_disposition', 0, 18, 1, 0, '2022-10-14 09:35:28', '2022-10-01 15:46:56', 0),
+(19, 'Co. Voice Disposition:', 'company_voice_disposition', 'company_voice_disposition', 1, 'bdcrm_company_disposition', 0, 19, 1, 0, '2022-10-14 09:35:33', '2022-10-01 15:46:56', 0),
+(20, 'Co. General Notes:', 'textarea', 'company_genaral_notes', 0, '', 0, 20, 1, 0, '2022-10-01 11:13:18', '2022-10-01 15:46:56', 0),
+(21, 'Co. Remark:', 'textarea', 'company_remark', 0, '', 0, 21, 1, 0, '2022-10-14 11:02:28', '2022-10-01 15:46:56', 0),
+(22, 'Country Code:\r\n', 'number', 'country_code', 0, '', 0, 22, 1, 0, '2022-10-01 11:13:21', '2022-10-01 15:46:56', 0),
+(23, 'Area Code:\r\n', 'number', 'area_code', 0, '', 0, 23, 1, 0, '2022-10-01 11:13:25', '2022-10-01 15:46:56', 0),
+(24, 'Telephone Number:', 'number', 'tel_number', 0, '', 0, 24, 1, 0, '2022-10-01 11:13:27', '2022-10-01 15:46:56', 0),
+(25, 'Alternate Number:\r\n', 'number', 'alternate_number', 0, '', 0, 25, 1, 0, '2022-10-01 11:13:29', '2022-10-01 15:46:56', 0),
+(26, 'Website URL:\r\n', 'text', '', 0, '', 0, 26, 1, 0, '2022-10-01 11:13:31', '2022-10-01 15:46:56', 0),
+(27, 'Email Address:', 'email', 'email_address', 0, '', 0, 27, 1, 0, '2022-10-01 11:13:34', '2022-10-01 15:46:56', 0),
+(28, 'No. of Employees:', 'number', 'no_of_employee', 0, '', 0, 28, 1, 0, '2022-10-01 11:13:38', '2022-10-01 15:46:56', 0),
+(31, 'Revenue : ', 'text', 'revenue', 0, '', 0, 31, 1, 0, '2022-10-01 11:13:46', '2022-10-01 15:46:56', 0),
+(32, 'SA1:', 'text', 'sa1', 0, '', 0, 32, 1, 0, '2022-10-01 11:13:50', '2022-10-01 15:46:56', 0),
+(33, 'SA2:', 'text', 'sa2', 0, '', 0, 33, 1, 0, '2022-10-01 11:13:51', '2022-10-01 15:46:56', 0),
+(34, 'SA3:', 'text', 'sa3', 0, '', 0, 34, 1, 0, '2022-10-01 11:13:54', '2022-10-01 15:46:56', 0),
+(35, 'SA4:', 'text', 'sa4', 0, '', 0, 35, 1, 0, '2022-10-01 11:13:56', '2022-10-01 15:46:56', 0),
+(36, 'SA5:', 'text', 'sa5', 0, '', 0, 36, 1, 0, '2022-10-01 11:13:58', '2022-10-01 15:46:56', 0),
+(37, 'Industry:', 'text', 'industry', 0, '', 0, 37, 1, 0, '2022-10-14 11:29:40', '2022-10-14 16:59:40', 0),
+(39, 'First Name:', 'text', 'first_name', 0, '', 0, 33, 1, 0, '2022-10-15 08:33:08', '2022-10-14 17:08:12', 0),
+(40, 'Last Name:', 'text', 'last_name', 0, '', 0, 34, 1, 0, '2022-10-15 08:33:11', '2022-10-14 17:08:12', 0),
+(41, 'Job Title:', 'text', 'job_title', 0, '', 0, 35, 1, 0, '2022-10-15 08:33:15', '2022-10-14 17:11:57', 0),
+(42, 'Job Function:', 'text', 'staff_job_function', 0, '', 0, 36, 1, 0, '2022-10-15 08:33:19', '2022-10-14 17:11:57', 0),
+(43, 'Staff Email:', 'text', 'staff_email', 0, '', 0, 37, 1, 0, '2022-10-15 08:33:23', '2022-10-14 17:11:57', 0),
+(44, 'Staff Department:', 'text', 'staff_department', 0, '', 0, 38, 1, 0, '2022-10-15 08:33:27', '2022-10-14 17:11:57', 0),
+(45, 'Staff Source URL:', 'text', 'staff_url', 0, '', 0, 39, 1, 0, '2022-10-15 08:33:32', '2022-10-14 17:11:57', 0),
+(48, 'Staff Email:', 'text', 'staff_email', 0, '', 0, 40, 1, 0, '2022-10-15 08:33:35', '2022-10-14 17:13:10', 0),
+(51, 'Assumed Email:', 'text', 'assumed_email', 0, '', 0, 41, 1, 0, '2022-10-15 08:34:01', '2022-10-14 17:41:29', 0),
+(52, 'Email Source URL:', 'text', 'staff_email_harvesting', 0, '', 0, 42, 1, 0, '2022-10-15 08:34:15', '2022-10-14 17:41:29', 0),
+(55, 'Direct Tel:', 'text', 'staff_direct_tel', 0, '', 0, 43, 1, 0, '2022-10-15 08:34:21', '2022-10-14 17:43:32', 0),
+(56, 'Mobile:', 'text', 'staff_mobile', 0, '', 0, 45, 1, 0, '2022-10-15 08:35:38', '2022-10-14 17:43:32', 0),
+(59, 'Web Staff Disposition:', 'select', 'web_staff_disposition', 0, '', 0, 44, 1, 0, '2022-10-15 08:35:27', '2022-10-14 18:45:42', 0),
+(60, 'Voice Staff Disposition:', 'select', 'voice_staff_disposition', 0, '', 0, 46, 1, 0, '2022-10-15 08:35:57', '2022-10-14 18:45:42', 0),
+(61, 'Linkedin Connections Count:', 'text', 'staff_linkedin_count', 0, '', 0, 47, 1, 0, '2022-10-15 08:36:01', '2022-10-14 18:45:42', 0),
+(65, 'Staff Note:', 'text', 'staff_note', 0, '', 0, 48, 1, 0, '2022-10-15 08:36:06', '2022-10-14 18:48:21', 0),
+(66, 'Staff Remark:', 'text', 'staff_remark', 0, '', 0, 49, 1, 0, '2022-10-15 08:36:11', '2022-10-14 18:48:21', 0),
+(69, 'Suffix:', 'select', 'suffix', 0, '', 0, 32, 1, 0, '2022-10-15 08:33:00', '2022-10-14 18:48:21', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bdcrm_feilds_old`
+--
+
+CREATE TABLE `bdcrm_feilds_old` (
+  `id` int(11) NOT NULL,
+  `label_name` varchar(100) NOT NULL,
+  `input_type` varchar(50) NOT NULL,
+  `input_name` varchar(50) NOT NULL,
+  `has_dropdown` int(11) NOT NULL DEFAULT 0 COMMENT '0:No Dropdown | 1:Dropdown',
+  `table_name` varchar(40) NOT NULL,
+  `readonly` int(1) NOT NULL DEFAULT 0 COMMENT '0:Editable | 1:Readonly',
+  `sort_order` int(11) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1 COMMENT '1:Active | 0: Deactive',
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bdcrm_feilds_old`
+--
+
+INSERT INTO `bdcrm_feilds_old` (`id`, `label_name`, `input_type`, `input_name`, `has_dropdown`, `table_name`, `readonly`, `sort_order`, `status`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
+(1, 'Co. Name Recd:\r\n', 'text', 'company_received', 0, '', 1, 1, 1, 0, '2022-10-01 11:06:58', '0000-00-00 00:00:00', 0),
+(2, 'Co. Name:\r\n', 'text', 'company_name', 0, '', 0, 2, 1, 0, '2022-10-01 11:07:12', '2022-10-01 15:24:00', 0),
+(3, 'Address:', 'text', 'address_1', 0, '', 0, 3, 1, 0, '2022-10-01 11:07:37', '2022-10-01 15:26:41', 0),
+(4, 'Address 2:', 'text', 'address_2', 0, '', 0, 4, 1, 0, '2022-10-01 11:07:43', '2022-10-01 15:26:41', 0),
+(5, 'Address 3:', 'text', 'address_3', 0, '', 0, 5, 1, 0, '2022-10-01 11:07:47', '2022-10-01 15:26:41', 0),
+(6, 'City: ', 'text', 'city_name', 0, '', 0, 6, 1, 0, '2022-10-01 11:07:55', '2022-10-01 15:26:41', 0),
+(7, 'Postal Code:', 'number', 'postal_code', 0, '', 0, 7, 1, 0, '2022-10-01 11:07:58', '2022-10-01 15:32:12', 0),
+(8, 'State/County:', 'text', 'state_name', 0, '', 0, 8, 1, 0, '2022-10-01 11:08:02', '2022-10-01 15:32:12', 0),
 (9, 'Country:', 'select', 'select', 1, 'bdcrm_countries', 0, 9, 1, 0, '2022-10-01 11:08:10', '2022-10-01 15:32:12', 0),
 (10, 'Region:', 'text', 'region_name', 0, '', 0, 10, 1, 0, '2022-10-01 11:08:23', '2022-10-01 15:32:12', 0),
 (11, 'Address Source URL:', 'text', 'address_source_url', 0, '', 0, 11, 1, 0, '2022-10-01 11:10:16', '2022-10-01 15:32:12', 0),
@@ -7812,138 +7941,24 @@ INSERT INTO `bdcrm_feilds` (`id`, `label_name`, `input_type`, `input_name`, `has
 (33, 'SA2:', 'text', 'sa2', 0, '', 0, 33, 1, 0, '2022-10-01 11:13:51', '2022-10-01 15:46:56', 0),
 (34, 'SA3:', 'text', 'sa3', 0, '', 0, 34, 1, 0, '2022-10-01 11:13:54', '2022-10-01 15:46:56', 0),
 (35, 'SA4:', 'text', 'sa4', 0, '', 0, 35, 1, 0, '2022-10-01 11:13:56', '2022-10-01 15:46:56', 0),
-(36, 'SA5:', 'text', 'sa5', 0, '', 0, 36, 1, 0, '2022-10-01 11:13:58', '2022-10-01 15:46:56', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bdcrm_fields_master`
---
-
-CREATE TABLE `bdcrm_fields_master` (
-  `id` bigint(20) NOT NULL,
-  `table_name` varchar(111) NOT NULL,
-  `field_name` varchar(111) NOT NULL,
-  `required` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'required during all uploads',
-  `external` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=False',
-  `internal` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=False',
-  `has_dropdown` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=False',
-  `dropdown_table` varchar(111) NOT NULL,
-  `field_orders` tinyint(4) NOT NULL DEFAULT 0,
-  `logical_fields` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'this is the fields which are updated by codes written',
-  `editable` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'the fields all users can edit',
-  `allowed_fields` varchar(17) NOT NULL DEFAULT '1,2,3' COMMENT 'roles based fields or allowed_fields_by_user_role; comma separated role id',
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bdcrm_fields_master`
---
-
-INSERT INTO `bdcrm_fields_master` (`id`, `table_name`, `field_name`, `required`, `external`, `internal`, `has_dropdown`, `dropdown_table`, `field_orders`, `logical_fields`, `editable`, `allowed_fields`, `updated_at`) VALUES
-(1, 'projects', 'records_relation', 1, 0, 0, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(2, 'staff', 'assigned_to', 1, 0, 0, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(3, 'projects', 'parent_id', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(4, 'projects', 'project_name', 1, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(5, 'projects', 'project_type', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(6, 'projects', 'task_type', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 16:18:34'),
-(7, 'projects', 'list_name', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(8, 'projects', 'activity', 1, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(9, 'projects', 'source', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 16:18:34'),
-(10, 'projects', 'company_brief', 1, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 16:03:57'),
-(11, 'projects', 'event_name', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(12, 'projects', 'event_link', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(13, 'projects', 'event_industry', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(14, 'projects', 'project_csvfilepath', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(15, 'projects', 'uploaded_by', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(16, 'projects', 'updated_by', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(17, 'projects', 'event_date', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(18, 'projects', 'updated_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(19, 'projects', 'created_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(20, 'company', 'id', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(21, 'company', 'staff_id', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(22, 'company', 'company_name', 1, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(23, 'company', 'company_received', 1, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(24, 'company', 'address_1', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(25, 'company', 'address_2', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(26, 'company', 'address_3', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(27, 'company', 'city', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(28, 'company', 'postal_code', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(29, 'company', 'state_county', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(30, 'company', 'country', 0, 1, 1, 1, 'm_countries', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(31, 'company', 'country_code', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(32, 'company', 'telephone_number', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(33, 'company', 'fax_number', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(34, 'company', 'alternate_number', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(35, 'company', 'email_address', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(36, 'company', 'website_url', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(37, 'company', 'address_url', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(38, 'company', 'industry', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(39, 'company', 'region', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(40, 'company', 'no_of_employees', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(41, 'company', 'revenue', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(42, 'company', 'company_disposition', 0, 1, 1, 1, 'm_c_disposition', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(43, 'company', 'web_disposition', 0, 1, 1, 1, 'm_web_c_disposition', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(44, 'company', 'voice_disposition', 0, 1, 1, 1, 'm_c_voice_disposition', 0, 0, 1, '1,2,3,4,5,7', '2022-08-29 15:41:21'),
-(45, 'company', 'general_notes', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(46, 'company', 'remarks', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(47, 'company', 'ca1', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(48, 'company', 'ca2', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(49, 'company', 'ca3', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(50, 'company', 'ca4', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(51, 'company', 'ca5', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(54, 'company', 'updated_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(55, 'company', 'created_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(56, 'staff', 'id', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(57, 'staff', 'suffix', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(58, 'staff', 'first_name', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 16:18:34'),
-(59, 'staff', 'last_name', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 16:18:34'),
-(60, 'staff', 'staff_url', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(61, 'staff', 'required_job_title', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(62, 'staff', 'provided_job_title', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(63, 'staff', 'job_title', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(64, 'staff', 'staff_email', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(65, 'staff', 'assumed_email', 0, 1, 1, 0, '', 0, 0, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(66, 'staff', 'staff_email_harvesting', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(75, 'staff', 'staff_mobile', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(76, 'staff', 'staff_direct_tel', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(77, 'staff', 'staff_direct_fax', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(78, 'staff', 'staff_linkedin_count', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(79, 'staff', 'staff_extension', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(80, 'staff', 'staff_remark', 0, 1, 1, 1, 'm_s_remarks', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(81, 'staff', 'staff_note', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(82, 'staff', 'staff_industry', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(83, 'staff', 'staff_department', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(84, 'staff', 'opt_in_out', 0, 1, 1, 1, 'm_opt_in_out', 0, 0, 1, '1,2,3,4,5,7', '2022-08-29 15:41:21'),
-(85, 'staff', 'spoke_to', 0, 1, 1, 1, 'm_spoke_to', 0, 0, 1, '1,2,3,4,5,7', '2022-08-29 15:41:21'),
-(86, 'staff', 'web_staff_disposition', 0, 1, 1, 1, 'm_web_s_disposition', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(87, 'staff', 'incomplete_disposition', 0, 1, 1, 1, 'm_s_incomplete_disposition', 0, 0, 1, '1,2,3,4,5,7', '2022-08-29 15:41:21'),
-(88, 'staff', 'voice_staff_disposition', 0, 1, 1, 1, 'm_voice_s_disposition', 0, 0, 1, '1,2,3,4,5,7', '2022-08-29 15:41:21'),
-(89, 'staff', 'sa1', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(90, 'staff', 'sa2', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(91, 'staff', 'sa3', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(92, 'staff', 'sa4', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(93, 'staff', 'sa5', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(96, 'staff', 'updated_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(97, 'staff', 'created_at', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(98, 'projects', 'is_delivered', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(108, 'projects', 'project_fields', 0, 0, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(109, 'company', 'available_for_voice', 0, 1, 1, 1, 'm_yes_no', 0, 0, 1, '1,2,3,4,5,6,7', '2022-09-12 12:38:09'),
-(111, 'projects', 'id', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(112, 'projects', 'company_id', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(114, 'company', 'sic_code', 0, 0, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(115, 'company', 'sic_description', 0, 0, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(116, 'staff', 'title', 0, 0, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(117, 'staff', 'initials', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(118, 'staff', 'middle_name', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(119, 'staff', 'staff_job_function', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 16:25:55'),
-(121, 'staff', 'staff_interest_area', 0, 0, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:53:40'),
-(122, 'projects', 'reference_code', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-08-29 15:41:21'),
-(123, 'staff', 'staff_email_verified', 0, 1, 1, 0, '', 0, 1, 1, '1,2,3,4,5,6,7', '2022-09-08 09:10:37'),
-(124, 'company', 'revenue_currency', 0, 1, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-09-07 07:41:18'),
-(125, 'projects', 'edited_fields', 0, 0, 1, 0, '', 0, 1, 0, '1,2,3,4,5,6,7', '2022-09-08 13:24:14'),
-(126, 'staff', 'staff_area_code', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-09-12 12:42:51'),
-(127, 'company', 'area_code', 0, 1, 1, 0, '', 0, 0, 1, '1,2,3,4,5,6,7', '2022-09-12 12:43:14');
+(36, 'SA5:', 'text', 'sa5', 0, '', 0, 36, 1, 0, '2022-10-01 11:13:58', '2022-10-01 15:46:56', 0),
+(37, 'Suffix', 'text', 'suffix', 0, '', 1, 1, 1, 0, '2022-10-01 11:06:58', '0000-00-00 00:00:00', 0),
+(38, 'First Name', 'text', 'first_name', 0, '', 1, 1, 1, 0, '2022-10-01 11:06:58', '0000-00-00 00:00:00', 0),
+(39, 'Last Name', 'text', 'last_name', 0, '', 1, 1, 1, 0, '2022-10-01 11:06:58', '0000-00-00 00:00:00', 0),
+(40, 'Staff URL : ', 'textarea', 'staff_url', 0, '', 0, 0, 1, 0, '2022-10-13 08:55:33', '2022-10-13 14:25:33', 0),
+(41, 'Job Title : ', 'text', 'provided_job_title', 0, '', 0, 0, 1, 0, '2022-10-13 08:55:33', '2022-10-13 14:25:33', 0),
+(42, 'Staff Email', 'text', 'provided_staff_email', 0, '', 0, 0, 1, 0, '2022-10-13 08:55:33', '2022-10-13 14:25:33', 0),
+(43, 'Assumed Email', 'text', 'assumed_email', 0, '', 0, 0, 1, 0, '2022-10-13 08:55:33', '2022-10-13 14:25:33', 0),
+(44, 'Staff Email Harvesting', 'text', 'staff_email_harvesting', 0, '', 0, 0, 1, 0, '2022-10-13 08:55:33', '2022-10-13 14:25:33', 0),
+(45, 'Staff Mobile :', 'text', 'staff_mobile', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(46, 'Staff Direct Tel :', 'text', 'staff_direct_tel', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(47, 'Extention : ', 'text', 'extention', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(48, 'Staff Linkedin Conn :', 'textarea', 'staff_linkedin_con', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(49, 'Staff Remark', 'text', 'staff_remark', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(50, 'Staff Note :', 'textarea', 'staff_note', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(51, 'Staff Department', 'text', 'staff_department', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(52, 'OPT IN/OUT', 'checkbox', 'opt_in_out', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0),
+(53, 'Spoke To : ', 'text', 'spoke_to', 0, '', 0, 0, 1, 0, '2022-10-13 09:04:22', '2022-10-13 14:34:22', 0);
 
 -- --------------------------------------------------------
 
@@ -7954,10 +7969,7 @@ INSERT INTO `bdcrm_fields_master` (`id`, `table_name`, `field_name`, `required`,
 CREATE TABLE `bdcrm_master_projects` (
   `id` int(11) NOT NULL,
   `project_name` varchar(200) NOT NULL,
-  `task_type_id` int(11) NOT NULL,
-  `project_type_id` int(11) NOT NULL,
   `project_breif` text NOT NULL,
-  `country` varchar(255) DEFAULT NULL,
   `file_path` varchar(255) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
   `created_by` int(11) NOT NULL,
@@ -7971,8 +7983,8 @@ CREATE TABLE `bdcrm_master_projects` (
 -- Dumping data for table `bdcrm_master_projects`
 --
 
-INSERT INTO `bdcrm_master_projects` (`id`, `project_name`, `task_type_id`, `project_type_id`, `project_breif`, `country`, `file_path`, `status`, `created_by`, `created_at`, `project_type`, `task_type`, `file_name`) VALUES
-(1, 'test1234', 0, 0, 'dasdsfd', NULL, 'C:\\xampp\\htdocs\\BD\\uploads/projects/1665638251bdcrm (5).xls', 1, 1, '2022-10-13 05:17:31.498494', '2', '2', '1665638251bdcrm (5).xls');
+INSERT INTO `bdcrm_master_projects` (`id`, `project_name`, `project_breif`, `file_path`, `status`, `created_by`, `created_at`, `project_type`, `task_type`, `file_name`) VALUES
+(1, 'Test Project By Raj Namdev', 'Project Brief', 'uploads/projects/1665837277FBharat.xlsx', 1, 1, '2022-10-15 12:34:38.000000', '1', '2', '1665837277FBharat.xlsx');
 
 -- --------------------------------------------------------
 
@@ -7993,12 +8005,58 @@ CREATE TABLE `bdcrm_master_projects_fields` (
 --
 
 INSERT INTO `bdcrm_master_projects_fields` (`id`, `project_id`, `field_id`, `status`, `created_on`) VALUES
-(1, 1, 6, 1, '2022-10-13 07:17:31'),
-(2, 1, 5, 1, '2022-10-13 07:17:31'),
-(3, 1, 4, 1, '2022-10-13 07:17:31'),
-(4, 1, 3, 1, '2022-10-13 07:17:31'),
-(5, 1, 2, 1, '2022-10-13 07:17:31'),
-(6, 1, 1, 1, '2022-10-13 07:17:31');
+(1, 1, 1, 1, '2022-10-15 18:04:38'),
+(2, 1, 2, 1, '2022-10-15 18:04:38'),
+(3, 1, 3, 1, '2022-10-15 18:04:38'),
+(4, 1, 4, 1, '2022-10-15 18:04:38'),
+(5, 1, 5, 1, '2022-10-15 18:04:38'),
+(6, 1, 6, 1, '2022-10-15 18:04:38'),
+(7, 1, 7, 1, '2022-10-15 18:04:38'),
+(8, 1, 8, 1, '2022-10-15 18:04:38'),
+(9, 1, 9, 1, '2022-10-15 18:04:38'),
+(10, 1, 10, 1, '2022-10-15 18:04:38'),
+(11, 1, 11, 1, '2022-10-15 18:04:38'),
+(12, 1, 12, 1, '2022-10-15 18:04:38'),
+(13, 1, 13, 1, '2022-10-15 18:04:38'),
+(14, 1, 14, 1, '2022-10-15 18:04:39'),
+(15, 1, 15, 1, '2022-10-15 18:04:39'),
+(16, 1, 16, 1, '2022-10-15 18:04:39'),
+(17, 1, 17, 1, '2022-10-15 18:04:39'),
+(18, 1, 18, 1, '2022-10-15 18:04:39'),
+(19, 1, 19, 1, '2022-10-15 18:04:39'),
+(20, 1, 20, 1, '2022-10-15 18:04:39'),
+(21, 1, 21, 1, '2022-10-15 18:04:39'),
+(22, 1, 22, 1, '2022-10-15 18:04:39'),
+(23, 1, 23, 1, '2022-10-15 18:04:39'),
+(24, 1, 24, 1, '2022-10-15 18:04:39'),
+(25, 1, 25, 1, '2022-10-15 18:04:39'),
+(26, 1, 26, 1, '2022-10-15 18:04:39'),
+(27, 1, 27, 1, '2022-10-15 18:04:39'),
+(28, 1, 28, 1, '2022-10-15 18:04:39'),
+(29, 1, 31, 1, '2022-10-15 18:04:40'),
+(30, 1, 32, 1, '2022-10-15 18:04:40'),
+(31, 1, 33, 1, '2022-10-15 18:04:40'),
+(32, 1, 39, 1, '2022-10-15 18:04:40'),
+(33, 1, 40, 1, '2022-10-15 18:04:40'),
+(34, 1, 34, 1, '2022-10-15 18:04:40'),
+(35, 1, 35, 1, '2022-10-15 18:04:40'),
+(36, 1, 41, 1, '2022-10-15 18:04:40'),
+(37, 1, 36, 1, '2022-10-15 18:04:40'),
+(38, 1, 42, 1, '2022-10-15 18:04:40'),
+(39, 1, 37, 1, '2022-10-15 18:04:40'),
+(40, 1, 43, 1, '2022-10-15 18:04:40'),
+(41, 1, 44, 1, '2022-10-15 18:04:40'),
+(42, 1, 45, 1, '2022-10-15 18:04:40'),
+(43, 1, 48, 1, '2022-10-15 18:04:40'),
+(44, 1, 51, 1, '2022-10-15 18:04:40'),
+(45, 1, 52, 1, '2022-10-15 18:04:40'),
+(46, 1, 55, 1, '2022-10-15 18:04:41'),
+(47, 1, 59, 1, '2022-10-15 18:04:41'),
+(48, 1, 56, 1, '2022-10-15 18:04:41'),
+(49, 1, 60, 1, '2022-10-15 18:04:41'),
+(50, 1, 61, 1, '2022-10-15 18:04:41'),
+(51, 1, 65, 1, '2022-10-15 18:04:41'),
+(52, 1, 66, 1, '2022-10-15 18:04:41');
 
 -- --------------------------------------------------------
 
@@ -8019,8 +8077,8 @@ CREATE TABLE `bdcrm_name_prefix` (
 
 INSERT INTO `bdcrm_name_prefix` (`id`, `prefix`, `status`, `created_at`) VALUES
 (1, 'Mrs.', 0, '2022-09-30 14:36:58.171079'),
-(2, 'Mr.', 1, '2022-10-01 08:42:47.601118'),
-(3, 'Mrs.', 1, '2022-10-01 08:42:53.168300'),
+(2, 'Mr', 1, '2022-10-14 13:02:47.579454'),
+(3, 'Ms', 1, '2022-10-14 13:27:33.781802'),
 (4, 'Dr.', 1, '2022-10-01 08:43:23.965837'),
 (5, 'Er.', 1, '2022-10-01 08:43:57.103522');
 
@@ -8068,6 +8126,64 @@ INSERT INTO `bdcrm_project_types` (`id`, `project_type`, `status`, `created_at`)
 (1, 'Email Research', 1, '2022-10-04 11:57:33'),
 (2, 'List Research', 1, '2022-10-04 11:57:33'),
 (3, 'Voice Research', 1, '2022-10-04 11:57:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bdcrm_staff_voice_dispositions`
+--
+
+CREATE TABLE `bdcrm_staff_voice_dispositions` (
+  `id` int(11) NOT NULL,
+  `voice_dispositions` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bdcrm_staff_voice_dispositions`
+--
+
+INSERT INTO `bdcrm_staff_voice_dispositions` (`id`, `voice_dispositions`, `status`, `created_at`) VALUES
+(1, 'Verified', 1, '2022-10-15 08:11:33'),
+(2, 'Acquired', 1, '2022-10-15 08:11:39'),
+(3, 'Staff Left', 1, '2022-10-15 08:11:43'),
+(4, 'Replaced', 1, '2022-10-15 08:11:46'),
+(5, 'Not Verified', 1, '2022-10-15 08:11:50'),
+(6, 'Added', 1, '2022-10-15 08:11:55'),
+(7, 'Duplicate', 1, '2022-10-15 08:11:59'),
+(8, 'Operator Refused', 1, '2022-10-15 08:12:05'),
+(9, 'Operator Unaware', 1, '2022-10-15 08:12:09'),
+(10, 'IVR', 1, '2022-10-15 08:12:14'),
+(11, 'Voicemail', 1, '2022-10-15 08:12:18'),
+(12, 'DND', 1, '2022-10-15 08:12:24'),
+(13, 'Callback', 1, '2022-10-15 08:12:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bdcrm_staff_web_disposition`
+--
+
+CREATE TABLE `bdcrm_staff_web_disposition` (
+  `id` int(11) NOT NULL,
+  `dispositions` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bdcrm_staff_web_disposition`
+--
+
+INSERT INTO `bdcrm_staff_web_disposition` (`id`, `dispositions`, `status`, `created_at`) VALUES
+(1, 'Verified', 1, '2022-10-15 08:09:57'),
+(2, 'Acquired', 1, '2022-10-15 08:10:04'),
+(3, 'Staff Left', 1, '2022-10-15 08:10:08'),
+(4, 'Replaced', 1, '2022-10-15 08:10:13'),
+(5, 'Added', 1, '2022-10-15 08:10:16'),
+(6, 'No Result', 1, '2022-10-15 08:10:20'),
+(7, 'Duplicate', 1, '2022-10-15 08:10:25');
 
 -- --------------------------------------------------------
 
@@ -8147,6 +8263,7 @@ CREATE TABLE `bdcrm_uploaded_feildss` (
   `postal_code` varchar(20) DEFAULT NULL,
   `state_county` varchar(70) DEFAULT NULL,
   `provided_country` varchar(200) DEFAULT NULL,
+  `country_code` int(11) DEFAULT NULL,
   `country` varchar(11) DEFAULT NULL,
   `region` varchar(200) DEFAULT NULL,
   `address_souce_url` varchar(200) DEFAULT NULL,
@@ -8170,21 +8287,23 @@ CREATE TABLE `bdcrm_uploaded_feildss` (
   `suffix` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `staff_url` int(11) DEFAULT NULL,
-  `provided_job_title` int(11) DEFAULT NULL,
-  `updated_job_title` int(11) DEFAULT NULL,
+  `staff_url` varchar(100) DEFAULT NULL,
+  `provided_job_title` varchar(100) DEFAULT NULL,
+  `updated_job_title` varchar(100) DEFAULT NULL,
   `provided_staff_email` varchar(200) DEFAULT NULL,
   `staff_email` varchar(255) DEFAULT NULL,
   `assumed_email` varchar(255) DEFAULT NULL,
-  `staff_email_harvesting` int(11) DEFAULT NULL,
-  `staff_mobile` int(11) DEFAULT NULL,
-  `staff_direct_tel` int(11) DEFAULT NULL,
+  `staff_email_harvesting` varchar(100) DEFAULT NULL,
+  `staff_mobile` varchar(100) DEFAULT NULL,
+  `staff_direct_tel` varchar(100) DEFAULT NULL,
   `extention` varchar(40) DEFAULT NULL,
   `provided_comp_tel_number` varchar(200) DEFAULT NULL,
-  `staff_linkedin_con` int(11) DEFAULT NULL,
-  `staff_remark` int(11) DEFAULT NULL,
-  `staff_note` int(11) DEFAULT NULL,
-  `staff_department` int(11) DEFAULT NULL,
+  `web_staff_disposition` int(11) DEFAULT NULL,
+  `voice_staff_disposition` int(11) DEFAULT NULL,
+  `staff_linkedin_con` varchar(100) DEFAULT NULL,
+  `staff_remark` varchar(100) DEFAULT NULL,
+  `staff_note` int(100) DEFAULT NULL,
+  `staff_department` varchar(100) DEFAULT NULL,
   `opt_in_out` int(1) DEFAULT NULL,
   `spoke_to` varchar(200) DEFAULT NULL,
   `web_dispositions` int(11) DEFAULT NULL,
@@ -8197,8 +8316,84 @@ CREATE TABLE `bdcrm_uploaded_feildss` (
   `sa5` varchar(200) DEFAULT NULL,
   `avail_for_voice` varchar(255) DEFAULT NULL,
   `staff_job_function` varchar(200) DEFAULT NULL,
-  `genaral_note` varchar(200) DEFAULT NULL
+  `genaral_note` varchar(200) DEFAULT NULL,
+  `created_date` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bdcrm_uploaded_feildss`
+--
+
+INSERT INTO `bdcrm_uploaded_feildss` (`id`, `project_id`, `company_name`, `received_company_name`, `address1`, `address2`, `address3`, `city`, `postal_code`, `state_county`, `provided_country`, `country_code`, `country`, `region`, `address_souce_url`, `provided_direct_tel`, `tel_number`, `alternate_number`, `website_url`, `industry`, `no_of_emp`, `revenue`, `company_disposition`, `web_disposition`, `voice_disposition`, `genral_notes`, `remarks`, `ca1`, `ca2`, `ca3`, `ca4`, `ca5`, `suffix`, `first_name`, `last_name`, `staff_url`, `provided_job_title`, `updated_job_title`, `provided_staff_email`, `staff_email`, `assumed_email`, `staff_email_harvesting`, `staff_mobile`, `staff_direct_tel`, `extention`, `provided_comp_tel_number`, `web_staff_disposition`, `voice_staff_disposition`, `staff_linkedin_con`, `staff_remark`, `staff_note`, `staff_department`, `opt_in_out`, `spoke_to`, `web_dispositions`, `incomplete_disposition`, `address_url`, `sa1`, `sa2`, `sa3`, `sa4`, `sa5`, `avail_for_voice`, `staff_job_function`, `genaral_note`, `created_date`, `status`) VALUES
+(1, 1, NULL, 'Arla Foods', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Rob', 'Edwards', NULL, 'Head of Media and Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.522604', 1),
+(2, 1, NULL, 'Asahi', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Alexandre', 'Bocken', NULL, 'Analytics Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.589743', 1),
+(3, 1, NULL, 'Asahi', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Sam', 'Rhodes', NULL, 'Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.640501', 1),
+(4, 1, NULL, 'Associated British Foods Plc', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Paolo', 'Gennero', NULL, 'Global Marketing and Business Development Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.710569', 1),
+(5, 1, NULL, 'Associated British Foods Plc', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Alice', 'Gheissari', NULL, 'Head of Global E-commerce', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.739502', 1),
+(6, 1, NULL, 'Associated British Foods Plc', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Lynton', 'Oelofsen', NULL, 'Chief Information Security Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.798610', 1),
+(7, 1, NULL, 'Associated British Foods Plc', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Janene', 'Warsap', NULL, 'Marketing Excellence Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.853440', 1),
+(8, 1, NULL, 'Auchan Retail', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Paul', 'Lavoquet', NULL, 'Chief Information Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:41.949924', 1),
+(9, 1, NULL, 'Beam Suntory', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Robert', 'Nelson', NULL, 'Vice President and General Manager of International Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.012848', 1),
+(10, 1, NULL, 'Bol', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Arend', 'De Ruiter', NULL, 'Head of Paid Performance Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.084851', 1),
+(11, 1, NULL, 'Bol', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Denis N', 'Matei', NULL, 'E-Commerce Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.113184', 1),
+(12, 1, NULL, 'Cereal Partners Worldwide (Nestlé & General Mills)', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Ben', 'Irby', NULL, 'Vice President and Chief Marketing & Strategy Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.168316', 1),
+(13, 1, NULL, 'Chiquita', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Frederic', 'Verborg', NULL, 'Supply Chain Manager', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.228859', 1),
+(14, 1, NULL, 'Deoleo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Zhan Liu', 'Cheng', NULL, 'Head of Global Consumer Insight and Analytics', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.282286', 1),
+(15, 1, NULL, 'Deoleo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Maria Martha', 'Luchetti', NULL, 'Chief Marketing and Innovation Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.337894', 1),
+(16, 1, NULL, 'Deoleo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Maricruz Díaz', 'Sacristán', NULL, 'Chief Information Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.392744', 1),
+(17, 1, NULL, 'Diageo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Sandy', 'Griffiths', NULL, 'Marketing and Innovation Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.615303', 1),
+(18, 1, NULL, 'Diageo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Tom', 'Harries', NULL, 'Head of Consumer, Global Decision Science, Analytics and Insights', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.717880', 1),
+(19, 1, NULL, 'Diageo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Macarena', 'Rodriguez', NULL, 'Head of Retail Operations', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.773151', 1),
+(20, 1, NULL, 'Diageo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Mira', 'Samani', NULL, 'Head of Global Digital Strategy and Planning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.828177', 1),
+(21, 1, NULL, 'Diageo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Stephen', 'White', NULL, 'Global Marketing, Innovation Director and General Manager', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.887032', 1),
+(22, 1, NULL, 'Dr. Oetker', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Gill', 'Davies', NULL, 'Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.937754', 1),
+(23, 1, NULL, 'Dr. Oetker', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Jen', 'Johnson', NULL, 'Head of Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:42.991841', 1),
+(24, 1, NULL, 'Dr. Oetker', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Sarah', 'Savage', NULL, 'Head of Sales and E-Commerce', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.052313', 1),
+(25, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Arantza', 'Barberá', NULL, 'Head of Marketing and Category', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.102868', 1),
+(26, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Ashish', 'Das', NULL, 'Digital, Technology and International Business Transformation Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.168637', 1),
+(27, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Michiel', 'De Meulemeester', NULL, 'Head of Global Fruit Strategy, Innovation and Sourcing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.224294', 1),
+(28, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Joséphine', 'Grelaud (Maroniez)', NULL, 'Head of Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.290383', 1),
+(29, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Yuliya', 'Polyanker', NULL, 'International Marketing Head of Old El Paso and Strategic Planning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.363200', 1),
+(30, 1, NULL, 'General Mills', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Fabyenne', 'Renard', NULL, 'Head of E-Commerce and Acceleration Channel', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.435365', 1),
+(31, 1, NULL, 'Gruma', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Cristina Fernandez', 'Casado', NULL, 'New Product Development Manager', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.494292', 1),
+(32, 1, NULL, 'Haribo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Francesc Ramió', 'Mier', NULL, 'E-Commerce and Digital Marketing Manager', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.535641', 1),
+(33, 1, NULL, 'Heineken', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Vanderlei', 'Santos', NULL, 'Global Technology, Digital and Commerce Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.608681', 1),
+(34, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Geraldine Block', 'De Friberg', NULL, 'Corporate Content Creator', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.656638', 1),
+(35, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Isma Belabbaci', 'De Montalembert', NULL, 'Global Retail Experience and Visual Merchandising Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.674337', 1),
+(36, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Emmy Aoun', 'Gestin', NULL, 'Vice President of Global Marketing Prestige Brands and Innovation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.722894', 1),
+(37, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Matthieu', 'Heidsieck', NULL, 'Global Vice President of Marketing and Super Premium Brands', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.753834', 1),
+(38, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Laetitia', 'Laplace', NULL, 'Global Vice President of Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.806742', 1),
+(39, 1, NULL, 'Hennessy', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Cory', 'Soutar', NULL, 'Brand Premium Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.855123', 1),
+(40, 1, NULL, 'Hero Group', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Jon Mielgo', 'Iza', NULL, 'Marketing Director For Southern Europe Cluster', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.909731', 1),
+(41, 1, NULL, 'Hero Group', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Viona', 'Vogelzangs', NULL, 'HR Supply Chain, Quality Director and Chief Marketing Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.964626', 1),
+(42, 1, NULL, 'ICA Gruppen', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Sebastian', 'Gabot', NULL, 'Head of Marketing and Communication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:43.992976', 1),
+(43, 1, NULL, 'ICA Gruppen', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Jakob Tardelius', 'Hemborg', NULL, 'Chief Product Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.036902', 1),
+(44, 1, NULL, 'Icelandic Seachill', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Barbara', 'Higgins', NULL, 'Product Development Manager', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.080952', 1),
+(45, 1, NULL, 'Lactalis', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Fabrizio', 'Arienzo', NULL, 'Head of Sales Customers Team, Modern Trade, Discount, E-Commerce', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.130078', 1),
+(46, 1, NULL, 'Lactalis', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Simona', 'Fiorina', NULL, 'Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.184691', 1),
+(47, 1, NULL, 'Lactalis', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Debora', 'Guma', NULL, 'Group Chief Information Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.224372', 1),
+(48, 1, NULL, 'Lavazza', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Martina', 'Deisanti', NULL, 'Head of Marketing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.272320', 1),
+(49, 1, NULL, 'Lavazza', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Filippo', 'Ferrari', NULL, 'Marketing Director for United Kingdom and Ireland', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.339165', 1),
+(50, 1, NULL, 'Lavazza', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Nicky', 'Green', NULL, 'Global Director of Information Technology and Digital Solutions', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.378751', 1),
+(51, 1, NULL, 'Lindt & Sprüngli', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Elisabet Ricart', 'Roig', NULL, 'Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.423035', 1),
+(52, 1, NULL, 'Lindt & Sprüngli', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'André', 'Vörtler', NULL, 'Global E-Commerce Director and Digital Commerce Project Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.480256', 1),
+(53, 1, NULL, 'LVMH', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Bernard', 'Berkane', NULL, 'Chief Data Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.535738', 1),
+(54, 1, NULL, 'LVMH', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Aurélie', 'Debiève', NULL, 'Retail and Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.590597', 1),
+(55, 1, NULL, 'McCormick & Company', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Iwona', 'German', NULL, 'Marketing Director for Western Europe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.734518', 1),
+(56, 1, NULL, 'Media Markt & Saturn', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Shariar', 'Khalili', NULL, 'Digital Director for Benelux', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.791237', 1),
+(57, 1, NULL, 'Perfetti', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'David', 'Van Der Lei', NULL, 'International Trade Marketing Director and Global E-Commerce Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.871324', 1),
+(58, 1, NULL, 'Premier Foods', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Jill', 'Downs', NULL, 'Innovation Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:44.941811', 1),
+(59, 1, NULL, 'Premier Foods', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Paul', 'Kitchener', NULL, 'Technical and Innovation Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.014042', 1),
+(60, 1, NULL, 'Premier Foods', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Michael', 'Lawless', NULL, 'Head of Innovation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.065352', 1),
+(61, 1, NULL, 'Salling Group', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Razvan Bogdan', 'Pop', NULL, 'Head of Departments, E-Commerce Logistics and Automatic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.136765', 1),
+(62, 1, NULL, 'Savencia', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Renou', 'Annick', NULL, 'International Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.186258', 1),
+(63, 1, NULL, 'Savencia', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Clémence', 'Saint-Macary', NULL, 'Group Marketing Director and Chief Marketing Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.236639', 1),
+(64, 1, NULL, 'Storck', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Lisa-Maria', 'Ferstl', NULL, 'Marketing Director', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.292441', 1),
+(65, 1, NULL, 'Tchibo', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Andrea', 'Schulig', NULL, 'Head of Retail', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.346802', 1),
+(66, 1, NULL, 'Upfield Holdings', NULL, NULL, NULL, NULL, NULL, NULL, '101', 91, 'India', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', 'Josipa', 'Babic', NULL, 'Head of Digital and Marketing for Austria, Italy and Switzerland', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.394984', 1),
+(67, 1, NULL, 'Raj Namdev', NULL, NULL, NULL, NULL, NULL, NULL, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 'Raj ', 'Namdev', NULL, 'Testing Data', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.445692', 1),
+(68, 1, NULL, 'Stz Soft Tech', NULL, NULL, NULL, NULL, NULL, NULL, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'Akahs', 'Mahsl', NULL, 'Testing Data', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-15 12:34:45.493400', 1);
 
 -- --------------------------------------------------------
 
@@ -8278,10 +8473,10 @@ CREATE TABLE `bdcrm_web_disposition` (
 --
 
 INSERT INTO `bdcrm_web_disposition` (`id`, `web_disposition_name`, `status`, `created_at`) VALUES
-(2, 'Records Completed', 1, '2022-10-01 08:31:55'),
+(2, 'Records Completed', 1, '2022-10-15 07:27:50'),
 (3, 'Records Completed', 1, '2022-10-01 08:32:07'),
-(4, 'Web Dispo 2212', 0, '2022-09-30 13:11:23'),
-(5, 'Web Dispo', 0, '2022-09-30 13:12:58'),
+(4, 'Web Dispo 2212', 1, '2022-10-15 07:27:55'),
+(5, 'Web Dispo', 1, '2022-10-15 07:27:53'),
 (6, 'RNU/No Contact', 1, '2022-10-01 08:32:29'),
 (7, 'No Result', 1, '2022-10-01 08:32:40'),
 (8, 'Duplicate', 1, '2022-10-01 08:34:31');
@@ -8347,9 +8542,9 @@ INSERT INTO `bdscrm_menu_access` (`id`, `menu_id`, `designation`, `status`, `acc
 (57, 1, 1, 1, 1, '2022-10-03 13:06:23'),
 (58, 2, 1, 1, 1, '2022-10-03 13:06:23'),
 (59, 5, 1, 1, 1, '2022-10-03 13:06:23'),
-(60, 1, 8, 1, 1, '2022-10-03 13:07:57'),
-(61, 2, 8, 1, 1, '2022-10-03 13:07:57'),
-(62, 5, 8, 1, 1, '2022-10-03 13:07:57');
+(69, 1, 8, 1, 1, '2022-10-15 07:13:04'),
+(70, 2, 8, 1, 1, '2022-10-15 07:13:04'),
+(71, 5, 8, 1, 1, '2022-10-15 07:13:04');
 
 -- --------------------------------------------------------
 
@@ -8361,7 +8556,7 @@ CREATE TABLE `bdscrm_submenus` (
   `id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   `sub_menu_name` varchar(50) NOT NULL,
-  `url` varchar(30) NOT NULL,
+  `url` varchar(70) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
   `created_dt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -8378,12 +8573,14 @@ INSERT INTO `bdscrm_submenus` (`id`, `menu_id`, `sub_menu_name`, `url`, `status`
 (5, 5, 'Upload Projects', 'master/upload_projects', 1, '2022-09-30 08:46:55.965973'),
 (6, 2, 'Country', 'master/add_country', 1, '2022-09-30 08:46:55.965973'),
 (7, 2, 'Company Disposition', 'master/add_company_disposition', 1, '2022-09-30 09:02:01.656905'),
-(8, 2, 'Web Disposition', 'master/add_web_disposition', 1, '2022-09-30 08:46:55.965973'),
-(9, 2, 'Voice Disposition', 'master/add_caller_disposition', 1, '2022-10-01 08:38:21.029535'),
+(8, 2, 'Company Web Disposition', 'master/add_web_disposition', 1, '2022-10-15 07:06:21.272912'),
+(9, 2, 'Company Voice Disposition', 'master/add_caller_disposition', 1, '2022-10-15 07:06:51.115910'),
 (10, 2, 'Task Type', 'master/add_project_type', 1, '2022-10-03 09:21:20.482224'),
 (11, 2, 'Currency', 'master/add_currency', 1, '2022-09-30 08:46:55.965973'),
 (12, 2, 'Name Prefix', 'master/add_name_prefix', 1, '2022-09-30 08:46:55.965973'),
-(13, 5, 'New Project', 'projects/new_projects', 1, '2022-10-03 13:52:44.155177');
+(13, 5, 'New Project', 'projects/new_projects', 1, '2022-10-03 13:52:44.155177'),
+(14, 2, 'Staff Voice Dispositions', 'master/add_staff_voice_dispositions', 1, '2022-10-15 07:11:43.747361'),
+(15, 2, 'Staff Web Dispositions', 'master/add_staff_web_disposition\r\n', 1, '2022-10-15 07:11:30.747439');
 
 -- --------------------------------------------------------
 
@@ -8432,19 +8629,20 @@ INSERT INTO `bdscrm_submenu_access` (`id`, `designation_id`, `submenu_id`, `acce
 (116, 1, 4, 1, 1, '2022-10-03 13:06:24.475252'),
 (117, 1, 5, 1, 1, '2022-10-03 13:06:24.532309'),
 (118, 1, 13, 1, 1, '2022-10-03 13:06:24.586468'),
-(119, 8, 1, 1, 1, '2022-10-03 13:07:57.368520'),
-(120, 8, 2, 1, 1, '2022-10-03 13:07:57.423634'),
-(121, 8, 3, 1, 1, '2022-10-03 13:07:57.480396'),
-(122, 8, 6, 1, 1, '2022-10-03 13:07:57.512374'),
-(123, 8, 7, 1, 1, '2022-10-03 13:07:57.566300'),
-(124, 8, 8, 1, 1, '2022-10-03 13:07:57.620435'),
-(125, 8, 9, 1, 1, '2022-10-03 13:07:57.710032'),
-(126, 8, 10, 1, 1, '2022-10-03 13:07:57.809176'),
-(127, 8, 11, 1, 1, '2022-10-03 13:07:57.864873'),
-(128, 8, 12, 1, 1, '2022-10-03 13:07:57.919423'),
-(129, 8, 4, 1, 1, '2022-10-03 13:07:57.975249'),
-(130, 8, 5, 1, 1, '2022-10-03 13:07:58.029822'),
-(131, 8, 13, 1, 1, '2022-10-03 13:07:58.084651');
+(157, 8, 1, 1, 1, '2022-10-15 07:13:05.028629'),
+(158, 8, 2, 1, 1, '2022-10-15 07:13:05.084059'),
+(159, 8, 3, 1, 1, '2022-10-15 07:13:05.178576'),
+(160, 8, 6, 1, 1, '2022-10-15 07:13:05.359107'),
+(161, 8, 7, 1, 1, '2022-10-15 07:13:05.400030'),
+(162, 8, 8, 1, 1, '2022-10-15 07:13:05.458119'),
+(163, 8, 9, 1, 1, '2022-10-15 07:13:05.523540'),
+(164, 8, 10, 1, 1, '2022-10-15 07:13:05.588859'),
+(165, 8, 11, 1, 1, '2022-10-15 07:13:05.628973'),
+(166, 8, 12, 1, 1, '2022-10-15 07:13:05.665916'),
+(167, 8, 14, 1, 1, '2022-10-15 07:13:05.722040'),
+(168, 8, 15, 1, 1, '2022-10-15 07:13:05.777172'),
+(169, 8, 4, 1, 1, '2022-10-15 07:13:05.831962'),
+(170, 8, 13, 1, 1, '2022-10-15 07:13:05.894486');
 
 -- --------------------------------------------------------
 
@@ -29194,9 +29392,9 @@ ALTER TABLE `bdcrm_feilds`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `bdcrm_fields_master`
+-- Indexes for table `bdcrm_feilds_old`
 --
-ALTER TABLE `bdcrm_fields_master`
+ALTER TABLE `bdcrm_feilds_old`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -29227,6 +29425,18 @@ ALTER TABLE `bdcrm_project_type`
 -- Indexes for table `bdcrm_project_types`
 --
 ALTER TABLE `bdcrm_project_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bdcrm_staff_voice_dispositions`
+--
+ALTER TABLE `bdcrm_staff_voice_dispositions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bdcrm_staff_web_disposition`
+--
+ALTER TABLE `bdcrm_staff_web_disposition`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -29333,19 +29543,19 @@ ALTER TABLE `bdcrm_currency`
 -- AUTO_INCREMENT for table `bdcrm_default_feilds_access`
 --
 ALTER TABLE `bdcrm_default_feilds_access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
 
 --
 -- AUTO_INCREMENT for table `bdcrm_feilds`
 --
 ALTER TABLE `bdcrm_feilds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
--- AUTO_INCREMENT for table `bdcrm_fields_master`
+-- AUTO_INCREMENT for table `bdcrm_feilds_old`
 --
-ALTER TABLE `bdcrm_fields_master`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+ALTER TABLE `bdcrm_feilds_old`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `bdcrm_master_projects`
@@ -29357,7 +29567,7 @@ ALTER TABLE `bdcrm_master_projects`
 -- AUTO_INCREMENT for table `bdcrm_master_projects_fields`
 --
 ALTER TABLE `bdcrm_master_projects_fields`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `bdcrm_name_prefix`
@@ -29378,10 +29588,22 @@ ALTER TABLE `bdcrm_project_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `bdcrm_staff_voice_dispositions`
+--
+ALTER TABLE `bdcrm_staff_voice_dispositions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `bdcrm_staff_web_disposition`
+--
+ALTER TABLE `bdcrm_staff_web_disposition`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `bdcrm_uploaded_feildss`
 --
 ALTER TABLE `bdcrm_uploaded_feildss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `bdcrm_uploaded_project`
@@ -29405,19 +29627,19 @@ ALTER TABLE `bdscrm_menus`
 -- AUTO_INCREMENT for table `bdscrm_menu_access`
 --
 ALTER TABLE `bdscrm_menu_access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `bdscrm_submenus`
 --
 ALTER TABLE `bdscrm_submenus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `bdscrm_submenu_access`
 --
 ALTER TABLE `bdscrm_submenu_access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT for table `master_department`
