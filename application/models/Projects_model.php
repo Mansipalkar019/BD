@@ -229,4 +229,13 @@ function get_projectrecord_count_filtered($rowno="",$rowperpage="",$search_text=
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
+
+    function get_minmax_pid($project_id,$rowid,$company_name){
+        $this->db->select('first_name,last_name,company_disposition,project_id,id');
+        $this->db->from('bdcrm_uploaded_feildss');
+        $this->db->where('project_id',$project_id);
+        $this->db->where('received_company_name',$company_name);
+        $querys=$this->db->get();
+        return $datas =  $querys->result_array();
+    }
 }
