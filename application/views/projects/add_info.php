@@ -238,8 +238,9 @@
                      <select class='form-control form-control-sm' id="company_disposition"  name='company_disposition'>
                         <option value=''>Select Co. Disposition</option>
                         <?php 
-                           foreach ($compDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['company_dispostion']==$val['company_dispostion']){?>selected<?php } ?> ><?= $val['company_dispostion']; ?></option>
+                     foreach ($compDispo as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php
+                         if(($val['company_dispostion']== (!empty($allInfo[0]['company_dispostion'])) ? $allInfo[0]['company_dispostion'] : '' ) && !empty($val['company_dispostion'])){ echo "selected";}?> ><?= $val['company_dispostion']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -347,7 +348,7 @@
                      <div class="input-group mb-3">
                         <a class="btn btn-outline-secondary btn-sm" href="#" title="First" id="first"><<</a>
                         <a class="btn btn-outline-secondary btn-sm" href="#" title="Previous" id="prev"><</a>
-                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="61" title="61" disabled>
+                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="<?= $allInfo[0]['id']; ?>" title="<?= $allInfo[0]['id']; ?>" disabled>
                         <a class="btn btn-outline-secondary btn-sm" href="#" title="Next" id="next">></a>
                         <a class="btn btn-outline-secondary btn-sm" href="#" title="Last" id="last">>></a>
                      </div>
@@ -751,7 +752,7 @@
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($allInfo[0]['no_of_staff'])) ?  '('.$allInfo[0]['no_of_staff'].')' : '(0)' ?></button>
+                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($allInfo[0]['project_name'])) ?  $allInfo[0]['project_name'] : ''  ?> <?=  (!empty($allInfo[0]['company_count'])) ?  '('.$allInfo[0]['company_count'].')' : '(0)' ?></button>
@@ -768,9 +769,10 @@
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
+
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
                               <tr class="" <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="<?php echo base_url().'Projects/my_projects/'.$staff_list_val['project_id'].'/'.$staff_list_val['id'];?>"><i class="fas fa-eye"></i></a></td>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name']; ?></td>
                               <td><?= $staff_list_val['last_name']; ?></td>
                               <td><?= $staff_list_val['company_disposition']; ?></td>
@@ -790,7 +792,7 @@
                            <?php 
                            foreach($company_list as $company_list_key => $company_list_val) {?>
                            <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="<?php echo base_url().'Projects/my_projects/'.$company_list_val['project_id'].'/'.$company_list_val['id'];?>"><i class="fas fa-eye"></i></a></td>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($company_list_val['project_id']).'/'.base64_encode($company_list_val['id']).'/'.base64_encode($company_list_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $company_list_val['received_company_name']; ?></td>
                               <td></td>
                            </tr>

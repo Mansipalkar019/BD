@@ -29,70 +29,12 @@ class Projects extends CI_Controller
 
     public function project_list()
     {
-        $main_content = "projects/project_list";
-        $projectlist = $this->model->getData('bdcrm_master_projects', array('status' => '1'));
-        if(!empty($projectlist)){
-        foreach ($projectlist as $data_key => $data_row) {
-            $projectlist[$data_key]['project_type'] = $this->model->selectWhereData('bdcrm_project_types', array('id' => $data_row['project_type']), array('project_type'));
-            $projectlist[$data_key]['task_type'] = $this->model->selectWhereData('bdcrm_project_type', array('id' => $data_row['task_type']), array('project_type'));
-        }
-        $data = array(
-            'projectlist' => $projectlist,
-            'main_content' => $main_content
-        );
-    }else{
-        $data = array(
-            'projectlist' => "",
-            'main_content' => $main_content
-        );
-    }
+        $data['projects']=$this->Projects_model->getprojectrecord();
+        $data['main_content'] = "projects/project_list";
         $this->load->view("includes/template", $data);
     }
 
-    public function getprojectrecord()
-    {
-       
-        $data[] = json_encode($_POST);  
-        $rowno = $_POST['start'];
-        $rowperpage = $_POST['length'];
-        $search_text = $_POST['search']['value'];   
-        $totalData=$this->Projects_model->getprojectrecord($rowno,$rowperpage,$search_text);   
-        $count_filtered=$this->Projects_model->get_projectrecord_count_filtered($rowno,$rowperpage,$search_text);
-        $count_all = $this->Projects_model->get_projectrecord_count_all($rowno,$rowperpage,$search_text);
-
-        $data_array=array();
-       
-        foreach($totalData as $category_details_key => $data_row)
-        {
-            $download_excel = '<a  href="'.base_url().$data_row['file_path'].'"><i class="fas fa-download"></a>';
-            $comp_count = '<span><a class="badge rounded-pill bg-success" href="#">'.$data_row['company_count'].'</a></span>&nbsp;&nbsp;';
-            $staff_count = '<span><a class="badge rounded-pill bg-dark" href="#">'.$data_row['no_of_staff'].'</a></span>&nbsp;&nbsp;';
-            $project_name = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/ProjectInfo/'.base64_encode($data_row['id']).'">'.$data_row['project_name'].'</a></span>&nbsp;&nbsp;';
-            $nestedData=array();
-                $nestedData[] = ++$category_details_key;
-                $nestedData[] = $project_name;
-                $nestedData[] = $comp_count;
-                $nestedData[] = $staff_count;
-                $nestedData[] = $data_row['task_type'];
-                $nestedData[] = $data_row['project_type'];
-                $nestedData[] = $data_row['project_breif'];
-                $nestedData[] = $data_row['username'];
-                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_at']));
-                $nestedData[] = $download_excel;
-                $data_array[] = $nestedData;
-              
-       }
-      $output = array(
-            "draw" => intval($_POST['draw']),
-            "recordsTotal" => intval($count_all),
-            "recordsFiltered" => intval($count_filtered),
-            "data" => $data_array,
-        );
-
-        echo json_encode($output);
-    }
-
-
+  
     public function new_projects($id = 0)
     {
         $data['TaskType'] = $this->model->getData('bdcrm_project_type', array('status' => '1'));
@@ -256,11 +198,8 @@ class Projects extends CI_Controller
                                 }
                                 $this->session->set_flashdata("success", "Records Uploaded Successfully.");  
                                 redirect(base_url("projects/project_list"), $data);
-
                             }
-                       
                         
-                      
                     } else {
                         $this->session->set_flashdata("error", "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.");
                         redirect(base_url("projects/new_projects"), $data);
@@ -277,6 +216,18 @@ class Projects extends CI_Controller
         }
     }
 
+    public function DeleteProjects($project_id){
+
+        $deactivateProjects = $this->model->updateData("bdcrm_master_projects", array('status'=>0), array('id' => $project_id));
+        if($deactivateProjects){
+
+            $this->session->set_flashdata("success", "Project Successfully Deleted.");
+            redirect(base_url("projects/project_list"));
+        }else{
+             $this->session->set_flashdata("error", "Something Went Wrong.");
+             redirect(base_url("projects/project_list"));
+        }
+    }
    
     public function getCountryInfoByName($country){
             $country_name = strtolower($country);
@@ -428,12 +379,12 @@ class Projects extends CI_Controller
          $this->load->view("includes/template", $data);
     }
 
-    public function my_projects($pid,$rid,$cmp_name)
+    public function my_projects($pid,$rid,$cmp_name='')
     {
-        $productid=base64_decode($pid);
+        $project_id=base64_decode($pid);
         $rowid=base64_decode($rid);
         $cmp_name=base64_decode($cmp_name);
-        $data['minmax'] =  $this->Projects_model->get_minmax_pid($productid,$rowid,$cmp_name);
+        $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
@@ -444,12 +395,12 @@ class Projects extends CI_Controller
         $data['webDispos'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
         $data['VoiceDispos'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
-        $data['project_info']=$this->Projects_model->get_project_input_fields($productid);
-        $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($productid,$rowid);
-        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($productid,$data['allInfo'][0]['received_company_name']);
-        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($productid);
+        $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
+        $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
+        $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
+        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
         // echo "<pre>";
-        // print_r($data['company_list']);die();
+        // print_r($data['compDispo']);die();
         $this->load->view("projects/add_info", $data);
     }
 
