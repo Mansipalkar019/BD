@@ -64,6 +64,15 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
+
+<script >
+    
+   // window.onload = function exampleFunction() {
+   //         swal("Good job!", "You clicked the button!", "success");
+
+   //          }
+            
+</script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
