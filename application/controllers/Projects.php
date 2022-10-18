@@ -63,6 +63,7 @@ class Projects extends CI_Controller
 
 
     public function upload_project(){
+     
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -177,9 +178,15 @@ class Projects extends CI_Controller
                    
                 }
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
-                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info); 
-                    if (!empty($_POST['feild_access'])) {
-                        foreach ($_POST['feild_access'] as $field_access => $filed_access_key) {
+                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info);
+                    if(!empty($_POST['feild_access']))
+                    {
+                        $field_accesses=$_POST['feild_access'];
+                    }else{
+                        $field_accesses= 1;
+                    }
+                    if ($field_accesses != 1) {
+                        foreach ($field_accesses as $field_access => $filed_access_key) {
                             $projects_info = array(
                                 'field_id' => $filed_access_key,
                                 'project_id' => $addProjectInfo,
@@ -198,14 +205,15 @@ class Projects extends CI_Controller
                             }
                         
                     } else {
-
+                        //echo "hii";die();
                         $errors[0]['error'] = "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.";
                         $errors[0]['class']="Danger";
                         $this->session->set_flashdata("error", $errors);
-                        redirect(base_url("projects/new_projects"), $data);
+                       
                     }
                 }
             }
+            //print_r($data);die();
             redirect(base_url("projects/new_projects"), $data);
         } else {
             $data = array(
