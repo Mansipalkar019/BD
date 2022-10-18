@@ -205,15 +205,14 @@ class Projects extends CI_Controller
                             }
                         
                     } else {
-                        //echo "hii";die();
                         $errors[0]['error'] = "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.";
                         $errors[0]['class']="Danger";
-                        $this->session->set_flashdata("error", $errors);
+                        $data['error'] = $errors;
+                        $this->session->set_flashdata("error", $data);
                        
                     }
                 }
             }
-            //print_r($data);die();
             redirect(base_url("projects/new_projects"), $data);
         } else {
             $data = array(
@@ -384,6 +383,7 @@ class Projects extends CI_Controller
     public function my_projects($pid,$rid,$cmp_name='')
     {
         $project_id=base64_decode($pid);
+        $project_id=base64_decode($pid);
         $rowid=base64_decode($rid);
         $cmp_name=base64_decode($cmp_name);
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
@@ -404,7 +404,10 @@ class Projects extends CI_Controller
         $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
         $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
-      
+        $data['userinfo']=$this->session->userdata('designation_id');
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id);
+        // echo "<pre>";
+        // print_r($data['allstaffinfo']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -439,7 +442,6 @@ class Projects extends CI_Controller
         //print_r($_POST);die();
         $project_id=$this->input->post('project_id');
         $staff_id=$this->input->post('staff_id');
-        $company_recieved_name=$this->input->post('company_received');
         $company_name=$this->input->post('company_name');
         $address_1=$this->input->post('address_1');
         $address_2=$this->input->post('address_2');
@@ -467,7 +469,6 @@ class Projects extends CI_Controller
         $revenue=$this->input->post('revenue');
         $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
-            'received_company_name'=>$company_recieved_name,
             'company_name'=>$company_name,
             'address1'=>$address_1,
             'address2'=>$address_2,
@@ -495,6 +496,8 @@ class Projects extends CI_Controller
             'revenue'=>$revenue,
          
         );
+        // echo "<pre>";
+        // print_r($company_details);
         if( $this->model->updateData('bdcrm_uploaded_feildss',$company_details,array('project_id'=>$project_id,'id'=>$staff_id)))
         {
             $response['status']='success';

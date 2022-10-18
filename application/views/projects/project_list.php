@@ -15,8 +15,6 @@ background-color: #F5F7FA;
         <div class="col-6">
             <div class="page-title-box">
                 <h4 class="page-title">Project List</h4>
-                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="sa-basic">Click me</button>
-
             </div>
         </div>
 

@@ -17,7 +17,6 @@ $("#update_company_details_form").submit(function(e) {
         },
         success: function(response) {
           if (response.status == 'success') {
-             alert('inserted successfully');
              swal({
               title: "success",
               text: response.status.msg,

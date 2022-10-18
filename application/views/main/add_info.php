@@ -255,7 +255,7 @@ body { padding: 1px;  }
                     <option value=''>Select Co. Disposition</option>
                         <?php 
                             foreach ($compDispo as $key => $val) { ?>
-                            <option value='<?= $val['id']; ?>'><?= $val['company_dispostion']; ?></option>
+                            <option value='<?= $val['id']; ?>' ><?= $val['company_dispostion']; ?></option>
                             <?php }
 
                         ?>
@@ -373,14 +373,14 @@ body { padding: 1px;  }
 
             <div class="row g3 justify-content-md-center mt-4">
                 <div class="col-auto">
-                    <div class="input-group mb-3">
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="First" id="first"><<</a>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Previous" id="prev"><</a>
-                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="61" title="61" disabled>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Next" id="next">></a>
-                        <a class="btn btn-outline-secondary btn-sm" href="#" title="Last" id="last">>></a>
-                    </div>
-                </div>
+                     <div class="input-group mb-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['myfirst']).'/'.base64_encode($minmax['received_company_name']);?>" title="First" id=""><<</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['prev']).'/'.base64_encode($minmax['received_company_name']);?>" title="Previous" id=""><</a>
+                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="<?= $minmax['current']; ?>" disabled>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['next']).'/'.base64_encode($minmax['received_company_name']);?>" title="Next" id="">></a>
+                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['mylast']).'/'.base64_encode($minmax['received_company_name']);?>" title="Last" id="">>></a>
+                     </div>
+                  </div>
                 <div class="col-auto">
                     <button class="btn btn-outline-primary btn-sm" type="button" id="update_company">Update</button>
                 </div>
@@ -698,7 +698,7 @@ body { padding: 1px;  }
         <div class="col">
             <div class="alert alert-warning text-center p-1">
                         Staff Details
-             / <a class="text-underline" data-bs-toggle="modal" data-bs-target="#providedJobTitle" id="provided_job_title" href="#">P. JT</a>            
+              <a class="text-underline" data-bs-toggle="modal" data-bs-target="#providedJobTitle" id="provided_job_title" href="#">P. JT</a>            
             
                         <div class="modal fade" id="providedJobTitle" tabindex="-1" aria-labelledby="providedJobTitleLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -729,13 +729,11 @@ body { padding: 1px;  }
                     <select class='form-control form-control-sm' id="web_staff_disposition"  name='web_staff_disposition'>
 
                         <option value=''>select Web Disposition</option>
-                        <option value='Verified' selected>Verified</option>
-                        <option value='Acquired'>Acquired</option>
-                        <option value='Staff Left'>Staff Left</option>
-                        <option value='Replaced'>Replaced</option>
-                        <option value='Added'>Added</option>
-                        <option value='No Result'>No Result</option>
-                        <option value='Duplicate'>Duplicate</option>
+                        <?php 
+                        foreach ($webDispos as $key => $val) { ?>
+                        <option value='<?= $val['dispositions']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['dispositions']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
+                        <?php }
+                           ?>
                     </select>
                 </div>
             <?php } ?>
@@ -754,19 +752,11 @@ body { padding: 1px;  }
                 <div class="col">
                     <select class='form-control form-control-sm' id="voice_staff_disposition"  name='voice_staff_disposition'>
                         <option value=''>select Web Disposition</option>
-                        <option value='Verified'>Verified</option>
-                        <option value='Acquired'>Acquired</option>
-                        <option value='Staff Left'>Staff Left</option>
-                        <option value='Replaced'>Replaced</option>
-                        <option value='Not Verified'>Not Verified</option>
-                        <option value='Added'>Added</option>
-                        <option value='Duplicate'>Duplicate</option>
-                        <option value='Operator Refused'>Operator Refused</option>
-                        <option value='Operator Unaware'>Operator Unaware</option>
-                        <option value='IVR'>IVR</option>
-                        <option value='Voicemail'>Voicemail</option>
-                        <option value='DND'>DND</option>
-                        <option value='Callback'>Callback</option>
+                        <?php 
+                        foreach ($VoiceDispos as $key => $val) { ?>
+                        <option value='<?= $val['caller_disposition']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['caller_disposition']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <?php }
+                           ?>
                     </select>
                 </div>
                 <?php } ?>
@@ -874,6 +864,19 @@ body { padding: 1px;  }
 </main>
 
 <script>
+$("#country").select2({
+placeholder: " Select Country",
+allowClear: true
+});
+
+$("#web_staff_disposition").select2({
+placeholder: " Select Staff Web Disposition",
+allowClear: true
+});
+$("#voice_staff_disposition").select2({
+placeholder: " Select Staff Voice Disposition",
+allowClear: true
+});
 $(document).ready(function() {
 
     $('.row1').css({

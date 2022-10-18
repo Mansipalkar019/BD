@@ -263,8 +263,7 @@
                         <option value=''>Select Co. Disposition</option>
                         <?php 
                      foreach ($compDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php
-                         if(($val['company_dispostion']== (!empty($allInfo[0]['company_dispostion'])) ? $allInfo[0]['company_dispostion'] : '' ) && !empty($val['company_dispostion'])){ echo "selected";}?> ><?= $val['company_dispostion']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($val['id'] == $allInfo[0]['company_disposition']){?>selected<?php } ?> ><?= $val['company_dispostion']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -286,7 +285,7 @@
                         <option value=''>Select Web Disposition</option>
                         <?php 
                            foreach ($webDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['web_disposition_name']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['id']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -295,6 +294,7 @@
                </div>
                <!-- check input access for company_voice_disposition -->
                <?php 
+                  if($this->session->userdata('designation_id') == 3){
                   $div_count=div_access($project_info,array('company_voice_disposition'));
                   $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -308,13 +308,35 @@
                         <option value=''>Select Voice Disposition</option>
                         <?php 
                            foreach ($VoiceDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['caller_disposition']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
                         <?php }
                            ?>
                      </select>
                   </div>
-                  <?php } ?>
+                 
                </div>
+               <?php } }elseif($this->session->userdata('designation_id') == 8 ){ 
+                   $div_count=div_access($project_info,array('company_voice_disposition'));
+                   $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access5; ?>>
+                  <?php if(in_array('company_voice_disposition',$project_info)){ ?>
+                  <div class="col">
+                     <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
+                  </div>
+                  <div class="col">
+                     <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
+                        <option value=''>Select Voice Disposition</option>
+                        <?php 
+                           foreach ($VoiceDispo as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <?php }
+                           ?>
+                     </select>
+                  </div>
+                 
+               </div>
+               <?php } } ?>
                <style>
                   .incomplete_disposition { display: none; }
                </style>
@@ -746,7 +768,8 @@
                   <?php } ?>
                </div>
                <!-- check input access for voice_staff_disposition -->
-               <?php 
+               <?php
+                if($this->session->userdata('designation_id') == 3 ){ 
                   $div_count=div_access($project_info,array('voice_staff_disposition'));
                   $access22 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -765,8 +788,9 @@
                            ?>
                      </select>
                   </div>
-                  <?php } ?>
+                
                </div>
+               <?php } }?>
                <!-- <div class="row g-3 align-items-center justify-content-md-center">
                   <div class="col">
                       <label for="staff_interest_area" class="col-form-label">Interest Area:</label>
@@ -820,20 +844,91 @@
                   </div>
                   <?php } ?>
                </div>
+
+                <!-- check input access for Rearcher_remark-->
+                <?php 
+                  $div_count=div_access($project_info,array('research_remark'));
+                  $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  if($userinfo == 3){
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="research_remark" class="col-form-label">Researcher Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm" readonly><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
+                  </div>
+                 
+               </div>
+               <?php } }else{?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="research_remark" class="col-form-label">Researcher Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
+                  </div>
+                 
+               </div>
+               <?php } }?>
+               <!-- check input access for Rearcher_remark-->
+               <?php 
+                  $div_count=div_access($project_info,array('voice_remark'));
+                  $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  if($userinfo == 3 || $userinfo == 8)
+                  {?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('voice_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="voice_remark" class="col-form-label">Voice Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="voice_remark"  name='voice_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['voice_remark'])) ?  $allInfo[0]['voice_remark'] : ''  ?></textarea>
+                  </div>
+                  <?php } ?>
+               </div>
+                  <?php }?>
+               
                <br><br><br>
             </div>
             
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
+               <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button style='font-size:12px' class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($allInfo[0]['project_name'])) ?  $allInfo[0]['project_name'] : ''  ?> <?=  (!empty($allInfo[0]['company_count'])) ?  '('.$allInfo[0]['company_count'].')' : '(0)' ?></button>
                   </li>
                </ul>
                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
+               <div class="tab-pane fade show active" id="allcompany" role="tabpanel" aria-labelledby="company-tab">
+                     <div class='table-responsive' style='height:333px;font-size:12px'>
+                        <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
+                           <tr>
+                              <th>#</th>
+                              <th>Company Name</th>
+                              <th>Staff Name</th>
+                              <th>Co. Disposition</th>
+                           </tr>
+                           <?php 
+                           foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
+                              <tr  <?php if($allstaffinfo_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['comp_name']; ?></td>
+                              <td><?= $allstaffinfo_val['first_name'].$allstaffinfo_val['last_name']; ?></td>
+                              <td><?= $allstaffinfo_val['company_disposition']; ?></td>
+                           </tr>
+                           <?php } ?>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="tab-pane fade show" id="company" role="tabpanel" aria-labelledby="company-tab">
                      <div class='table-responsive' style='height:333px;font-size:12px'>
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
@@ -891,24 +986,13 @@
          placeholder: " Select Country",
          allowClear: true
          });
-         // $("#company_disposition").select2({
-         // placeholder: " Select Co. Disposition",
-         // allowClear: true
-         // });
-         // $("#company_web_dispositon").select2({
-         // placeholder: " Select Co. Web Disposition",
-         // allowClear: true
-         // });
-         // $("#company_voice_disposition").select2({
-         // placeholder: " Select Co. Voice Disposition",
-         // allowClear: true
-         // });
+      
          $("#web_staff_disposition").select2({
-         placeholder: " Select Co. Voice Disposition",
+         placeholder: " Select Staff Voice Disposition",
          allowClear: true
          });
          $("#voice_staff_disposition").select2({
-         placeholder: " Select Co. Voice Disposition",
+         placeholder: " Select Staff Voice Disposition",
          allowClear: true
          });
          $(document).ready(function() {
@@ -942,7 +1026,6 @@
          $('#copy_company').click(function(){
 
             var items = [{
-               company_received:$('#company_received').val(),
                company_name:$('#company_name').val(),
                address_1:$('#address_1').val(),
                address_2:$('#address_2').val(),
@@ -982,7 +1065,6 @@
             var getitems=JSON.parse(localStorage.getItem('company_details'));
             console.log(getitems);
             console.log(getitems[0].company_name);
-            $('#company_received').val(getitems[0].company_received);
             $('#company_name').val(getitems[0].company_name);
             $('#address_1').val(getitems[0].address_1);
             $('#address_2').val(getitems[0].address_2);
