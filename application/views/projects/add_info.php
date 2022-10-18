@@ -207,7 +207,14 @@
                      <input type="text" value="<?=  (!empty($allInfo[0]['ca4'])) ?  $allInfo[0]['ca4'] : ''  ?>" title="" id="ca4"  name='ca4' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
-                  <?php if(in_array('ca5',$project_info)){ ?>
+                  <?php
+
+                  // echo "<pre>";
+                  // print_r($project_info);
+                  // die;
+
+
+                   if(in_array('ca5',$project_info)){ ?>
                   <div class="col">
                      <label for="ca5" class="col-form-label">CA5:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="ca5"  name='ca5' class="form-control form-control-sm">
@@ -830,9 +837,8 @@
       <script>
 
 
-         function myFunction(a){
-            alert (a);
-         }
+          
+
          $("#country").select2({
          placeholder: " Select Country",
          allowClear: true

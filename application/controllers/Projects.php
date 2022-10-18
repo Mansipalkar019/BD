@@ -417,9 +417,7 @@ class Projects extends CI_Controller
          $data['main_content'] = "projects/project_info";   
          $this->load->view("includes/template", $data);
     }
-
   
-
 
     public function getcountrycode()
     {

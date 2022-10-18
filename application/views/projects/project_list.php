@@ -15,6 +15,8 @@ background-color: #F5F7FA;
         <div class="col-6">
             <div class="page-title-box">
                 <h4 class="page-title">Project List</h4>
+                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="sa-basic">Click me</button>
+
             </div>
         </div>
 
@@ -92,4 +94,9 @@ background-color: #F5F7FA;
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
     var simpletable = $('#doc_list_datatable').DataTable();
+    window.onload = function exampleFunction() {
+  
+    // Function to be executed
+}
+
 </script>

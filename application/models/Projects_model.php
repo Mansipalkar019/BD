@@ -108,6 +108,8 @@ function getprojectrecord(){
 		$this->db->group_by('bdcrm_master_projects_fields.id');
         $this->db->order_by('bdcrm_master_projects_fields.id');
 		$query=$this->db->get();
+        $this->db->last_query(); 
+
         $data=$query->result_array();
         foreach($data as $data_key =>$data_val)
         {
@@ -115,7 +117,6 @@ function getprojectrecord(){
            
         }
         return $fdata;
-       
     }
 
 
