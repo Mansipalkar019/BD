@@ -427,22 +427,18 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
-<<<<<<< HEAD
-
-         $data['main_content'] = "projects/project_info";   
-=======
          $data['main_content'] = "projects/project_info";
          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
     public function get_staff_info(){
          $id=base64_decode($_GET['id']);
-         // echo '<pre>'; print_r($id); exit;
          $received_company_name = base64_decode ($_GET['received_company_name']);
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['getAllUsers'] = $this->model->getData('users', array('status' => '1'));
+
          $data['main_content'] = "projects/staff_info";
-          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
->>>>>>> e72cf3ac9f48942efac43e2f20e90947d7659b36
+         
          $this->load->view("includes/template", $data);
     }
 

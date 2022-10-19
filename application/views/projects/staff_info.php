@@ -1,6 +1,6 @@
-s<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
 <style>
 .grey-bg {  
@@ -20,6 +20,32 @@ background-color: #F5F7FA;
  <p><?php echo $this->session->flashdata("error");?></p>
  <p><?php echo $this->session->flashdata("success");?></p>
 <div class="grey-bg container-fluid" style="font-size: 100%">
+<br>
+<div class="row">
+    <div class="col-sm-2">
+         <input type="text" class="form-control" value="" placeholder="Records Counts" name="records_counts">
+    </div>
+ 
+     <div class="col-sm-3">
+           <select class='form-control form-control-sm' id="country"  name='country' multiple="" onchange="getcountrycode(this.value)">
+            <option>Please Select User</option>
+           <?php 
+           foreach($getAllUsers as $val){ ?>
+            <option value="<? $val['id']; ?>"><?= $val['first_name'].' '.$val['last_name'];?></option>
+           <?php }
+
+           ?>
+          </select>
+    </div>
+   
+    <div class="col-sm-2">
+         <input type="button" class="form-control" value="" placeholder="Ex: B2B-19" name="project_name" required="">
+    </div>
+
+</div>
+<br>
+
+
 <section id="minimal-statistics">
 <div style="overflow-y: auto;">
     <table id="datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
@@ -63,13 +89,7 @@ background-color: #F5F7FA;
 </div>
 </div>
 
-<script >
-    
-   // window.onload = function exampleFunction() {
-   //         swal("Good job!", "You clicked the button!", "success");
 
-   //          }
-            
 </script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -78,6 +98,16 @@ background-color: #F5F7FA;
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <script type="text/javascript">
     var simpletable = $('datatable').DataTable();
 </script>
+<script >
+    $("#country").select2({
+         placeholder: " Select Country",
+         allowClear: true
+         });
+     </script>
+      
+      
