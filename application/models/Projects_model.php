@@ -133,7 +133,7 @@ function getprojectrecord(){
         return $data = $query->result_array();
     }
     function getProjectInfo($project_id){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,GROUP_CONCAT(buf.created_date) as created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name');
+        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         // $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
