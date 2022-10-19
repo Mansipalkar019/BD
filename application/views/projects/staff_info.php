@@ -23,9 +23,8 @@ background-color: #F5F7FA;
 <br>
 <div class="row">
     <div class="col-sm-2">
-         <input type="text" class="form-control" value="" placeholder="Records Counts" name="records_counts">
+         <input type="text" class="form-control" value="" placeholder="Records Counts" name="records_counts" onchange="test()">
     </div>
- 
      <div class="col-sm-3">
            <select class='form-control form-control-sm' id="country"  name='country' multiple="" onchange="getcountrycode(this.value)">
             <option>Please Select User</option>
@@ -37,7 +36,6 @@ background-color: #F5F7FA;
            ?>
           </select>
     </div>
-   
     <div class="col-sm-2">
          <input type="button" class="form-control" value="" placeholder="Ex: B2B-19" name="project_name" required="">
     </div>
@@ -75,12 +73,8 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
-<?php //$this->load->view("includes/footer.php"); ?>
 <script >
-    
-   // window.onload = function exampleFunction() {
-   //         swal("Good job!", "You clicked the button!", "success");
-
+  
 </script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -120,7 +114,12 @@ background-color: #F5F7FA;
     $("#country").select2({
          placeholder: " Select Country",
          allowClear: true
-         });
-     </script>
+     });
+
+
+    function test(){
+        alert('hoo')
+    }
+</script>
       
       
