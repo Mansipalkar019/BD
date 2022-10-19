@@ -25,6 +25,7 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
+  
 
     public function project_list()
     {
@@ -427,17 +428,7 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
-         $data['main_content'] = "projects/project_info";
-         // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
-         $this->load->view("includes/template", $data);
-    }
-    public function get_staff_info(){
-         $id=base64_decode($_GET['id']);
-         // echo '<pre>'; print_r($id); exit;
-         $received_company_name = base64_decode ($_GET['received_company_name']);
-         $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
-         $data['main_content'] = "projects/staff_info";
-          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
+         $data['main_content'] = "projects/project_info";   
          $this->load->view("includes/template", $data);
     }
 
@@ -524,6 +515,59 @@ class Projects extends CI_Controller
         }
         
      echo json_encode($response);
+    }
+
+    public function get_staff_info(){
+         $data['id']=base64_decode($_GET['id']);
+         $data['received_company_name'] = base64_decode ($_GET['received_company_name']);
+         //$data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['main_content'] = "projects/staff_info";
+          // echo '<pre>'; print_r($data['ProjectInfo']); exit;
+         $this->load->view("includes/template",$data);
+    }
+
+    public function getprojectrecord()
+    {
+        // echo "<pre>";
+        // print_r($_POST['staffid']);die();
+        $data[] = json_encode($_POST);  
+        $staffid = $_POST['staffid'];
+        $received_company_name = $_POST['received_company_name'];
+        $rowno = $_POST['start'];
+        $rowperpage = $_POST['length'];
+        $search_text = $_POST['search']['value'];   
+        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name);
+        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name);
+        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name);
+        $data_array=array();
+        foreach($totalData as $category_details_key => $data_row)
+        {
+           $staff_count = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a></span>&nbsp;&nbsp;';
+            $nestedData=array();
+                $nestedData[] = ++$category_details_key;
+                $nestedData[] = $data_row['project_name'];
+                $nestedData[] = $staff_count;
+                $nestedData[] = $data_row['received_company_name'];
+                $nestedData[] = $data_row['provided_job_title'];
+                $nestedData[] = $data_row['address1'];
+                $nestedData[] = $data_row['city'];
+                $nestedData[] = $data_row['postal_code'];
+                $nestedData[] = $data_row['country_name'];
+                $nestedData[] = $data_row['username'];
+                $nestedData[] = $data_row['designation_name'];
+                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
+
+                $data_array[] = $nestedData;
+              
+       }
+      $output = array(
+            "draw" => intval($_POST['draw']),
+            "recordsTotal" => intval($count_all),
+            "recordsFiltered" => intval($count_filtered),
+            "data" => $data_array,
+        );
+
+        echo json_encode($output);
     }
 
 }
