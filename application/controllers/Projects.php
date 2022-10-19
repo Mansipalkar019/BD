@@ -519,8 +519,8 @@ class Projects extends CI_Controller
 
     public function get_staff_info(){
          $data['id']=base64_decode($_GET['id']);
-         $data['received_company_name'] = base64_decode ($_GET['received_company_name']);
-         //$data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['received_company_name'] = base64_decode($_GET['received_company_name']);
+         $data['users'] = $this->model->getData('users', array('status' => '1'));
          $data['main_content'] = "projects/staff_info";
           // echo '<pre>'; print_r($data['ProjectInfo']); exit;
          $this->load->view("includes/template",$data);
@@ -531,12 +531,27 @@ class Projects extends CI_Controller
         $data[] = json_encode($_POST);  
         $staffid = $_POST['staffid'];
         $received_company_name = $_POST['received_company_name'];
+        if(!empty($_POST['count']))
+        {
+            $counter=$_POST['count'];
+        }else{
+            $counter = $_POST['length'];
+        }
+        $workstatus = '';
+        if(!empty($_POST['workalloc']))
+        {
+           if($_POST['workalloc'] == 'Assigned')
+           {
+                $workstatus=1;
+           }else{
+                $workstatus =2;
+           }
+        }
         $rowno = $_POST['start'];
-        $rowperpage = $_POST['length'];
         $search_text = $_POST['search']['value'];   
-        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
-        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
-        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
+        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $data_array=array();
         foreach($totalData as $category_details_key => $data_row)
         {
@@ -554,7 +569,7 @@ class Projects extends CI_Controller
                 $nestedData[] = $data_row['username'];
                 $nestedData[] = $data_row['designation_name'];
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
-
+                $nestedData[] = $data_row['staff_id'];
                 $data_array[] = $nestedData;
               
        }

@@ -143,7 +143,7 @@ function getprojectrecord(){
     }
 
 
-    function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage=""){
+    function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
         $this->db->select('cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,users.username,md.designation_name');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
@@ -155,13 +155,21 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+        if($workstatus==1)
+        {
+            $this->db->where('cmpallo.assigned_by !=""');  
+        }
+        elseif($workstatus==2){
+            $this->db->where('cmpallo.assigned_by IS NULL');   
+        }
         $this->db->limit($rowperpage,$rowno);
         $this->db->group_by('buf.id');
         $query=$this->db->get();
+        //echo $this->db->last_query();die();
         return $data = $query->result_array();
     }
 
-    function get_no_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage=""){
+    function get_no_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
         $this->db->select('cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,users.username,md.designation_name');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
@@ -173,6 +181,13 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+        if($workstatus==1)
+        {
+            $this->db->where('cmpallo.assigned_by !=""');  
+        }
+        elseif($workstatus==2){
+            $this->db->where('cmpallo.assigned_by IS NULL');   
+        }
         $this->db->limit($rowperpage,$rowno);
         $this->db->group_by('buf.id');
         $query=$this->db->get();
@@ -180,7 +195,7 @@ function getprojectrecord(){
         return $result;
     }
 
-    function get_all_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage=""){
+    function get_all_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
         $this->db->select('cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,users.username,md.designation_name');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
@@ -192,6 +207,13 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+        if($workstatus==1)
+        {
+            $this->db->where('cmpallo.assigned_by !=""');  
+        }
+        elseif($workstatus==2){
+            $this->db->where('cmpallo.assigned_by IS NULL');   
+        }
         $this->db->limit($rowperpage,$rowno);
         $this->db->group_by('buf.id');
         $query=$this->db->get();
