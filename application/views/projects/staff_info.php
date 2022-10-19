@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-<?php //$this->load->view("includes/header.php");
-//$this->load->view("includes/navbar.php");
-//$this->load->view("includes/left-sidebar.php");
-//$this->load->view("includes/right-sidebar.php");?>
->>>>>>> 652e4bd4690baaf84224790a185064b46788ca0c
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -82,15 +75,11 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
-<<<<<<< HEAD
-
-=======
 <?php //$this->load->view("includes/footer.php"); ?>
 <script >
     
    // window.onload = function exampleFunction() {
    //         swal("Good job!", "You clicked the button!", "success");
->>>>>>> 652e4bd4690baaf84224790a185064b46788ca0c
 
 </script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
