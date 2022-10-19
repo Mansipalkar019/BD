@@ -25,7 +25,6 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-  
 
     public function project_list()
     {
@@ -63,6 +62,7 @@ class Projects extends CI_Controller
 
 
     public function upload_project(){
+     
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -177,9 +177,15 @@ class Projects extends CI_Controller
                    
                 }
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
-                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info); 
-                    if (!empty($_POST['feild_access'])) {
-                        foreach ($_POST['feild_access'] as $field_access => $filed_access_key) {
+                    $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info);
+                    if(!empty($_POST['feild_access']))
+                    {
+                        $field_accesses=$_POST['feild_access'];
+                    }else{
+                        $field_accesses= 1;
+                    }
+                    if ($field_accesses != 1) {
+                        foreach ($field_accesses as $field_access => $filed_access_key) {
                             $projects_info = array(
                                 'field_id' => $filed_access_key,
                                 'project_id' => $addProjectInfo,
@@ -198,11 +204,11 @@ class Projects extends CI_Controller
                             }
                         
                     } else {
-
                         $errors[0]['error'] = "Didn't Set Feilds Access for the Uploaded Project, Please Reupload & Set the feilds Access.";
                         $errors[0]['class']="Danger";
-                        $this->session->set_flashdata("error", $errors);
-                        redirect(base_url("projects/new_projects"), $data);
+                        $data['error'] = $errors;
+                        $this->session->set_flashdata("error", $data);
+                       
                     }
                 }
             }
@@ -376,6 +382,7 @@ class Projects extends CI_Controller
     public function my_projects($pid,$rid,$cmp_name='')
     {
         $project_id=base64_decode($pid);
+        $project_id=base64_decode($pid);
         $rowid=base64_decode($rid);
         $cmp_name=base64_decode($cmp_name);
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
@@ -393,9 +400,14 @@ class Projects extends CI_Controller
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
-        $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
-        $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
-        $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid);
+        $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
+        $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
+        $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
+        $data['userinfo']=$this->session->userdata('designation_id');
+        // echo "<pre>";
+        // print_r($data['staff_list']);die();
+       
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -408,23 +420,115 @@ class Projects extends CI_Controller
         $final = $key-2;
         $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
         $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
+       
         return $data;
     }
 
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
+<<<<<<< HEAD
 
          $data['main_content'] = "projects/project_info";   
+=======
+         $data['main_content'] = "projects/project_info";
+         // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
-  
+    public function get_staff_info(){
+         $id=base64_decode($_GET['id']);
+         // echo '<pre>'; print_r($id); exit;
+         $received_company_name = base64_decode ($_GET['received_company_name']);
+         $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['main_content'] = "projects/staff_info";
+          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
+>>>>>>> e72cf3ac9f48942efac43e2f20e90947d7659b36
+         $this->load->view("includes/template", $data);
+    }
 
     public function getcountrycode()
     {
         $country = $this->input->post('country');
         $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('phonecode'));
         echo json_encode($check_country);
+    }
+
+    public function update_company_details()
+    {
+        //print_r($_POST);die();
+        $project_id=$this->input->post('project_id');
+        $staff_id=$this->input->post('staff_id');
+        $company_name=$this->input->post('company_name');
+        $address_1=$this->input->post('address_1');
+        $address_2=$this->input->post('address_2');
+        $address_3=$this->input->post('address_3');
+        $city_name=$this->input->post('city_name');
+        $postal_code=$this->input->post('postal_code');
+        $state_name=$this->input->post('state_name');
+        $country=$this->input->post('country');
+        $region_name=$this->input->post('region_name');
+        $address_source_url=$this->input->post('address_source_url');
+        $ca1=$this->input->post('ca1');
+        $ca2=$this->input->post('ca2');
+        $ca3=$this->input->post('ca3');
+        $ca4=$this->input->post('ca4');
+        $ca5=$this->input->post('ca5');
+        $company_disposition=$this->input->post('company_disposition');
+        $company_web_dispositon=$this->input->post('company_web_dispositon');
+        $company_voice_disposition=$this->input->post('company_voice_disposition');
+        $company_genaral_notes=$this->input->post('company_genaral_notes');
+        $company_remark=$this->input->post('company_remark');
+        $country_code=$this->input->post('country_code');
+        $tel_number=$this->input->post('tel_number');
+        $alternate_number=$this->input->post('alternate_number');
+        $industry=$this->input->post('industry');
+        $revenue=$this->input->post('revenue');
+        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
+        $company_details=array(
+            'company_name'=>$company_name,
+            'address1'=>$address_1,
+            'address2'=>$address_2,
+            'address3'=>$address_3,
+            'city'=>$city_name,
+            'postal_code'=>$postal_code,
+            'state_county'=>$state_name,
+            'country'=>$check_country['name'],
+            'country_code'=>$country_code,
+            'region'=>$region_name,
+            'address_souce_url'=>$address_source_url,
+            'ca1'=>$ca1,
+            'ca2'=>$ca2,
+            'ca3'=>$ca3,
+            'ca4'=>$ca4,
+            'ca5'=>$ca5,
+            'company_disposition'=>$company_disposition,
+            'web_disposition'=>$company_web_dispositon,
+            'voice_disposition'=>$company_voice_disposition,
+            'genral_notes'=>$company_genaral_notes,
+            'remarks'=>$company_remark,
+            'tel_number'=>$tel_number,
+            'alternate_number'=>$alternate_number,
+            'industry'=>$industry,
+            'revenue'=>$revenue,
+            'updated_at'=>date('Y-m-d H:i:s'),
+            'updated_by'=>$this->session->userdata('designation_id'),
+            'updated_status'=>'Updated',
+         
+        );
+        // echo "<pre>";
+        // print_r($company_details);
+        if( $this->model->updateData('bdcrm_uploaded_feildss',$company_details,array('project_id'=>$project_id,'id'=>$staff_id)))
+        {
+            $response['status']='success';
+            $response['error']=array('msg' => "Company Details Updated Successfully !");
+        }
+        else{
+            $response['status']='failure';
+            $response['error']=array('msg' => "Company Details Updated  UnSuccessfully !"); 
+
+        }
+        
+     echo json_encode($response);
     }
 
 }

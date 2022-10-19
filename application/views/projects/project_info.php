@@ -27,7 +27,18 @@ background-color: #F5F7FA;
         <tr>
             <th>ID</th>
             <th>Staff Count</th>
+<<<<<<< HEAD
             <th>Company Received</th>
+=======
+            <!-- <th>Project Name</th>
+            <th>Staff Name</th> -->
+            <th>Company Received</th>
+            <!-- <th>Provided Job Title</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Postal Code</th>
+            <th>Country</th> -->
+>>>>>>> e72cf3ac9f48942efac43e2f20e90947d7659b36
             <th>Created At</th>
             <th>Action</th>
         </tr>

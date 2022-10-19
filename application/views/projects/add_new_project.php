@@ -135,8 +135,6 @@
 
 <script>
     //mansi
-
-
     function gettasktype(tasktypeid) {
 
         var task_type = jQuery('#task_type option:selected').text()

@@ -26,6 +26,15 @@
          min-height: 45rem;
          padding-top: 4.5rem;
          }
+         .swal-text {
+         padding: 17px;
+         border: 1px solid #F0E1A1;
+         display: block;
+         margin: 22px;
+         font-size: 17px;;
+         text-align: center;
+         color: #61534e;
+         }
       </style>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -64,7 +73,7 @@
          }
       </style>
       <main class="container-fluid" style="background-color: #FFFFEA;">
-      <?php echo form_open('Sales/save_deal', array('id' => 'sale_report_form')) ?>
+      <?php echo form_open('Projects/update_company_details', array('id' => 'update_company_details_form')) ?>
          <div class="row row1">
             <div class="col">
                <!-- check input access for company received -->
@@ -76,7 +85,7 @@
                   </div>
 
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" disabled>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" readonly>
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['project_id'])) ?  $allInfo[0]['project_id'] : ''  ?>" title="" id="project_id"  name='project_id' class="form-control form-control-sm">
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['id'])) ?  $allInfo[0]['id'] : ''  ?>" title="" id="staff_id"  name='staff_id' class="form-control form-control-sm">
                   </div>
@@ -254,8 +263,7 @@
                         <option value=''>Select Co. Disposition</option>
                         <?php 
                      foreach ($compDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php
-                         if(($val['company_dispostion']== (!empty($allInfo[0]['company_dispostion'])) ? $allInfo[0]['company_dispostion'] : '' ) && !empty($val['company_dispostion'])){ echo "selected";}?> ><?= $val['company_dispostion']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($val['id'] == $allInfo[0]['company_disposition']){?>selected<?php } ?> ><?= $val['company_dispostion']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -277,7 +285,7 @@
                         <option value=''>Select Web Disposition</option>
                         <?php 
                            foreach ($webDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['web_disposition_name']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['id']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -286,6 +294,7 @@
                </div>
                <!-- check input access for company_voice_disposition -->
                <?php 
+                  if($this->session->userdata('designation_id') == 3){
                   $div_count=div_access($project_info,array('company_voice_disposition'));
                   $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -299,13 +308,35 @@
                         <option value=''>Select Voice Disposition</option>
                         <?php 
                            foreach ($VoiceDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['caller_disposition']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
                         <?php }
                            ?>
                      </select>
                   </div>
-                  <?php } ?>
+                 
                </div>
+               <?php } }elseif($this->session->userdata('designation_id') == 8 ){ 
+                   $div_count=div_access($project_info,array('company_voice_disposition'));
+                   $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access5; ?>>
+                  <?php if(in_array('company_voice_disposition',$project_info)){ ?>
+                  <div class="col">
+                     <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
+                  </div>
+                  <div class="col">
+                     <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
+                        <option value=''>Select Voice Disposition</option>
+                        <?php 
+                           foreach ($VoiceDispo as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
+                        <?php }
+                           ?>
+                     </select>
+                  </div>
+                 
+               </div>
+               <?php } } ?>
                <style>
                   .incomplete_disposition { display: none; }
                </style>
@@ -360,7 +391,7 @@
                </div>
                <div class="row g3 justify-content-md-center mt-4">
                <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company">Copy</button>
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
                   </div>
                   <div class="col-auto">
                      <div class="input-group mb-3">
@@ -372,10 +403,10 @@
                      </div>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="update_company">Update</button>
+                     <button class="btn btn-outline-primary btn-sm" type="submit" id="update_company">Update</button>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none">Paste</button>
+                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
                   </div>
                </div>
             </div>
@@ -470,7 +501,7 @@
                   <div class="col">
                      <label for="revenue" class="col-form-label">Revenue:</label>
                      <div class="input-group">
-                        <input type="number" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
+                        <input type="text" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency">$</button>
                         <ul class="dropdown-menu dropdown-menu-end revenue_currency">
                            <?php 
@@ -655,6 +686,43 @@
                   </div>
                   <?php } ?>
                </div>
+               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+               <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('sa1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa1" class="col-form-label">SA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa2" class="col-form-label">SA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa3" class="col-form-label">SA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa4" class="col-form-label">SA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa5" class="col-form-label">SA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+               </div>
                <br><br><br>
             </div>
             <div class="col">
@@ -700,7 +768,8 @@
                   <?php } ?>
                </div>
                <!-- check input access for voice_staff_disposition -->
-               <?php 
+               <?php
+                if($this->session->userdata('designation_id') == 3 ){ 
                   $div_count=div_access($project_info,array('voice_staff_disposition'));
                   $access22 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -719,8 +788,9 @@
                            ?>
                      </select>
                   </div>
-                  <?php } ?>
+                
                </div>
+               <?php } }?>
                <!-- <div class="row g-3 align-items-center justify-content-md-center">
                   <div class="col">
                       <label for="staff_interest_area" class="col-form-label">Interest Area:</label>
@@ -774,20 +844,93 @@
                   </div>
                   <?php } ?>
                </div>
+
+                <!-- check input access for Rearcher_remark-->
+                <?php 
+                  $div_count=div_access($project_info,array('research_remark'));
+                  $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  if($userinfo == 3){
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="research_remark" class="col-form-label">Researcher Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm" readonly><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
+                  </div>
+                 
+               </div>
+               <?php } }else{?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="research_remark" class="col-form-label">Researcher Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
+                  </div>
+                 
+               </div>
+               <?php } }?>
+               <!-- check input access for Rearcher_remark-->
+               <?php 
+                  $div_count=div_access($project_info,array('voice_remark'));
+                  $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  if($userinfo == 3 || $userinfo == 8)
+                  {?>
+                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
+                  <?php if(in_array('voice_remark',$project_info)){ ?>
+                  <div class="col">
+                     <label for="voice_remark" class="col-form-label">Voice Remark:</label>
+                  </div>
+                  <div class="col">
+                     <textarea title="" id="voice_remark"  name='voice_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['voice_remark'])) ?  $allInfo[0]['voice_remark'] : ''  ?></textarea>
+                  </div>
+                  <?php } ?>
+               </div>
+                  <?php }?>
+               
                <br><br><br>
             </div>
             
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
+               <li class="nav-item" role="presentation">
+                     <button style='font-size:12px' class="nav-link active" id="company-tab1" data-bs-toggle="tab" data-bs-target="#company1" type="button" role="tab" aria-controls="company1" aria-selected="true"><?php if(!empty($staff_list)){ echo 'All ('.count($staff_list).')'; }else{ 'All (0)'; } ?></button>
+                  </li>
                   <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
+                     <button style='font-size:12px' class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($allInfo[0]['project_name'])) ?  $allInfo[0]['project_name'] : ''  ?> <?=  (!empty($allInfo[0]['company_count'])) ?  '('.$allInfo[0]['company_count'].')' : '(0)' ?></button>
                   </li>
                </ul>
                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
+               <div class="tab-pane fade show active" id="company1" role="tabpanel" aria-labelledby="company-tab1">
+                     <div class='table-responsive' style='height:333px;font-size:12px'>
+                        <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
+                           <tr>
+                              <th>#</th>
+                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
+                              <th>Staff Name</th>
+                              <th>Co. Disposition</th>
+                              <th>Status</th>
+                           </tr>
+                           <?php 
+                           foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
+                              <tr  <?php if($allstaffinfo_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['comp_name']; ?></td>
+                              <td><?= $allstaffinfo_val['first_name'].$allstaffinfo_val['last_name']; ?></td>
+                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
+                              <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
+                           </tr>
+                           <?php } ?>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="tab-pane fade show" id="company" role="tabpanel" aria-labelledby="company-tab">
                      <div class='table-responsive' style='height:333px;font-size:12px'>
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
@@ -795,6 +938,7 @@
                               <th>First Name</th>
                               <th>Last Name</th>
                               <th>Co. Disposition</th>
+                              <th>Status</th>   
                            </tr>
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
@@ -802,7 +946,8 @@
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name']; ?></td>
                               <td><?= $staff_list_val['last_name']; ?></td>
-                              <td><?= $staff_list_val['company_disposition']; ?></td>
+                              <td><?= $staff_list_val['company_dispostion']; ?></td>
+                              <td><?php  if($staff_list_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -814,6 +959,7 @@
                            <tr>
                               <th>#</th>
                               <th>Company Name</th>
+                              <th>No. of Staff</th>
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
@@ -821,7 +967,8 @@
                            <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($company_list_val['project_id']).'/'.base64_encode($company_list_val['id']).'/'.base64_encode($company_list_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $company_list_val['received_company_name']; ?></td>
-                              <td></td>
+                              <td><?= $company_list_val['staffcount']; ?></td>
+                              <td><?= $company_list_val['company_dispostion']; ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -834,33 +981,22 @@
       <script src="<?php echo base_url();?>public/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+      <script src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>
+      <script src="<?= base_url();?>assets/js/update_company_details.js"></script>
       <script>
 
-
-          
 
          $("#country").select2({
          placeholder: " Select Country",
          allowClear: true
          });
-         // $("#company_disposition").select2({
-         // placeholder: " Select Co. Disposition",
-         // allowClear: true
-         // });
-         // $("#company_web_dispositon").select2({
-         // placeholder: " Select Co. Web Disposition",
-         // allowClear: true
-         // });
-         // $("#company_voice_disposition").select2({
-         // placeholder: " Select Co. Voice Disposition",
-         // allowClear: true
-         // });
+      
          $("#web_staff_disposition").select2({
-         placeholder: " Select Co. Voice Disposition",
+         placeholder: " Select Staff Voice Disposition",
          allowClear: true
          });
          $("#voice_staff_disposition").select2({
-         placeholder: " Select Co. Voice Disposition",
+         placeholder: " Select Staff Voice Disposition",
          allowClear: true
          });
          $(document).ready(function() {
@@ -894,7 +1030,6 @@
          $('#copy_company').click(function(){
 
             var items = [{
-               company_received:$('#company_received').val(),
                company_name:$('#company_name').val(),
                address_1:$('#address_1').val(),
                address_2:$('#address_2').val(),
@@ -909,6 +1044,7 @@
                ca2:$('#ca2').val(), 
                ca3:$('#ca3').val(), 
                ca4:$('#ca4').val(), 
+               ca5:$('#ca5').val(), 
                company_disposition:$("#company_disposition option:selected").val(), 
                company_web_dispositon:$("#company_web_dispositon option:selected").val(), 
                company_voice_disposition:$("#company_voice_disposition option:selected").val(),
@@ -922,14 +1058,17 @@
                revenue_currency:$('#revenue_currency').text(),
                }];
             localStorage.setItem('company_details',JSON.stringify(items));
-          
+            swal({
+                     text: 'Company Details Copied Successfully',
+                     dangerMode: true,
+                     timer: 1500
+                  });
          });
 
          $('#paste_company').click(function(){
             var getitems=JSON.parse(localStorage.getItem('company_details'));
             console.log(getitems);
             console.log(getitems[0].company_name);
-            $('#company_received').val(getitems[0].company_received);
             $('#company_name').val(getitems[0].company_name);
             $('#address_1').val(getitems[0].address_1);
             $('#address_2').val(getitems[0].address_2);
@@ -944,10 +1083,8 @@
             $('#ca2').val(getitems[0].ca2);
             $('#ca3').val(getitems[0].ca3);
             $('#ca4').val(getitems[0].ca4);
+            $('#ca5').val(getitems[0].ca5);
             $('#company_disposition').val(getitems[0].company_disposition).trigger('change');
-            //$("#company_disposition").val(getitems[0].company_disposition);
-            //$('#company_disposition').val(getitems[0].company_disposition);
-            //$('#company_disposition').trigger('change.select2');
             $('#company_web_dispositon').val(getitems[0].company_web_dispositon).trigger('change');
             $('#company_voice_disposition').val(getitems[0].company_voice_disposition).trigger('change');
             $('#company_genaral_notes').val(getitems[0].company_genaral_notes);
