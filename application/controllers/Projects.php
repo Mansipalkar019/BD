@@ -414,6 +414,7 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
+
          $data['main_content'] = "projects/project_info";   
          $this->load->view("includes/template", $data);
     }
