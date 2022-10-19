@@ -501,7 +501,7 @@
                   <div class="col">
                      <label for="revenue" class="col-form-label">Revenue:</label>
                      <div class="input-group">
-                        <input type="number" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
+                        <input type="text" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency">$</button>
                         <ul class="dropdown-menu dropdown-menu-end revenue_currency">
                            <?php 
@@ -897,7 +897,7 @@
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link active" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
+                     <button style='font-size:12px' class="nav-link active" id="company-tab1" data-bs-toggle="tab" data-bs-target="#company1" type="button" role="tab" aria-controls="company1" aria-selected="true"><?php if(!empty($staff_list)){ echo 'All ('.count($staff_list).')'; }else{ 'All (0)'; } ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
@@ -907,14 +907,15 @@
                   </li>
                </ul>
                <div class="tab-content" id="myTabContent">
-               <div class="tab-pane fade show active" id="allcompany" role="tabpanel" aria-labelledby="company-tab">
+               <div class="tab-pane fade show active" id="company1" role="tabpanel" aria-labelledby="company-tab1">
                      <div class='table-responsive' style='height:333px;font-size:12px'>
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
-                              <th>Company Name</th>
+                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
                               <th>Staff Name</th>
                               <th>Co. Disposition</th>
+                              <th>Status</th>
                            </tr>
                            <?php 
                            foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
@@ -922,7 +923,8 @@
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $allstaffinfo_val['comp_name']; ?></td>
                               <td><?= $allstaffinfo_val['first_name'].$allstaffinfo_val['last_name']; ?></td>
-                              <td><?= $allstaffinfo_val['company_disposition']; ?></td>
+                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
+                              <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -936,6 +938,7 @@
                               <th>First Name</th>
                               <th>Last Name</th>
                               <th>Co. Disposition</th>
+                              <th>Status</th>
                            </tr>
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
@@ -943,7 +946,8 @@
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name']; ?></td>
                               <td><?= $staff_list_val['last_name']; ?></td>
-                              <td><?= $staff_list_val['company_disposition']; ?></td>
+                              <td><?= $staff_list_val['company_dispostion']; ?></td>
+                              <td><?php  if($staff_list_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -955,6 +959,7 @@
                            <tr>
                               <th>#</th>
                               <th>Company Name</th>
+                              <th>No. of Staff</th>
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
@@ -962,7 +967,8 @@
                            <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($company_list_val['project_id']).'/'.base64_encode($company_list_val['id']).'/'.base64_encode($company_list_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $company_list_val['received_company_name']; ?></td>
-                              <td></td>
+                              <td><?= $company_list_val['staffcount']; ?></td>
+                              <td><?= $company_list_val['company_dispostion']; ?></td>
                            </tr>
                            <?php } ?>
                         </table>

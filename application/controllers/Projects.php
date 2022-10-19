@@ -401,13 +401,14 @@ class Projects extends CI_Controller
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
-        $data['minmax']['current'] = $this->getIndexInfo($data['staff_list'],$rowid)['current'];
-        $data['minmax']['prev'] = $this->getIndexInfo($data['staff_list'],$rowid)['prev'];
-        $data['minmax']['next'] = $this->getIndexInfo($data['staff_list'],$rowid)['next'];
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid);
+        $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
+        $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
+        $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
-        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id);
         // echo "<pre>";
-        // print_r($data['allstaffinfo']);die();
+        // print_r($data['staff_list']);die();
+       
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -420,6 +421,7 @@ class Projects extends CI_Controller
         $final = $key-2;
         $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
         $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
+       
         return $data;
     }
 
@@ -494,6 +496,9 @@ class Projects extends CI_Controller
             'alternate_number'=>$alternate_number,
             'industry'=>$industry,
             'revenue'=>$revenue,
+            'updated_at'=>date('Y-m-d H:i:s'),
+            'updated_by'=>$this->session->userdata('designation_id'),
+            'updated_status'=>'Updated',
          
         );
         // echo "<pre>";

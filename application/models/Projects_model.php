@@ -149,30 +149,33 @@ function getprojectrecord(){
     }
 
     function getStaffInfoDetails($project_id,$company_name){
-        $this->db->select('first_name,last_name,received_company_name as comp_name,company_disposition,project_id,id');
-        $this->db->from('bdcrm_uploaded_feildss');
-        $this->db->where('project_id',$project_id);
-        $this->db->where('received_company_name',$company_name);
+        $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
+        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->where('buf.project_id',$project_id);
+        $this->db->where('buf.received_company_name',$company_name);
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
 
     function getAllStaffInfoDetails($project_id){
-        $this->db->select('first_name,last_name,received_company_name as comp_name,company_disposition,project_id,id');
-        $this->db->from('bdcrm_uploaded_feildss');
-        $this->db->where('project_id',$project_id);
+        $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
+        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->where('buf.project_id',$project_id);
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
 
     function getCompanyInfoDetails($project_id){
-        $this->db->select('received_company_name,company_disposition,project_id,id');
+        $this->db->select('bmp.*,buf.received_company_name,buf.updated_status,count(buf.received_company_name) as staffcount,buf.project_id,buf.id');
         $this->db->distinct('received_company_name');
-        $this->db->from('bdcrm_uploaded_feildss');
-
+        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
         $this->db->where('project_id',$project_id);
         $this->db->group_by('received_company_name');
         $querys=$this->db->get();
+         
         return $datas =  $querys->result_array();
     }
 
@@ -180,8 +183,9 @@ function getprojectrecord(){
             $this->db->select('min(id) as myfirst,max(id) as mylast,project_id,received_company_name');
             $this->db->from('bdcrm_uploaded_feildss');
             $this->db->where('project_id',$project_id);
-            $this->db->where('received_company_name',$cmp_name);
+            //$this->db->where('received_company_name',$cmp_name);
             $querys=$this->db->get();
+            //echo $this->db->last_query();die();
             return $datas =  $querys->row_array();  
 
 
