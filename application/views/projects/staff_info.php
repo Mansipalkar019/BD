@@ -21,6 +21,14 @@ background-color: #F5F7FA;
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="page-title-box">
+               <label>Enter count</label>
+               <input type="text" value="" class="form-control" id="count">
+            </div>
+        </div>
+    </div>
  <p><?php echo $this->session->flashdata("error");?></p>
  <p><?php echo $this->session->flashdata("success");?></p>
 <div class="grey-bg container-fluid" style="font-size: 100%">

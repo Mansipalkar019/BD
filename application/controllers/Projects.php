@@ -528,17 +528,15 @@ class Projects extends CI_Controller
 
     public function getprojectrecord()
     {
-        // echo "<pre>";
-        // print_r($_POST['staffid']);die();
         $data[] = json_encode($_POST);  
         $staffid = $_POST['staffid'];
         $received_company_name = $_POST['received_company_name'];
         $rowno = $_POST['start'];
         $rowperpage = $_POST['length'];
         $search_text = $_POST['search']['value'];   
-        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name);
-        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name);
-        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name);
+        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
+        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
+        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$rowperpage);
         $data_array=array();
         foreach($totalData as $category_details_key => $data_row)
         {
