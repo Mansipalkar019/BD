@@ -938,7 +938,7 @@
                               <th>First Name</th>
                               <th>Last Name</th>
                               <th>Co. Disposition</th>
-                              <th>Status</th>
+                              <th>Status</th>   
                            </tr>
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
@@ -985,8 +985,6 @@
       <script src="<?= base_url();?>assets/js/update_company_details.js"></script>
       <script>
 
-
-          
 
          $("#country").select2({
          placeholder: " Select Country",

@@ -25,7 +25,6 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-  
 
     public function project_list()
     {
@@ -435,7 +434,7 @@ class Projects extends CI_Controller
     public function get_staff_info(){
          $id=base64_decode($_GET['id']);
          // echo '<pre>'; print_r($id); exit;
-         $received_company_name = base64_decode($_GET['received_company_name']);
+         $received_company_name = base64_decode ($_GET['received_company_name']);
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
          $data['main_content'] = "projects/staff_info";
           // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
