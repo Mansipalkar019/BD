@@ -26,17 +26,15 @@ background-color: #F5F7FA;
     <thead>
         <tr>
             <th>ID</th>
-            <th>Staff Count</th>
-            <!-- <th>Project Name</th>
-            <th>Staff Name</th> -->
+            <th>Project Name</th>
+            <th>Staff Name</th>
             <th>Company Received</th>
-            <!-- <th>Provided Job Title</th>
+            <th>Provided Job Title</th>
             <th>Address</th>
             <th>City</th>
             <th>Postal Code</th>
-            <th>Country</th> -->
+            <th>Country</th>
             <th>Created At</th>
-            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -44,11 +42,15 @@ background-color: #F5F7FA;
             foreach ($ProjectInfo as $key => $value) { ?>
               <tr>
                 <td><?= $key+1;?></td>
-               <td><span><a href='<?= base_url().'Projects/get_staff_info?id='.base64_encode($value['project_id']).'&received_company_name='.base64_encode($value['received_company_name']); ?>'class="badge btn btn-primary btn-sm"><?= $value['staff_count']?></a></span></td> 
-               
+                <td><?= $value['project_name'];?></td> 
+                <td><span><a class="badge btn btn-primary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($value['project_id']).'/'.base64_encode($value['id']).'/'.base64_encode($value['received_company_name']);?>" title="Open Record"><?= $value['salutation'].'. '. $value['first_name'].' '.$value['last_name'];?></a></span></td>
                 <td><?= $value['received_company_name'];?></td>
+                <td><?= $value['provided_job_title'];?></td>
+                <td><?= $value['address1'];?></td>
+                <td><?= $value['city'];?></td>
+                <td><?= $value['postal_code'];?></td> 
+                <td><?= $value['country_name'];?></td>
                 <td><?= date(('d-m-Y h:i A'),strtotime($value['created_date']));?></td>
-                <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($value['project_id']).'/'.base64_encode($value['id']).'/'.base64_encode($value['received_company_name']);?>"><i class="fa-solid fa-eye"></i></i></a></td>
               </tr>
             <?php }
             ?>

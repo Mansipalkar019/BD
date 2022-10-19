@@ -7,7 +7,6 @@ class Dashboard extends CI_Controller{
         if(empty($this->session->userdata('id'))){
             redirect(base_url("login"));
         }
-
     }
 
     public function index()
