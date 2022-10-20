@@ -573,7 +573,7 @@ class Projects extends CI_Controller
                 $nestedData[] = $data_row['username'];
                 $nestedData[] = $data_row['designation_name'];
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
-                $nestedData[] = $data_row['staff_id'];
+                $nestedData[] = $data_row['id'];
                 $data_array[] = $nestedData;
               
        }
@@ -588,33 +588,36 @@ class Projects extends CI_Controller
     }
 
     public function getsInfo(){
-        
         $project_id = $this->input->post('project_id');
         $staff_info = $this->input->post('staff_info');
         $assignee_users = $this->input->post('users');
+        $company_name = $this->input->post('company_name');
         $perUser = count($assignee_users);
         $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-
-        //    echo "<pre>";
-        // print_r($assignee_users);
-
-
+        
         for($i=0;$i<$perUser;$i++){
 
            $user_id = $assignee_users[$i];
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
         }
-        print_r($final);die();
-         
-    
-
-
-
-
-
-
-
+        foreach($final as $final_key => $final_row){
+            foreach($final_row['staff_info'] as $final_keys =>$final_rows)
+            {
+                $user_id=$final_row['user_id'];
+                $staff_info=$final_rows;
+                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+            }
+        }
+        if($addProjectInfo)
+        {
+            $this->session->set_flashdata("success", "Records Inserted Successfully");
+        }
+        else{
+            $this->session->set_flashdata("error", "Failed To Insert");  
+        }
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
     }
 
 }

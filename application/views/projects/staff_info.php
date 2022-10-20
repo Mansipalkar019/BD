@@ -12,6 +12,8 @@
 background-color: #F5F7FA;
 }
 </style>
+<form action="<?php echo base_url()?>Projects/getsInfo" method="post">
+  
 <div class="content-page">
 <div class="content">
 <div class="container-fluid">
@@ -20,13 +22,31 @@ background-color: #F5F7FA;
             <div class="page-title-box">
                 <center><h4 class="page-title" style="color: black">Staff Informations of Project : <?= $received_company_name;?></h4></center>
             </div>
+            <?php if(!empty($this->session->flashdata("error"))){?>
+            <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?= $this->session->flashdata("error"); ?>
+            </div>
+            <?php }
+            ?>
+
+            <?php if(!empty($this->session->flashdata("success"))){?>
+            <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?= $this->session->flashdata("success"); ?>
+            </div>
+            <?php }
+            ?>
         </div>
     </div>
     <div class="row">
+    
         <div class="col-3">
             <div class="page-title-box">
                <label>Enter count</label>
                <input type="text" value="" class="form-control" id="count">
+               <input type="hidden" value="<?= $received_company_name;?>" class="form-control" name="company_name" id="company_name">
+               <input type="hidden" value="<?= $id;?>" class="form-control" name="project_id" id="company_name">
             </div>
         </div>
         <div class="col-3">
@@ -42,7 +62,7 @@ background-color: #F5F7FA;
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Users</label>
-               <select  class="form-control users" id="users[]" multiple>
+               <select  class="form-control users" id="users[]" multiple name="users[]"> 
                 <option value="">Select Users</option>
                 <?php 
                 foreach($users as $user_key => $user_row)
@@ -58,8 +78,10 @@ background-color: #F5F7FA;
                <button type="submit" value="" class="btn btn-danger form-control" id="btn-search-by-count" style="margin-top:30px;">Submit</button>
         </div>
         </div>
+       
     </div>
- <p><?php echo $this->session->flashdata("error");?></p>
+ 
+ <p></p>
  <p><?php echo $this->session->flashdata("success");?></p>
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
@@ -92,6 +114,7 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
+</form>
 <?php //$this->load->view("includes/footer.php"); ?>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -141,5 +164,5 @@ function getworkalloc($value)
 {
     simpletable.ajax.reload(null, false);
 }
-//simpletable.column([12]).visible(false);
+simpletable.column([12]).visible(false);
 </script>
