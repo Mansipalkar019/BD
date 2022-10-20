@@ -407,7 +407,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['staff_list']);die();
+        // print_r($data['allstaffinfo']);die();
        
         $this->load->view("projects/add_info", $data);
     }
@@ -430,6 +430,7 @@ class Projects extends CI_Controller
          // echo '<pre>'; print_r($id); exit;
          $data['id'] = $id;
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
+<<<<<<< HEAD
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
          $data['main_content'] = "projects/project_info"; 
          $this->load->view("includes/template", $data);
@@ -481,6 +482,9 @@ class Projects extends CI_Controller
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
          $data['main_content'] = "projects/staff_info";
           // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
+=======
+         $data['main_content'] = "projects/project_info";   
+>>>>>>> 36c0da79e4822a53575659685493372fa2890cc2
          $this->load->view("includes/template", $data);
     }
 
@@ -569,6 +573,7 @@ class Projects extends CI_Controller
      echo json_encode($response);
     }
 
+<<<<<<< HEAD
     public function save_company_allocation_data()
     {
        $company_name = $this->input->post('company_name');
@@ -595,6 +600,109 @@ class Projects extends CI_Controller
        }
        echo json_encode($response);
 
+=======
+    public function get_staff_info(){
+         $data['id']=base64_decode($_GET['id']);
+         $data['received_company_name'] = base64_decode($_GET['received_company_name']);
+         $data['users'] = $this->model->getData('users', array('status' => '1'));
+         $data['main_content'] = "projects/staff_info";
+
+          // echo '<pre>'; print_r($data['ProjectInfo']); exit;
+         $this->load->view("includes/template",$data);
+    }
+
+    public function getprojectrecord()
+    {
+        $data[] = json_encode($_POST);  
+        $staffid = $_POST['staffid'];
+        $received_company_name = $_POST['received_company_name'];
+        if(!empty($_POST['count']))
+        {
+            $counter=$_POST['count'];
+        }else{
+            $counter = $_POST['length'];
+        }
+        $workstatus = '';
+        if(!empty($_POST['workalloc']))
+        {
+           if($_POST['workalloc'] == 'Assigned')
+           {
+                $workstatus=1;
+           }else{
+                $workstatus =2;
+           }
+        }
+        $rowno = $_POST['start'];
+        $search_text = $_POST['search']['value'];   
+        $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        $data_array=array();
+        foreach($totalData as $category_details_key => $data_row)
+        {
+
+           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['id']."'>";
+
+           $staff_count = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a></span>&nbsp;&nbsp;';
+            $nestedData=array();
+                $nestedData[] = ++$category_details_key;
+                $nestedData[] = $input_type.$data_row['project_name'];
+                $nestedData[] = $staff_count;
+                $nestedData[] = $data_row['received_company_name'];
+                $nestedData[] = $data_row['provided_job_title'];
+                $nestedData[] = $data_row['address1'];
+                $nestedData[] = $data_row['city'];
+                $nestedData[] = $data_row['postal_code'];
+                $nestedData[] = $data_row['country_name'];
+                $nestedData[] = $data_row['username'];
+                $nestedData[] = $data_row['designation_name'];
+                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
+                $nestedData[] = $data_row['id'];
+                $data_array[] = $nestedData;
+              
+       }
+      $output = array(
+            "draw" => intval($_POST['draw']),
+            "recordsTotal" => intval($count_all),
+            "recordsFiltered" => intval($count_filtered),
+            "data" => $data_array,
+        );
+
+        echo json_encode($output);
+    }
+
+    public function getsInfo(){
+        $project_id = $this->input->post('project_id');
+        $staff_info = $this->input->post('staff_info');
+        $assignee_users = $this->input->post('users');
+        $company_name = $this->input->post('company_name');
+        $perUser = count($assignee_users);
+        $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
+        
+        for($i=0;$i<$perUser;$i++){
+
+           $user_id = $assignee_users[$i];
+           $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
+          
+        }
+        foreach($final as $final_key => $final_row){
+            foreach($final_row['staff_info'] as $final_keys =>$final_rows)
+            {
+                $user_id=$final_row['user_id'];
+                $staff_info=$final_rows;
+                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+            }
+        }
+        if($addProjectInfo)
+        {
+            $this->session->set_flashdata("success", "Records Inserted Successfully");
+        }
+        else{
+            $this->session->set_flashdata("error", "Failed To Insert");  
+        }
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
+>>>>>>> 36c0da79e4822a53575659685493372fa2890cc2
     }
 
 }
