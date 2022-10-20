@@ -155,6 +155,11 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+
+        if($this->session->userdata('designation_id') != 8)
+        {
+            $this->db->where('users.designation',$this->session->userdata('designation_id'));  
+        }
         if($workstatus==1)
         {
             $this->db->where('cmpallo.assigned_by !=""');  
@@ -181,6 +186,10 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+        if($this->session->userdata('designation_id') != 8)
+        {
+            $this->db->where('users.designation',$this->session->userdata('designation_id'));  
+        }
         if($workstatus==1)
         {
             $this->db->where('cmpallo.assigned_by !=""');  
@@ -207,6 +216,10 @@ function getprojectrecord(){
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);
+        if($this->session->userdata('designation_id') != 8)
+        {
+            $this->db->where('users.designation',$this->session->userdata('designation_id'));  
+        }
         if($workstatus==1)
         {
             $this->db->where('cmpallo.assigned_by !=""');  

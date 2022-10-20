@@ -11,12 +11,14 @@
 .grey-bg {  
 background-color: #F5F7FA;
 }
+
 </style>
 <form action="<?php echo base_url()?>Projects/getsInfo" method="post">
   
 <div class="content-page">
 <div class="content">
 <div class="container-fluid">
+    <?php if($this->session->userdata('designation_id') == 8 || $this->session->userdata('designation_id') == 2 || $this->session->userdata('designation_id') == 1) {?>
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -39,6 +41,7 @@ background-color: #F5F7FA;
             ?>
         </div>
     </div>
+   
     <div class="row">
     
         <div class="col-3">
@@ -80,9 +83,7 @@ background-color: #F5F7FA;
         </div>
        
     </div>
- 
- <p></p>
- <p><?php echo $this->session->flashdata("success");?></p>
+    <?php } ?>
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
 <div style="overflow-y: auto;">

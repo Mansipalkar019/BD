@@ -849,30 +849,28 @@
                 <?php 
                   $div_count=div_access($project_info,array('research_remark'));
                   $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  if($userinfo == 3){
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
-                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <?php if(in_array('research_remark',$project_info)){ 
+                     if($userinfo == 3){
+                     ?>
                   <div class="col">
                      <label for="research_remark" class="col-form-label">Researcher Remark:</label>
                   </div>
                   <div class="col">
                      <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm" readonly><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
                   </div>
-                 
-               </div>
-               <?php } }else{?>
-                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
-                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <?php }else{ ?>
                   <div class="col">
                      <label for="research_remark" class="col-form-label">Researcher Remark:</label>
                   </div>
                   <div class="col">
                      <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
                   </div>
-                 
+                  <?php } }?>
                </div>
-               <?php } }?>
+               
+                 
                <!-- check input access for Rearcher_remark-->
                <?php 
                   $div_count=div_access($project_info,array('voice_remark'));
@@ -912,19 +910,21 @@
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
-                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
                               <th>Staff Name</th>
-                              <th>Co. Disposition</th>
+                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
                               <th>Status</th>
+                              <th>Co. Disposition</th>
+                            
                            </tr>
                            <?php 
                            foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
                               <tr  <?php if($allstaffinfo_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['first_name'].' '.$allstaffinfo_val['last_name']; ?></td>
                               <td><?= $allstaffinfo_val['comp_name']; ?></td>
-                              <td><?= $allstaffinfo_val['first_name'].$allstaffinfo_val['last_name']; ?></td>
-                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
                               <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
+                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
+                             
                            </tr>
                            <?php } ?>
                         </table>
@@ -935,8 +935,7 @@
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
+                              <th>Staff Name</th>
                               <th>Co. Disposition</th>
                               <th>Status</th>   
                            </tr>
@@ -944,8 +943,7 @@
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
                               <tr  <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
-                              <td><?= $staff_list_val['first_name']; ?></td>
-                              <td><?= $staff_list_val['last_name']; ?></td>
+                              <td><?= $staff_list_val['first_name'].' '.$staff_list_val['last_name']; ?></td>
                               <td><?= $staff_list_val['company_dispostion']; ?></td>
                               <td><?php  if($staff_list_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                            </tr>
