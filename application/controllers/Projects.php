@@ -606,21 +606,15 @@ class Projects extends CI_Controller
             {
                 $user_id=$final_row['user_id'];
                 $staff_info=$final_rows;
-                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'created_by'=>$this->session->userdata('id'),'created_on'=>date('Y-m-d H:i:s'));
-                $addProjectInfo  = $this->model->insertData('staffwise_allocation', $data1);
+                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
             }
         }
         if($addProjectInfo)
         {
-            // $data = array(
-            //     'success' => "Records Inserted Successfully"
-            // );
             $this->session->set_flashdata("success", "Records Inserted Successfully");
         }
         else{
-            // $data = array(
-            //     'error' => "Failed To Insert"
-            // );
             $this->session->set_flashdata("error", "Failed To Insert");  
         }
         redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
