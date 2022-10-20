@@ -1,10 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<<<<<<< HEAD
-=======
        
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
 
 <style>
 .grey-bg {  
@@ -21,11 +18,14 @@ background-color: #F5F7FA;
             </div>
         </div>
     </div>
+
+    <form action="<?php echo base_url('projects/getsInfo'); ?>" method="post">
     <div class="row">
         <div class="col-3">
             <div class="page-title-box">
                <label>Enter count</label>
-               <input type="text" value="" class="form-control" id="count">
+               <input type="text" value="" class="form-control" id="count" >
+               <input type="hidden" name="project_id" value="<?= $id; ?>">
             </div>
         </div>
         <div class="col-3">
@@ -41,7 +41,7 @@ background-color: #F5F7FA;
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Users</label>
-               <select  class="form-control users" id="users[]" multiple>
+               <select  class="form-control users" id="users[]" name="users[]" multiple required="">
                 <option value="">Select Users</option>
                 <?php 
                 foreach($users as $user_key => $user_row)
@@ -62,26 +62,7 @@ background-color: #F5F7FA;
  <p><?php echo $this->session->flashdata("success");?></p>
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <br>
-<div class="row">
-    <div class="col-sm-2">
-         <input type="text" class="form-control" value="" placeholder="Records Counts" name="records_counts" onchange="test()">
-    </div>
-     <div class="col-sm-3">
-           <select class='form-control form-control-sm' id="country"  name='country' multiple="" onchange="getcountrycode(this.value)">
-            <option>Please Select User</option>
-           <?php 
-           foreach($getAllUsers as $val){ ?>
-            <option value="<? $val['id']; ?>"><?= $val['first_name'].' '.$val['last_name'];?></option>
-           <?php }
 
-           ?>
-          </select>
-    </div>
-    <div class="col-sm-2">
-         <input type="button" class="form-control" value="" placeholder="Ex: B2B-19" name="project_name" required="">
-    </div>
-
-</div>
 <br>
 
 
@@ -115,13 +96,9 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
-<<<<<<< HEAD
-<script >
-  
-</script>
-=======
+
+</form>
 <?php //$this->load->view("includes/footer.php"); ?>
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
@@ -129,13 +106,8 @@ background-color: #F5F7FA;
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<<<<<<< HEAD
- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
-=======
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
       
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
 <script type="text/javascript">
      $(".users").select2({
          placeholder: " Select Users",

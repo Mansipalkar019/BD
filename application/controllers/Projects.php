@@ -522,6 +522,7 @@ class Projects extends CI_Controller
          $data['received_company_name'] = base64_decode($_GET['received_company_name']);
          $data['users'] = $this->model->getData('users', array('status' => '1'));
          $data['main_content'] = "projects/staff_info";
+
           // echo '<pre>'; print_r($data['ProjectInfo']); exit;
          $this->load->view("includes/template",$data);
     }
@@ -555,10 +556,13 @@ class Projects extends CI_Controller
         $data_array=array();
         foreach($totalData as $category_details_key => $data_row)
         {
+
+           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['id']."'>";
+
            $staff_count = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a></span>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
-                $nestedData[] = $data_row['project_name'];
+                $nestedData[] = $input_type.$data_row['project_name'];
                 $nestedData[] = $staff_count;
                 $nestedData[] = $data_row['received_company_name'];
                 $nestedData[] = $data_row['provided_job_title'];
@@ -581,6 +585,36 @@ class Projects extends CI_Controller
         );
 
         echo json_encode($output);
+    }
+
+    public function getsInfo(){
+        
+        $project_id = $this->input->post('project_id');
+        $staff_info = $this->input->post('staff_info');
+        $assignee_users = $this->input->post('users');
+        $perUser = count($assignee_users);
+        $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
+
+        //    echo "<pre>";
+        // print_r($assignee_users);
+
+
+        for($i=0;$i<$perUser;$i++){
+
+           $user_id = $assignee_users[$i];
+           $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
+          
+        }
+
+         
+    
+
+
+
+
+
+
+
     }
 
 }
