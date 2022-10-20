@@ -605,7 +605,7 @@ class Projects extends CI_Controller
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
         }
-
+        print_r($final);die();
          
     
 

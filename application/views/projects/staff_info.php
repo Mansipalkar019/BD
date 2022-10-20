@@ -1,3 +1,7 @@
+<?php //$this->load->view("includes/header.php");
+//$this->load->view("includes/navbar.php");
+//$this->load->view("includes/left-sidebar.php");
+//$this->load->view("includes/right-sidebar.php");?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -18,14 +22,11 @@ background-color: #F5F7FA;
             </div>
         </div>
     </div>
-
-    <form action="<?php echo base_url('projects/getsInfo'); ?>" method="post">
     <div class="row">
         <div class="col-3">
             <div class="page-title-box">
                <label>Enter count</label>
-               <input type="text" value="" class="form-control" id="count" >
-               <input type="hidden" name="project_id" value="<?= $id; ?>">
+               <input type="text" value="" class="form-control" id="count">
             </div>
         </div>
         <div class="col-3">
@@ -41,7 +42,7 @@ background-color: #F5F7FA;
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Users</label>
-               <select  class="form-control users" id="users[]" name="users[]" multiple required="">
+               <select  class="form-control users" id="users[]" multiple>
                 <option value="">Select Users</option>
                 <?php 
                 foreach($users as $user_key => $user_row)
@@ -61,11 +62,6 @@ background-color: #F5F7FA;
  <p><?php echo $this->session->flashdata("error");?></p>
  <p><?php echo $this->session->flashdata("success");?></p>
 <div class="grey-bg container-fluid" style="font-size: 100%">
-<br>
-
-<br>
-
-
 <section id="minimal-statistics">
 <div style="overflow-y: auto;">
 <input type="hidden"  value="<?= $id;?>" id="staff_id">
@@ -96,8 +92,6 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
-
-</form>
 <?php //$this->load->view("includes/footer.php"); ?>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -147,18 +141,5 @@ function getworkalloc($value)
 {
     simpletable.ajax.reload(null, false);
 }
-simpletable.column([12]).visible(false);
+//simpletable.column([12]).visible(false);
 </script>
-<script >
-    $("#country").select2({
-         placeholder: " Select Country",
-         allowClear: true
-     });
-
-
-    function test(){
-        alert('hoo')
-    }
-</script>
-      
-      
