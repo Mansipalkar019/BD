@@ -217,6 +217,8 @@ function getprojectrecord(){
         $this->db->limit($rowperpage,$rowno);
         $this->db->group_by('buf.id');
         $query=$this->db->get();
+
+        // echo $this->db->last_query(); die;
         return $this->db->count_all_results();     
     }
     function getProjectInfo($project_id){

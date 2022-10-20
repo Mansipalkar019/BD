@@ -559,7 +559,7 @@ class Projects extends CI_Controller
 
            $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['id']."'>";
 
-           $staff_count = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a></span>&nbsp;&nbsp;';
+           $staff_count = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $input_type.$data_row['project_name'];
@@ -573,7 +573,7 @@ class Projects extends CI_Controller
                 $nestedData[] = $data_row['username'];
                 $nestedData[] = $data_row['designation_name'];
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
-                $nestedData[] = $data_row['staff_id'];
+                $nestedData[] = $data_row['id'];
                 $data_array[] = $nestedData;
               
        }
@@ -588,33 +588,42 @@ class Projects extends CI_Controller
     }
 
     public function getsInfo(){
-        
         $project_id = $this->input->post('project_id');
         $staff_info = $this->input->post('staff_info');
         $assignee_users = $this->input->post('users');
+        $company_name = $this->input->post('company_name');
         $perUser = count($assignee_users);
         $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-
-        //    echo "<pre>";
-        // print_r($assignee_users);
-
-
+        
         for($i=0;$i<$perUser;$i++){
 
            $user_id = $assignee_users[$i];
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
         }
-
-         
-    
-
-
-
-
-
-
-
+        foreach($final as $final_key => $final_row){
+            foreach($final_row['staff_info'] as $final_keys =>$final_rows)
+            {
+                $user_id=$final_row['user_id'];
+                $staff_info=$final_rows;
+                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'created_by'=>$this->session->userdata('id'),'created_on'=>date('Y-m-d H:i:s'));
+                $addProjectInfo  = $this->model->insertData('staffwise_allocation', $data1);
+            }
+        }
+        if($addProjectInfo)
+        {
+            // $data = array(
+            //     'success' => "Records Inserted Successfully"
+            // );
+            $this->session->set_flashdata("success", "Records Inserted Successfully");
+        }
+        else{
+            // $data = array(
+            //     'error' => "Failed To Insert"
+            // );
+            $this->session->set_flashdata("error", "Failed To Insert");  
+        }
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
     }
 
 }
