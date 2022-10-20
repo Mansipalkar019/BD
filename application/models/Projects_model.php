@@ -133,11 +133,11 @@ function getprojectrecord(){
         return $data = $query->result_array();
     }
     function getProjectInfo($project_id){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id');
+        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        // $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
-        // $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
+        $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
+        $this->db->join('users','companywise_allocation.assigned_by = users.id','left');
         $this->db->where('bmp.id',$project_id);
         $this->db->where('bmp.status',1);
         $this->db->group_by('buf.received_company_name');
