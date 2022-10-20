@@ -62,7 +62,7 @@ background-color: #F5F7FA;
 </div>
 
 <script type="text/javascript">
-     var topRows = table.AsEnumerable().OrderBy(o=> o.Field<int>("IDColumn")).Take(2).ToList(); //IdColumn is your actual ID field
+     //var topRows = table.AsEnumerable().OrderBy(o=> o.Field<int>("IDColumn")).Take(2).ToList(); //IdColumn is your actual ID field
 
 
     var simpletable = $('#company_datatable').DataTable({
