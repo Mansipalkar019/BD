@@ -35,6 +35,10 @@
          text-align: center;
          color: #61534e;
          }
+         .row1 {
+            overflow-y: hidden !important;
+            overflow-x: hidden;
+         }
       </style>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -186,50 +190,7 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
-               <?php 
-                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
-                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  ?>
-               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
-                  <?php if(in_array('ca1',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca1" class="col-form-label">CA1:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca1'])) ?  $allInfo[0]['ca1'] : ''  ?>" title="" id="ca1"  name='ca1' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca2',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca2" class="col-form-label">CA2:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca2'])) ?  $allInfo[0]['ca2'] : ''  ?>" title="" id="ca2"  name='ca2' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca3',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca3" class="col-form-label">CA3:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca3'])) ?  $allInfo[0]['ca3'] : ''  ?>" title="" id="ca3"  name='ca3' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca4',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca4" class="col-form-label">CA4:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca4'])) ?  $allInfo[0]['ca4'] : ''  ?>" title="" id="ca4"  name='ca4' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php
-
-                  // echo "<pre>";
-                  // print_r($project_info);
-                  // die;
-
-
-                   if(in_array('ca5',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca5" class="col-form-label">CA5:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="ca5"  name='ca5' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-               </div>
+             
             </div>
             <div class="col">
                <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
@@ -420,17 +381,20 @@
                   <?php if(in_array('country_code',$project_info)){ ?>
                   <div class="col">
                      <label for="country_code" class="col-form-label">Country Code:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly>
+                     <input type="number" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly style="width:50px;">
                   </div>
                   <?php } ?>
-                  <!-- <div class="col">
-                     <label for="area_code" class="col-form-label">Area Code:</label>
-                     <input type="number" value="" title="" id="area_code"  name='area_code' class="form-control form-control-sm" size="6">
-                     </div> -->
+                 
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
                      <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('alternate_number',$project_info)){ ?>
+                  <div class="col">
+                     <label for="alternate_number" class="col-form-label">Alternate Number:</label>
+                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -440,12 +404,7 @@
                   $access9 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access9; ?>>
-                  <?php if(in_array('alternate_number',$project_info)){ ?>
-                  <div class="col">
-                     <label for="alternate_number" class="col-form-label">Alternate Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
+                 
                   <!-- <div class="col">
                      <label for="fax_number" class="col-form-label">Fax Number:</label>
                      <input type="number" value="" title="" id="fax_number"  name='fax_number' class="form-control form-control-sm">
@@ -458,7 +417,7 @@
                   <?php } ?>
                   <!-- check input access for email_address,no_of_employees -->
                   <?php 
-                     $div_count=div_access($project_info,array('email_address','no_of_employees'));
+                     $div_count=div_access($project_info,array('email_address','no_of_employee'));
                      $access10 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                      ?>
                   <!-- <div class="row g-3 align-items-center justify-content-md-center" <?= $access10; ?>>
@@ -468,10 +427,10 @@
                              <input type="email" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="email_address"  name='email_address' class="form-control form-control-sm">
                          </div>
                      <?php } ?> -->
-                  <?php if(in_array('no_of_employees',$project_info)){ ?>
+                  <?php if(in_array('no_of_employee',$project_info)){ ?>
                   <div class="col">
-                     <label for="no_of_employees" class="col-form-label">No. of Employees:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employees"  name='no_of_employees' class="form-control form-control-sm">
+                     <label for="no_of_employee" class="col-form-label">No. of Employees:</label>
+                     <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -513,6 +472,45 @@
                      </div>
                   </div>
                   <?php } ?>
+               </div>
+                 <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+                 <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('ca1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca1" class="col-form-label">CA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca1'])) ?  $allInfo[0]['ca1'] : ''  ?>" title="" id="ca1"  name='ca1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca2" class="col-form-label">CA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca2'])) ?  $allInfo[0]['ca2'] : ''  ?>" title="" id="ca2"  name='ca2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca3" class="col-form-label">CA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca3'])) ?  $allInfo[0]['ca3'] : ''  ?>" title="" id="ca3"  name='ca3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca4" class="col-form-label">CA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca4'])) ?  $allInfo[0]['ca4'] : ''  ?>" title="" id="ca4"  name='ca4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php
+                   if(in_array('ca5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca5" class="col-form-label">CA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="ca5"  name='ca5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  
                </div>
             </div>
          </div>
@@ -631,8 +629,13 @@
                      <label for="staff_url" class="col-form-label">Staff Source URL:</label>
                   </div>
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url' class="form-control form-control-sm">
+                  <div class="input-group mb-3">
+               
+                  <input type="text" class="form-control" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url'  aria-describedby="basic-addon1">
+                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn btn-primary input-group-text" id="basic-addon1"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
                   </div>
+                  </div>
+                  
                   <?php } ?>
                </div>
                <!-- check input access for staff_department -->
@@ -676,6 +679,11 @@
                      <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
                   </div>
+
+                  <div class="col">
+                     <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
+                  </div>
                   <!-- <div class="col">
                      <label for="staff_extension" class="col-form-label">Extension:</label>
                      <input type="text" value="" title="" id="staff_extension"  name='staff_extension' class="form-control form-control-sm">
@@ -686,43 +694,7 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
-               <?php 
-                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
-                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  ?>
-               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
-                  <?php if(in_array('sa1',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa1" class="col-form-label">SA1:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa2',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa2" class="col-form-label">SA2:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa3',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa3" class="col-form-label">SA3:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa4',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa4" class="col-form-label">SA4:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa5',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa5" class="col-form-label">SA5:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-               </div>
+              
                <br><br><br>
             </div>
             <div class="col">
@@ -889,8 +861,47 @@
                </div>
                   <?php }?>
                
+                   <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+               <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('sa1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa1" class="col-form-label">SA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa2" class="col-form-label">SA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa3" class="col-form-label">SA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa4" class="col-form-label">SA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa5" class="col-form-label">SA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+               </div>
                <br><br><br>
             </div>
+
+            
             
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -912,8 +923,8 @@
                               <th>#</th>
                               <th>Staff Name</th>
                               <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
-                              <th>Status</th>
                               <th>Co. Disposition</th>
+                              <th>Status</th>
                             
                            </tr>
                            <?php 
@@ -922,8 +933,9 @@
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $allstaffinfo_val['first_name'].' '.$allstaffinfo_val['last_name']; ?></td>
                               <td><?= $allstaffinfo_val['comp_name']; ?></td>
-                              <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
+   
                               <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
+                              <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                              
                            </tr>
                            <?php } ?>

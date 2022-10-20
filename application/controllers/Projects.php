@@ -407,7 +407,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['allstaffinfo']);die();
+        // print_r($data['project_info']);die();
        
         $this->load->view("projects/add_info", $data);
     }
@@ -617,7 +617,7 @@ class Projects extends CI_Controller
         else{
             $this->session->set_flashdata("error", "Failed To Insert");  
         }
-        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
     }
 
 }
