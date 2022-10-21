@@ -23,12 +23,10 @@ background-color: #F5F7FA;
               <a type='submit' href="<?php echo base_url(); ?>projects/new_projects" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:20px;margin-right:3%;background-image: linear-gradient(to right,#ff4156,#FF9A49);">New Project</a>
             </div>
         </div>
-
-
-
-        
     </div>
- <?php echo $this->session->flashdata("success");?>
+ <?php
+ $designation_name = $this->session->userdata('designation_name');
+  echo $this->session->flashdata("success");?>
 <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
 <div class="grey-bg container-fluid">
 <section id="minimal-statistics">
@@ -47,7 +45,12 @@ background-color: #F5F7FA;
             <th>Company Brief</th>
             <th>Uploaded By</th>
             <th>Created At</th>
-            <th>Action</th>
+            <th>Status</th>
+            <?php 
+            if(($designation_name!='Researcher') AND $designation_name!='Caller'){ 
+                echo "<th>Action</th>";
+            }?>
+
         </tr>
         </thead>
         <tbody>
@@ -64,11 +67,16 @@ background-color: #F5F7FA;
                         <td><?= $value['project_breif'];?></td>
                         <td><?= $value['username'];?></td>
                         <td><?= date(('d-m-Y h:i A'),strtotime($value['created_at']));?></td>
-                        <td>
+                        <td></td>
+                         <?php 
+                         if(($designation_name!='Researcher') AND $designation_name!='Caller'){ ?>
+                           <td>
                             <a href="<?= base_url().$value['file_path']; ?>" title='Download File'><i class="fas fa-download"></i></a>
                            &nbsp; <a href="<?= base_url().$value['file_path']; ?>"><i class="fa-solid fa-pen-to-square"></i></i></a>
                            &nbsp; <a onclick=" return confirm('are you sure you want to delete this project')" href="<?= base_url().'Projects/DeleteProjects/'.$value['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
+                         <?php } ?>
+                        
 
                     </tr>
                     
