@@ -63,7 +63,8 @@ class Projects extends CI_Controller
 
 
     public function upload_project(){
-     
+        // echo "<pre>";
+        // print_r($_POST);die();
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -93,7 +94,7 @@ class Projects extends CI_Controller
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
                 }
                 $spreadsheet = $reader->load($_FILES['uploaded_file']['tmp_name']);
-
+               
                 //mansi
                 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
                 $writer->save($filepath1);
@@ -106,6 +107,7 @@ class Projects extends CI_Controller
                 $created_by = $this->session->userdata('id');
                 $valid = 1;
                 $error = [];
+              
                 for ($i = 1; $i < count($file_data); $i++) {
                     $lower = trim(strtolower($file_data[$i][16]));
                     $check_country = $this->model->selectWhereData('bdcrm_countries', array('name' => $lower), array('name'));
@@ -122,7 +124,7 @@ class Projects extends CI_Controller
                 $data['error'] = $error;
                 $new=[];
                 $this->session->set_flashdata('error', $data);
-
+               
                if($valid > 0) {
                 for ($i = 1; $i < count($file_data); $i++) {
                     $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
@@ -197,8 +199,19 @@ class Projects extends CI_Controller
                         }
                             if($addProjectinputfields){
                                 foreach ($new as $key => $val) {
+                                   
                                     $val['project_id'] = $addProjectInfo;
-                                    $this->model->insertData('bdcrm_uploaded_feildss', $val);
+                                    // $check_user = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('first_name' => $val['first_name'],'provided_staff_email'=>$val['provided_staff_email']));
+                                    // if(!empty($check_user))
+                                    // {
+                                    //     $errors[0]['error'] = "Staff Name already exist";
+                                    //     $errors[0]['class']="Danger";
+                                    //     $data['error'] = $errors;
+                                    //     $this->session->set_flashdata("error", $data);
+                                    // }else{
+                                        $this->model->insertData('bdcrm_uploaded_feildss', $val);
+                                    //}
+                                   
                                 }
                                 $this->session->set_flashdata("success", "Records Uploaded Successfully.");  
                                 redirect(base_url("projects/project_list"), $data);
@@ -213,11 +226,14 @@ class Projects extends CI_Controller
                     }
                 }
             }
+           
             redirect(base_url("projects/new_projects"), $data);
         } else {
             $data = array(
                 'error' => validation_errors()
             );
+            echo "<pre>";
+            print_r($data);die();
             $this->session->set_flashdata("error", $data['error']);
             redirect(base_url("projects/new_projects"));
         }
@@ -400,29 +416,28 @@ class Projects extends CI_Controller
         $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
-        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
-        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid);
+        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id,$cmp_name);
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid,$cmp_name);
         $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
-        // echo "<pre>";
-        // print_r($data['project_info']);die();
-       
+        
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
         foreach($staff as $k =>$val){
             if($val['id']==$rowid){
-                $key = $k+1;
+                
+                    $key = $k+1;                
             }
         }
         $next = (!empty($staff[$key]['id'])) ? $staff[$key]['id'] : $rowid ;
         $final = $key-2;
         $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
         $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
-       
-        return $data;
+      
+       return $data;
     }
 
     public function ProjectInfo($id){
@@ -551,6 +566,8 @@ class Projects extends CI_Controller
         $rowno = $_POST['start'];
         $search_text = $_POST['search']['value'];   
         $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        // echo "<pre>";
+        // print_r($totalData);die();
         $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $data_array=array();

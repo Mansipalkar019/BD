@@ -21,10 +21,38 @@
          font-size: 3.5rem;
          }
          }
+         @media (min-width: 1024px) {
+            .table-bordered>:not(caption)>*>* {
+                  border-width: 0 1px;
+                  font-size: 10px !important;
+               }
+            .col-form-label {
+            font-size: 10px !important;
+         }
+         .form-control-sm {
+               font-size: 10px !important;
+            }
+            .alert .alert-warning .text-center .p-1{
+               font-size: 10 !important;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+               font-size: 10px !important;
+            }
+            .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+            font-size: 10 !important;
+            }
+            .btnsize{
+               font-size: 10 !important;
+            }
+            .container-fluid {
+               padding: 10px;
+               margin: 0px;
+            }
+         }
+        
          /* Show it is fixed to the top */
          body {
-         min-height: 45rem;
-         padding-top: 4.5rem;
+        padding-top: 4.5rem;
          }
          .swal-text {
          padding: 17px;
@@ -352,7 +380,7 @@
                </div>
                <div class="row g3 justify-content-md-center mt-4">
                <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
                   </div>
                   <div class="col-auto">
                      <div class="input-group mb-3">
@@ -364,10 +392,10 @@
                      </div>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="submit" id="update_company">Update</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="submit" id="update_company">Update</button>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
                   </div>
                </div>
             </div>
@@ -632,7 +660,7 @@
                   <div class="input-group mb-3">
                
                   <input type="text" class="form-control" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url'  aria-describedby="basic-addon1">
-                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn btn-primary input-group-text" id="basic-addon1"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
                   </div>
                   </div>
                   
@@ -664,8 +692,12 @@
                      <label for="staff_email_harvesting" class="col-form-label">Email Source URL:</label>
                   </div>
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm">
-                  </div>
+                  <div class="input-group mb-3">
+               
+                  <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm">
+                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+               </div>
+                     </div>
                   <?php } ?>
                </div>
                <!-- check input access for staff_direct_tel,staff_mobile -->
@@ -680,10 +712,6 @@
                      <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
                   </div>
 
-                  <div class="col">
-                     <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
-                  </div>
                   <!-- <div class="col">
                      <label for="staff_extension" class="col-form-label">Extension:</label>
                      <input type="text" value="" title="" id="staff_extension"  name='staff_extension' class="form-control form-control-sm">
@@ -973,12 +1001,12 @@
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
-                           foreach($company_list as $company_list_key => $company_list_val) {?>
-                           <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($company_list_val['project_id']).'/'.base64_encode($company_list_val['id']).'/'.base64_encode($company_list_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
-                              <td><?= $company_list_val['received_company_name']; ?></td>
-                              <td><?= $company_list_val['staffcount']; ?></td>
-                              <td><?= $company_list_val['company_dispostion']; ?></td>
+                           foreach($company_list as $allstaffinfo_key => $allstaffinfo_val) {?>
+                           <tr class="" <?php if($allstaffinfo_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['received_company_name']; ?></td>
+                              <td><?= $allstaffinfo_val['staffcount']; ?></td>
+                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -1011,9 +1039,9 @@
          });
          $(document).ready(function() {
          
-         $('.row1').css({
-             height: ($('body').height() - 11) / 2 //divide the body into to 2 rows
-         });
+         // $('.row1').css({
+         //     height: ($('body').height() - 11) / 2 //divide the body into to 2 rows
+         // });
          
          // // populate href of first,prev,next & last buttons...
          // $('#first').attr('href', $('table#company_table').first().find('a').attr('href'));
