@@ -444,8 +444,70 @@ class Projects extends CI_Controller
 
     public function ProjectInfo($id){
          $id=base64_decode($id);
+         $data['id'] = $id;
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
-         $data['main_content'] = "projects/project_info";   
+         $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
+         $data['main_content'] = "projects/project_info"; 
+         $this->load->view("includes/template", $data);
+    }
+    // public function display_all_company_staff($id="") {
+    //     // $id=$id;
+    //     $data[] = $_POST;
+    //    // echo '<pre>'; print_r($data); exit;
+    //     $id = $data[0]['id'];
+    //     // $from_date = $data[0]['from_date'];
+    //     // $to_date = $data[0]['to_date'];
+    //     // $payment_type = $data[0]['payment_type'];
+    //     // $order_source = $data[0]['order_source'];
+    //     // $member_type = $data[0]['member_type'];
+    //     $rowno = $data[0]['start'];
+    //     $rowperpage = $data[0]['length'];
+    //     $search_text = $data[0]['search']['value'];
+      
+    //     $this->load->model('company_staff_model');
+    //     $company_staff = $this->company_staff_model->getData($id,$search_text,$rowno,$rowperpage);
+    //     $count = $this->company_staff_model->getrecordCount($id,$search_text,$rowno,$rowperpage);
+    //     $data2 = array();
+    //     if (!empty($company_staff)) {
+    //         $sr_no = 1;
+    //         foreach ($company_staff as $company_staff_key => $company_staff_row) {
+    //            $count_data ="<span><a href='".base_url().'Projects/get_staff_info?id='.base64_encode($company_staff_row['project_id']).'&received_company_name='.base64_encode($company_staff_row['received_company_name'])."'class='badge btn btn-primary btn-sm'>".$company_staff_row['staff_count']."</a></span>";
+    //            $view ="<a href='".base_url().'Projects/my_projects/'.base64_encode($company_staff_row['project_id']).'/'.base64_encode($company_staff_row['id']).'/'.base64_encode($company_staff_row['received_company_name'])."'><i class='fa-solid fa-eye'></i></i></a>";
+    //             $sub_array = array();
+    //             $sub_array[] = $sr_no++;
+    //             $sub_array[] = $count_data;
+    //             $sub_array[] = $company_staff_row['received_company_name'];
+    //             $sub_array[] = date(('d-m-Y h:i A'),strtotime($company_staff_row['created_date']));
+    //             $sub_array[] = $view;                
+    //             $data2[] = $sub_array;
+    //         }
+    //     }
+    //     $output = array("draw" => intval($_POST["draw"]), "recordsTotal" => $count, "recordsFiltered" => $count, "data" => $data2);
+    //     echo json_encode($output);
+    // }
+     public function display_all_company_staff(){
+            $id= $this->input->post('id');
+            $slot_count= $this->input->post('slot_count');
+            $workalloc= $this->input->post('workalloc');
+         
+            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc);  
+            if(!empty($ProjectInfo)){
+               foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
+                         $total_count[]=$ProjectInfo_row['staff_count'];
+               }     
+            }
+              
+            $response['data']=$ProjectInfo;
+            $response['total_staff_count'] = array_sum($total_count);
+            // echo '<pre>'; print_r($response); exit;
+            echo json_encode($response);  
+    }
+    public function get_staff_info(){
+         $id=base64_decode($_GET['id']);
+         $received_company_name = base64_decode($_GET['received_company_name']);
+         $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['main_content'] = "projects/staff_info";
+          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
 
@@ -581,15 +643,41 @@ class Projects extends CI_Controller
      echo json_encode($response);
     }
 
-    public function get_staff_info(){
-         $data['id']=base64_decode($_GET['id']);
-         $data['received_company_name'] = base64_decode($_GET['received_company_name']);
-         $data['users'] = $this->model->getData('users', array('status' => '1'));
-         $data['main_content'] = "projects/staff_info";
+    public function save_company_allocation_data()
+    {
+       $company_name = $this->input->post('company_name');
+       $user_list = $this->input->post('user_list');
+       $project_id = $this->input->post('project_id');
+       foreach($company_name as $company_name_key => $company_name_row){
+            $company_name_id[] = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name_row,'project_id'=>$project_id),array('id','project_id'),false);
+       }
+       if(!empty($company_name_id)){
 
-          // echo '<pre>'; print_r($data['ProjectInfo']); exit;
-         $this->load->view("includes/template",$data);
+        foreach ($company_name_id as $company_name_id_key => $company_name_id_row) {
+            foreach ($company_name_id_row as $company_name_id_row_key => $company_name_id_row_row) {
+                    $curl_data = array(
+                        'project_id'=> $project_id,
+                        'staff_id' =>$company_name_id_row_row['id'],
+                        'assigned_by'=> $user_list,
+                    );
+
+                    $this->model->insertData('companywise_allocation',$curl_data);                
+            }
+        }
+        $response['message'] = "Company Allocation Inserted Successfully";
+        $response['success'] = true;
+       }
+       echo json_encode($response);
     }
+    // public function get_staff_info(){
+    //      $data['id']=base64_decode($_GET['id']);
+    //      $data['received_company_name'] = base64_decode($_GET['received_company_name']);
+    //      $data['users'] = $this->model->getData('users', array('status' => '1'));
+    //      $data['main_content'] = "projects/staff_info";
+
+    //       // echo '<pre>'; print_r($data['ProjectInfo']); exit;
+    //      $this->load->view("includes/template",$data);
+    // }
 
     public function getprojectrecord()
     {
