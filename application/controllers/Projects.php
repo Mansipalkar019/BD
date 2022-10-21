@@ -407,7 +407,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['staff_list']);die();
+        // print_r($data['project_info']);die();
        
         $this->load->view("projects/add_info", $data);
     }
