@@ -146,8 +146,8 @@ class Projects extends CI_Controller
                     $file_datas[$i]['postal_code'] = $file_data[$i][14];
                     $file_datas[$i]['provided_country'] = $c_id = (!empty($fInfo)) ? $fInfo['id'] : '';
                     $file_datas[$i]['country_code'] = $phone_code = (!empty($fInfo)) ? $fInfo['phonecode'] : '';
-                    $file_datas[$i]['country'] = $file_data[$i][16];
-                    $file_datas[$i]['region'] = $file_data[$i][17];
+                    $file_datas[$i]['country'] = $c_id = (!empty($fInfo)) ? $fInfo['id'] : '';
+                    $file_datas[$i]['region'] = $c_id = (!empty($fInfo)) ? $fInfo['region'] : '';
                     $file_datas[$i]['provided_staff_email'] = $file_data[$i][18];
                     $file_datas[$i]['staff_email'] = $file_data[$i][19];
                     $file_datas[$i]['assumed_email'] = $file_data[$i][20];
@@ -238,7 +238,7 @@ class Projects extends CI_Controller
    
     public function getCountryInfoByName($country){
             $country_name = strtolower($country);
-            $sql = "SELECT id,phonecode FROM `bdcrm_countries` WHERE lower(name) = '$country_name' AND status='1'"; 
+            $sql = "SELECT id,phonecode,region FROM `bdcrm_countries` WHERE lower(name) = '$country_name' AND status='1'"; 
             $query = $this->db->query($sql);
             return $row = $query->row_array();
     }
@@ -382,9 +382,9 @@ class Projects extends CI_Controller
 
     public function my_projects($pid,$rid,$cmp_name='')
     {
+
         $project_id=base64_decode($pid);
-        $project_id=base64_decode($pid);
-        $rowid=base64_decode($rid);
+        $rowid=base64_decode($rid); 
         $cmp_name=base64_decode($cmp_name);
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
@@ -396,6 +396,7 @@ class Projects extends CI_Controller
         $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
         $data['webDispos'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
         $data['VoiceDispos'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
+        $data['industry'] = $this->model->getData('bdcrm_industries', array('status' => '1'));
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
         $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
@@ -435,13 +436,13 @@ class Projects extends CI_Controller
     public function getcountrycode()
     {
         $country = $this->input->post('country');
-        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('phonecode'));
-        echo json_encode($check_country);
+        $country_info = $this->model->getData('bdcrm_countries', array('id' => $country,'status' => '1'))[0];
+        echo json_encode($country_info);
     }
 
     public function update_company_details()
     {
-        //print_r($_POST);die();
+
         $project_id=$this->input->post('project_id');
         $staff_id=$this->input->post('staff_id');
         $company_name=$this->input->post('company_name');
@@ -469,7 +470,7 @@ class Projects extends CI_Controller
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
         $revenue=$this->input->post('revenue');
-        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
+        //$check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
             'company_name'=>$company_name,
             'address1'=>$address_1,
@@ -478,7 +479,7 @@ class Projects extends CI_Controller
             'city'=>$city_name,
             'postal_code'=>$postal_code,
             'state_county'=>$state_name,
-            'country'=>$check_country['name'],
+            'country'=>$country,
             'country_code'=>$country_code,
             'region'=>$region_name,
             'address_souce_url'=>$address_source_url,
@@ -554,10 +555,11 @@ class Projects extends CI_Controller
         $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $data_array=array();
+
         foreach($totalData as $category_details_key => $data_row)
         {
            $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['staff_id']."'>";
-           $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;';
+          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $input_type.$data_row['project_name'];
@@ -634,15 +636,7 @@ class Projects extends CI_Controller
         unset($data['user_id']);
         $data['status'] = 1;
         $datas = $this->model->getData('companywise_allocation', $data);
-        //  echo $this->db->last_query(); die;
-        // echo "<pre>";
-        
-        // print_r($data);
-        // // die;
-
-
-
-
+      
 
        if(!empty($datas)){
         //echo "hello"; die;

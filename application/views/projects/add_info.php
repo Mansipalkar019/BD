@@ -169,7 +169,7 @@
                         <option value=''>Select Country</option>
                         <?php 
                            foreach ($country as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if(strtolower($allInfo[0]['country'])==strtolower($val['name'])){?>selected<?php } ?>><?= $val['name']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if(($allInfo[0]['country'])==($val['id'])){?>selected<?php } ?>><?= $val['name']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -450,12 +450,31 @@
                   $access11 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access11; ?>>
-                  <?php if(in_array('industry',$project_info)){ ?>
+               <?php if(in_array('industry',$project_info)){ ?>
                   <div class="col">
                      <label for="industry" class="col-form-label">Industry:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['industry'])) ?  $allInfo[0]['industry'] : ''  ?>" title="" id="industry"  name='industry' class="form-control form-control-sm">
+                     <select class='form-control form-control-sm' id="industry"  name='industry'>
+                        <option value=''>Select Industry</option>
+                        <?php 
+                      foreach ($industry as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if(($allInfo[0]['industry'])==($val['id'])){?>selected<?php } ?>><?= $val['Industries']; ?></option>
+                        <?php }
+                           ?>
+                     </select>
                   </div>
                   <?php } ?>
+
+
+
+                   
+
+
+
+
+
+
+
+
                   <?php if(in_array('revenue',$project_info)){ ?>
                   <div class="col">
                      <label for="revenue" class="col-form-label">Revenue:</label>
@@ -1000,6 +1019,15 @@
          placeholder: " Select Country",
          allowClear: true
          });
+
+         $("#industry").select2({
+         placeholder: " Select Country",
+         allowClear: true
+         });
+
+
+         
+
       
          $("#web_staff_disposition").select2({
          placeholder: " Select Staff Voice Disposition",
@@ -1063,7 +1091,7 @@
                country_code:$('#country_code').val(),
                tel_number:$('#tel_number').val(),
                alternate_number:$('#alternate_number').val(),
-               industry:$('#industry').val(),
+               industry:$("#industry option:selected").val(), 
                revenue:$('#revenue').val(),
                revenue_currency:$('#revenue_currency').text(),
                }];
@@ -1078,7 +1106,7 @@
          $('#paste_company').click(function(){
             var getitems=JSON.parse(localStorage.getItem('company_details'));
             console.log(getitems);
-            console.log(getitems[0].company_name);
+            
             $('#company_name').val(getitems[0].company_name);
             $('#address_1').val(getitems[0].address_1);
             $('#address_2').val(getitems[0].address_2);
@@ -1087,6 +1115,7 @@
             $('#postal_code').val(getitems[0].postal_code);
             $('#state_name').val(getitems[0].state_name);
             $('#country').val(getitems[0].country).trigger('change');
+            $('#industry').val(getitems[0].industry).trigger('change');
             $('#region_name').val(getitems[0].region_name);
             $('#address_source_url').val(getitems[0].address_source_url);
             $('#ca1').val(getitems[0].ca1);
@@ -1102,7 +1131,7 @@
             $('#country_code').val(getitems[0].country_code);
             $('#tel_number').val(getitems[0].tel_number);
             $('#alternate_number').val(getitems[0].alternate_number);
-            $('#industry').val(getitems[0].industry);
+            
             $('#revenue').val(getitems[0].revenue);
             $('#revenue_currency').text(getitems[0].revenue_currency).trigger('change');
          });
@@ -1117,6 +1146,7 @@
                },
                success: function (data) {
                   $("#country_code").val(data.phonecode);
+                  $("#region_name").val(data.region);
                }
             });
          }
