@@ -63,7 +63,8 @@ class Projects extends CI_Controller
 
 
     public function upload_project(){
-     
+        // echo "<pre>";
+        // print_r($_POST);die();
         $this->form_validation->set_rules("project_name", "Project Name", "trim|min_length[5]|max_length[100]|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("project_type", "Project Type", "trim|xss_clean", array("required" => "%s is required"));
         $this->form_validation->set_rules("task_type", "Task Type", "trim|xss_clean", array("required" => "%s is required"));
@@ -93,7 +94,7 @@ class Projects extends CI_Controller
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
                 }
                 $spreadsheet = $reader->load($_FILES['uploaded_file']['tmp_name']);
-
+               
                 //mansi
                 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
                 $writer->save($filepath1);
@@ -106,6 +107,7 @@ class Projects extends CI_Controller
                 $created_by = $this->session->userdata('id');
                 $valid = 1;
                 $error = [];
+              
                 for ($i = 1; $i < count($file_data); $i++) {
                     $lower = trim(strtolower($file_data[$i][16]));
                     $check_country = $this->model->selectWhereData('bdcrm_countries', array('name' => $lower), array('name'));
@@ -122,7 +124,7 @@ class Projects extends CI_Controller
                 $data['error'] = $error;
                 $new=[];
                 $this->session->set_flashdata('error', $data);
-
+               
                if($valid > 0) {
                 for ($i = 1; $i < count($file_data); $i++) {
                     $fInfo = (!empty($file_data[$i][16])) ? $this->getCountryInfoByName($file_data[$i][16]) : '' ;
@@ -146,8 +148,8 @@ class Projects extends CI_Controller
                     $file_datas[$i]['postal_code'] = $file_data[$i][14];
                     $file_datas[$i]['provided_country'] = $c_id = (!empty($fInfo)) ? $fInfo['id'] : '';
                     $file_datas[$i]['country_code'] = $phone_code = (!empty($fInfo)) ? $fInfo['phonecode'] : '';
-                    $file_datas[$i]['country'] = $file_data[$i][16];
-                    $file_datas[$i]['region'] = $file_data[$i][17];
+                    $file_datas[$i]['country'] = $c_id = (!empty($fInfo)) ? $fInfo['id'] : '';
+                    $file_datas[$i]['region'] = $c_id = (!empty($fInfo)) ? $fInfo['region'] : '';
                     $file_datas[$i]['provided_staff_email'] = $file_data[$i][18];
                     $file_datas[$i]['staff_email'] = $file_data[$i][19];
                     $file_datas[$i]['assumed_email'] = $file_data[$i][20];
@@ -197,8 +199,19 @@ class Projects extends CI_Controller
                         }
                             if($addProjectinputfields){
                                 foreach ($new as $key => $val) {
+                                   
                                     $val['project_id'] = $addProjectInfo;
-                                    $this->model->insertData('bdcrm_uploaded_feildss', $val);
+                                    // $check_user = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('first_name' => $val['first_name'],'provided_staff_email'=>$val['provided_staff_email']));
+                                    // if(!empty($check_user))
+                                    // {
+                                    //     $errors[0]['error'] = "Staff Name already exist";
+                                    //     $errors[0]['class']="Danger";
+                                    //     $data['error'] = $errors;
+                                    //     $this->session->set_flashdata("error", $data);
+                                    // }else{
+                                        $this->model->insertData('bdcrm_uploaded_feildss', $val);
+                                    //}
+                                   
                                 }
                                 $this->session->set_flashdata("success", "Records Uploaded Successfully.");  
                                 redirect(base_url("projects/project_list"), $data);
@@ -213,11 +226,14 @@ class Projects extends CI_Controller
                     }
                 }
             }
+           
             redirect(base_url("projects/new_projects"), $data);
         } else {
             $data = array(
                 'error' => validation_errors()
             );
+            echo "<pre>";
+            print_r($data);die();
             $this->session->set_flashdata("error", $data['error']);
             redirect(base_url("projects/new_projects"));
         }
@@ -238,7 +254,7 @@ class Projects extends CI_Controller
    
     public function getCountryInfoByName($country){
             $country_name = strtolower($country);
-            $sql = "SELECT id,phonecode FROM `bdcrm_countries` WHERE lower(name) = '$country_name' AND status='1'"; 
+            $sql = "SELECT id,phonecode,region FROM `bdcrm_countries` WHERE lower(name) = '$country_name' AND status='1'"; 
             $query = $this->db->query($sql);
             return $row = $query->row_array();
     }
@@ -382,9 +398,9 @@ class Projects extends CI_Controller
 
     public function my_projects($pid,$rid,$cmp_name='')
     {
+
         $project_id=base64_decode($pid);
-        $project_id=base64_decode($pid);
-        $rowid=base64_decode($rid);
+        $rowid=base64_decode($rid); 
         $cmp_name=base64_decode($cmp_name);
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
@@ -396,33 +412,33 @@ class Projects extends CI_Controller
         $data['currency'] = $this->model->getData('bdcrm_currency', array('status' => '1'));
         $data['webDispos'] = $this->model->getData('bdcrm_staff_web_disposition', array('status' => '1'));
         $data['VoiceDispos'] = $this->model->getData('bdcrm_staff_voice_dispositions', array('status' => '1'));
+        $data['industry'] = $this->model->getData('bdcrm_industries', array('status' => '1'));
         $data['name_prefix'] = $this->model->getData('bdcrm_name_prefix', array('status' => '1'));
         $data['project_info']=$this->Projects_model->get_project_input_fields($project_id);
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
-        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id);
-        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid);
+        $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id,$cmp_name);
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid,$cmp_name);
         $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
-        // echo "<pre>";
-        // print_r($data['allstaffinfo']);die();
-       
+        
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
         foreach($staff as $k =>$val){
             if($val['id']==$rowid){
-                $key = $k+1;
+                
+                    $key = $k+1;                
             }
         }
         $next = (!empty($staff[$key]['id'])) ? $staff[$key]['id'] : $rowid ;
         $final = $key-2;
         $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
         $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
-       
-        return $data;
+      
+       return $data;
     }
 
     public function ProjectInfo($id){
@@ -497,13 +513,13 @@ class Projects extends CI_Controller
     public function getcountrycode()
     {
         $country = $this->input->post('country');
-        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('phonecode'));
-        echo json_encode($check_country);
+        $country_info = $this->model->getData('bdcrm_countries', array('id' => $country,'status' => '1'))[0];
+        echo json_encode($country_info);
     }
 
     public function update_company_details()
     {
-        //print_r($_POST);die();
+
         $project_id=$this->input->post('project_id');
         $staff_id=$this->input->post('staff_id');
         $company_name=$this->input->post('company_name');
@@ -531,7 +547,7 @@ class Projects extends CI_Controller
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
         $revenue=$this->input->post('revenue');
-        $check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
+        //$check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
             'company_name'=>$company_name,
             'address1'=>$address_1,
@@ -540,7 +556,7 @@ class Projects extends CI_Controller
             'city'=>$city_name,
             'postal_code'=>$postal_code,
             'state_county'=>$state_name,
-            'country'=>$check_country['name'],
+            'country'=>$country,
             'country_code'=>$country_code,
             'region'=>$region_name,
             'address_souce_url'=>$address_source_url,
@@ -639,32 +655,42 @@ class Projects extends CI_Controller
         $rowno = $_POST['start'];
         $search_text = $_POST['search']['value'];   
         $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
+        // echo "<pre>";
+        // print_r($totalData);die();
         $count_filtered=$this->Projects_model->get_no_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $count_all = $this->Projects_model->get_all_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
         $data_array=array();
+
         foreach($totalData as $category_details_key => $data_row)
         {
-
-           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['id']."'>";
-
-           $staff_count = '<span><a class="badge btn btn-primary btn-sm" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a></span>&nbsp;&nbsp;';
+           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['staff_id']."'>";
+          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $input_type.$data_row['project_name'];
-                $nestedData[] = $staff_count;
+                $nestedData[] = $staff_info;
+                $nestedData[] = $data_row['industry'];
+                $nestedData[] = $data_row['provided_staff_email'];
                 $nestedData[] = $data_row['received_company_name'];
+                $nestedData[] = $data_row['company_disposition'];
+                $nestedData[] = $data_row['web_disposition'];
+                $nestedData[] = $data_row['website_url'];
+                $nestedData[] = $data_row['no_of_emp'];
+                $nestedData[] = $data_row['revenue'];
                 $nestedData[] = $data_row['provided_job_title'];
                 $nestedData[] = $data_row['address1'];
-                $nestedData[] = $data_row['city'];
-                $nestedData[] = $data_row['postal_code'];
                 $nestedData[] = $data_row['country_name'];
-                $nestedData[] = $data_row['username'];
-                $nestedData[] = $data_row['designation_name'];
+                $nestedData[] = $data_row['region'];
+                $nestedData[] = $data_row['web_staff_disposition'];
+                $nestedData[] = $data_row['voice_staff_disposition'];
+                $nestedData[] = "<span class='badge btn btn-primary btn-sm'>".$data_row['assigned_to']."</span>";
+                $nestedData[] = "<span class='badge btn btn-warning btn-sm'>".$data_row['assigned_by']."</span>";
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
-                $nestedData[] = $data_row['id'];
+                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['assigned_at']));
                 $data_array[] = $nestedData;
               
-       }
+    
+   }
       $output = array(
             "draw" => intval($_POST['draw']),
             "recordsTotal" => intval($count_all),
@@ -682,9 +708,7 @@ class Projects extends CI_Controller
         $company_name = $this->input->post('company_name');
         $perUser = count($assignee_users);
         $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-        
         for($i=0;$i<$perUser;$i++){
-
            $user_id = $assignee_users[$i];
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
@@ -695,6 +719,8 @@ class Projects extends CI_Controller
                 $user_id=$final_row['user_id'];
                 $staff_info=$final_rows;
                 $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                   $checkRecordsInfo  = $this->isDataExist($data1); 
+
                 $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
             }
         }
@@ -705,7 +731,40 @@ class Projects extends CI_Controller
         else{
             $this->session->set_flashdata("error", "Failed To Insert");  
         }
-        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
+    }
+
+
+    public function isDataExist($data){
+        unset($data['assigned_at']);
+        unset($data['assigned_by']);
+        unset($data['user_id']);
+        $data['status'] = 1;
+        $datas = $this->model->getData('companywise_allocation', $data);
+      
+
+       if(!empty($datas)){
+        //echo "hello"; die;
+        if(count($datas) > 0){
+
+            echo count($datas); 
+            unset($data['status']);
+
+
+           
+
+
+            $deactivateAssignee= $this->model->updateData("companywise_allocation", array('status'=>0), $data);
+             echo $this->db->last_query(); 
+        // echo $this->db->last_query(); die;
+        }
+    }
+    else
+    {
+        //echo "hii";
+    }
+
+        return true;
     }
 
 }

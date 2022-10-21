@@ -11,7 +11,10 @@
 .grey-bg {  
 background-color: #F5F7FA;
 }
-
+.select2-selection--multiple .select2-selection__choice {
+    background-color:black !important;
+    border-radius: 12px !important;
+    }
 </style>
 <form action="<?php echo base_url()?>Projects/getsInfo" method="post">
   
@@ -89,25 +92,32 @@ background-color: #F5F7FA;
 <div style="overflow-y: auto;">
 <input type="hidden"  value="<?= $id;?>" id="staff_id">
 <input type="hidden"  value="<?= $received_company_name; ?>" id="received_company_name">
-    <table id="datatable1" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
+    <table id="datatable1" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%" style="font-size: 88%;">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Project Name</th>
-            <th>Staff Name</th>
-            <th>Company Received</th>
-            <th>Provided Job Title</th>
+            <th>Project</th>
+            <th>Staff </th>
+            <th>Industry</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Company Dispo</th>
+            <th>Company Web Dispo</th>
+            <th>Website</th>
+            <th>Emp Size</th>
+            <th>Revenue</th>
+            <th>Job Title</th>
             <th>Address</th>
-            <th>City</th>
-            <th>Postal Code</th>
             <th>Country</th>
-            <th>Assigned By</th>
-            <th>Designation</th>
+            <th>Region</th>
+            <th>Web Staff Disposition</th>
+            <th>Web Voice Disposition</th>
+            <th>Ass. To</th>
+            <th>Ass. By</th>
             <th>Created At</th>
-            <th>Staff Id</th>
+            <th>Assigned At</th>
         </tr>
         </thead>
-       
 </table>
 </div>
 </section>
@@ -165,5 +175,5 @@ function getworkalloc($value)
 {
     simpletable.ajax.reload(null, false);
 }
-simpletable.column([12]).visible(false);
+//simpletable.column([12]).visible(false);
 </script>
