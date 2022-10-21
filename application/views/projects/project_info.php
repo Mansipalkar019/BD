@@ -26,16 +26,41 @@ background-color: #F5F7FA;
         <input type="hidden" id="id" name="id" value="<?=$id?>">
         <div class="col-md-4">
             <label>Slot Allocation Count</label>
-            <input type="text" name="slot_allocation" id="slot_allocation" class="form-control">
+            <input type="text" name="slot_allocation" id="slot_allocation" class="form-control company_allocation">
         </div>
         <div class="col-md-4">
-            <label>User List</label>
-            <select class="form-control select2" id="user_list" name="user_list">
-                <option value=""></option>
-                <?php foreach ($user_list as $user_list_key => $user_list_row) { ?>
-                    <option value="<?=$user_list_row['id']?>"><?=$user_list_row['first_name']." ".$user_list_row['last_name']?></option>
-                <?php }?>
-            </select>
+            <div class="form-group">
+                <div class="page-title-box">
+                       <label>Select Status</label>
+                       <select  class="form-control company_allocation" id="workalloc" name="workalloc">
+                       <option value="">Select Work Type</option>
+                        <option value="Assigned">Assigned</option>
+                        <option value="Unassigned">Unassigned</option>
+                        </select>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>User List</label>
+                <select class="form-control select2 company_allocation" id="user_list" name="user_list">
+                    <option value=""></option>
+                    <?php foreach ($user_list as $user_list_key => $user_list_row) { ?>
+                        <option value="<?=$user_list_row['id']?>"><?=$user_list_row['first_name']." ".$user_list_row['last_name']?></option>
+                    <?php }?>
+                </select>
+            </div>
+            
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Total Staff Count</label>
+                <div>
+                    <span id="total_staff_count"></span>
+                </div>
+            </div>
+            
         </div>
        
        
@@ -75,47 +100,23 @@ background-color: #F5F7FA;
 
 <script type="text/javascript">
     var frontend_path = "<?=base_url()?>";
-
-// var simpletable = $('#company_staff_count_datatable').DataTable({
-//       // "dom": 'lBfrtip',
-//     'processing': true,
-//     'serverSide': true,
-//     'serverMethod': 'post',
-//     'language': {
-//         'processing': '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>'
-//     },
-//     'ajax': {
-//         'url': frontend_path + 'projects/display_all_company_staff',
-//         "data": function (data) {
-//             data.id = $('#id').val();
-//             data.slot_allocation = $('#slot_allocation').val();
-//             // data.payment_type = $('#payment_type').val();
-//             // data.order_source = $('#order_source').val();
-//             // data.member_type = $('#member_type').val();
-//         }
-//     }, 
-//     createdRow: function (row, data, index) {
-//         $('td', row).eq(2).addClass('text-capitalize');
-//     },
-// });
-
-//     $('#btn-search-by-date').click(function () {
-//         var slot_allocation = $('#slot_allocation').val();
-//         var  d = simpletable.row(12).data();
-//             console.log(d);         
-//         // for (var i = 0; i < slot_allocation; i++) {
-//         //    d = simpletable.row(i).data();
-//         // }
-//     });
-
 $(document).ready(function (e) {
-    var id= $('#id').val();
     var table = $('#company_staff_count_datatable').DataTable({
-      "ajax": {
-       url:frontend_path + "projects/display_all_company_staff",
-       data: { id: id },
-       type: "post", 
-    },
+        'ajax': {
+           'url':frontend_path + 'projects/display_all_company_staff',
+           'type':"POST",
+           'data': function(data){
+              // Read values
+                var id= $('#id').val();
+                var slot_count = $('#slot_allocation').val();
+                var workalloc = $('#workalloc').val();
+              // Append to data
+              data.id = id;
+              data.slot_count = slot_count;
+              data.workalloc = workalloc;
+           }
+        },
+     
       "columns": [{
             "data": null
          },
@@ -150,7 +151,37 @@ $(document).ready(function (e) {
          [0, 'desc']
       ]
    });
-   //console.log(table);
+
+    $('#slot_allocation').keyup(function(){
+        table.ajax.reload();
+         var id= $('#id').val();
+                var slot_count = $('#slot_allocation').val();
+                var workalloc = $('#workalloc').val();
+         $.ajax({
+          url: frontend_path +'projects/display_all_company_staff',
+          type: 'post',
+          dataType: "json",
+          data: {id: id,slot_count:slot_count,workalloc:workalloc},
+          success: function( response ) { 
+            $('#total_staff_count').text(response.total_staff_count);
+          },
+        });
+    });
+    $('#workalloc').change(function(){
+        table.ajax.reload();
+        var id= $('#id').val();
+                var slot_count = $('#slot_allocation').val();
+                var workalloc = $('#workalloc').val();
+         $.ajax({
+          url: frontend_path +'projects/display_all_company_staff',
+          type: 'post',
+          dataType: "json",
+          data: {id: id,slot_count:slot_count,workalloc:workalloc},
+          success: function( response ) { 
+            $('#total_staff_count').text(response.total_staff_count);
+          },
+        });
+    });
    table.on('order.dt search.dt', function () {
       table.column(0, {
          search: 'applied',
@@ -159,90 +190,89 @@ $(document).ready(function (e) {
          cell.innerHTML = i + 1;
       });
    }).draw();
-var d="";
+    
 
-   $('#btn-search-by-date').click(function () {
-        var company_name =[];
-        var slot_allocation = $('#slot_allocation').val();
 
-        var user_list = $('#user_list').val();
-        if(slot_allocation==""){
-            swal({
-               title: 'Warning',
-               text: "Please Enter Slot Allocation Count",
-               icon: 'error',
-               showCancelButton: true,
-               confirmButtonColor: '#FD7E14',
-               confirmButtonText: 'Yes!',
-               cancelButtonText: 'No.'
-             }).then(() => {
-               if (result.value) {
-                 location.reload();
-               } 
-             });
-        }else{
-            for (var i = 0; i < slot_allocation; i++) {
-             // var row = $(this).closest('tr');  
-             // d = table.row(i).data();
-             d = table.rows({search:'applied'}).nodes()[i];
-             var td = d.getElementsByTagName("td")[2];
-             var assigned_td = d.getElementsByTagName("td")[4];
-             var assigned_td_1 = assigned_td.innerHTML;
-             if(assigned_td_1){
-                slot_allocation++;
-             } else{
-                var td_text = td.innerHTML;
-                company_name.push(td_text);
-             }
-             
-            }
-            if(user_list==""){
-                swal({
-                   title: 'Warning',
-                   text: "Please Select User",
-                   icon: 'error',
-                   showCancelButton: true,
-                   confirmButtonColor: '#FD7E14',
-                   confirmButtonText: 'Yes!',
-                   cancelButtonText: 'No.'
-                 }).then(() => {
-                   if (result.value) {
-                     location.reload();
-                   } 
-                 });
-            }
-            else {
-                if(company_name){
-                     $.ajax({
-                          url: '<?php echo base_url(); ?>projects/save_company_allocation_data',
-                          type: 'post',
-                          dataType: "json",
-                          data: {company_name: company_name,user_list:user_list,project_id:id},
-                          success: function( response ) { 
+  $('#btn-search-by-date').click(function () {
+   var company_name = [];
+   var slot_allocation = $('#slot_allocation').val();
+   var user_list = $('#user_list').val();
+   var id = $('#id').val();
+   if (slot_allocation == "") {
+      swal({
+         title: 'Warning',
+         text: "Please Enter Slot Allocation Count",
+         icon: 'error',
+         showCancelButton: true,
+         confirmButtonColor: '#FD7E14',
+         confirmButtonText: 'Yes!',
+         cancelButtonText: 'No.'
 
-                            swal({
-                                   title: 'success',
-                                   text: response.message,
-                                   icon: 'success',
-                                   showCancelButton: true,
-                                   confirmButtonColor: '#FD7E14',
-                                   confirmButtonText: 'Yes!',
-                                   cancelButtonText: 'No.'
-                                 }).then(() => {
-                                   if (result.value) {
-                                     location.reload();
-                                   } 
-                                 });
-                                 location.reload();
-                        },
-                    });
-                }
-               
-            }
-             
-        }
-        
-             
-    });
+      });
+   } else {
+      for (var i = 0; i < slot_allocation; i++) {
+         d = table.rows({
+            search: 'applied'
+         }).nodes()[i];
+         if (d) {
+            var td = d.getElementsByTagName("td")[2];
+            // var assigned_td = d.getElementsByTagName("td")[4];
+            // var assigned_td_1 = assigned_td.innerHTML;
+            // if (assigned_td_1) {
+            //    slot_allocation++;
+            // } else {
+            var td_text = td.innerHTML;
+            company_name.push(td_text);
+            // }
+            console.log(company_name);
+         }
+      }
+      if (user_list == "") {
+         swal({
+            title: 'Warning',
+            text: "Please Select User",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#FD7E14',
+            confirmButtonText: 'Yes!',
+            cancelButtonText: 'No.'
+         });
+      } else {
+         if (company_name) {
+            $.ajax({
+               dataType: 'json',
+               type: 'POST',
+               url: frontend_path + 'projects/save_company_allocation_data',
+               data: {
+                  company_name: company_name,
+                  user_list: user_list,
+                  project_id: id,
+               },
+
+               success: function (response) {
+                  swal({
+                     title: 'success',
+                     text: response.message,
+                     icon: 'success',
+                     showCancelButton: true,
+                     confirmButtonColor: '#FD7E14',
+                     confirmButtonText: 'Yes!',
+                     cancelButtonText: 'No.'
+                  }).then(() => {
+                     if (result.value) {
+                        location.reload();
+                     }
+                  });
+                  location.reload();
+               }
+            });
+         }
+
+      }
+
+   }
+
+
+});
 });
 </script>
