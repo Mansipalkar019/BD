@@ -326,13 +326,11 @@ class Master  extends CI_Controller
 
     public function submit_country(){
         $this->form_validation->set_rules("country_name","Country Name","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
-        $this->form_validation->set_rules("sortname","Country Sort Name","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
          $this->form_validation->set_rules("phone_code","Country Phone Code","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
 
         if($this->form_validation->run()==true){
             $country_id = $this->security->xss_clean($this->input->post("country_id"));
             $country_name = $this->security->xss_clean($this->input->post("country_name"));
-            $sort_name = $this->security->xss_clean($this->input->post("sortname"));
             $phone_code = $this->security->xss_clean($this->input->post("phone_code"));
             $data = array(
                 "name" => $country_name,
@@ -364,7 +362,7 @@ class Master  extends CI_Controller
 
     public function delete_country($id){
         if(!empty($id)){
-          $deleteCountry = $this->model->updateData("bdcrm_countries", array('status'=>0), array('id' => $id));
+           $deleteCountry = $this->model->updateData("bdcrm_countries", array('status'=>0), array('id' => $id));
           if($deleteCountry){
              $this->session->set_flashdata("success","Country has been successfullly deleted");
           }

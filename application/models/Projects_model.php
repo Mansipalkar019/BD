@@ -155,6 +155,11 @@ function getprojectrecord(){
         $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
         $this->db->join('users us','ca.user_id=us.id','left');
         $this->db->join('users usd','ca.assigned_by=usd.id','left');
+        $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
+        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+        
+            
+
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
         $this->db->where('bmp.status',1);

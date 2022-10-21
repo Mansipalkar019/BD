@@ -52,6 +52,7 @@ background-color: #F5F7FA;
         </thead>
         <tbody>
             <?php 
+
                 foreach ($projects as $key => $value) { ?>
                     <tr>
                         <td><?= $key+1; ?></td>
