@@ -125,16 +125,16 @@ function getprojectrecord(){
 
     function get_project_input_fields($project_id)
     {
-		$this->db->select('bdcrm_master_projects_fields.field_id,bdcrm_feilds.label_name,bdcrm_feilds.input_name');
+        $this->db->select('bdcrm_master_projects_fields.field_id,bdcrm_feilds.label_name,bdcrm_feilds.input_name');
 		$this->db->from('bdcrm_master_projects_fields');
         $this->db->join('bdcrm_feilds','bdcrm_feilds.id=bdcrm_master_projects_fields.field_id','left');
         $this->db->where('bdcrm_master_projects_fields.project_id',$project_id);	
 		$this->db->group_by('bdcrm_master_projects_fields.id');
         $this->db->order_by('bdcrm_master_projects_fields.id');
 		$query=$this->db->get();
-       //echo $this->db->last_query(); die; 
-
+        
         $data=$query->result_array();
+       
         foreach($data as $data_key =>$data_val)
         {
             $fdata[]=$data_val['input_name'];
@@ -146,9 +146,8 @@ function getprojectrecord(){
 
     function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
 
-        $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
-            bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,
-            buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
+        $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,buf.industry,buf.provided_job_title,buf.city,buf.address1,
+        bc.name as country_name,buf.region,buf.web_staff_disposition,buf.web_staff_disposition,buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
@@ -183,9 +182,8 @@ function getprojectrecord(){
 
     function get_no_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
 
-       
         $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,buf.industry,buf.provided_job_title,buf.city,buf.address1,
-            bc.name as country_name,buf.region,buf.web_staff_disposition,buf.web_staff_disposition,buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
+        bc.name as country_name,buf.region,buf.web_staff_disposition,buf.web_staff_disposition,buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
@@ -216,7 +214,7 @@ function getprojectrecord(){
     function get_all_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
 
         $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,buf.industry,buf.provided_job_title,buf.city,buf.address1,
-            bc.name as country_name,buf.region,buf.web_staff_disposition,buf.web_staff_disposition,buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
+        bc.name as country_name,buf.region,buf.web_staff_disposition,buf.web_staff_disposition,buf.provided_staff_email,buf.company_disposition,buf.web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,buf.voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
@@ -279,40 +277,52 @@ function getprojectrecord(){
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('companywise_allocation ca','ca.staff_id = buf.id','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$company_name);
+        $this->db->where('ca.assigned_by',$this->session->userdata('id'));
+        $this->db->where('ca.status','1');
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
 
-    function getAllStaffInfoDetails($project_id){
+    function getAllStaffInfoDetails($project_id,$rowid,$cmp_name){
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->from('companywise_allocation ca');
+        $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->where('buf.project_id',$project_id);
+        $this->db->where('ca.assigned_by',$this->session->userdata('id'));
+        $this->db->where('ca.status','1');
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
 
-    function getCompanyInfoDetails($project_id){
+    function getCompanyInfoDetails($project_id,$rowid){
         $this->db->select('bmp.*,buf.received_company_name,buf.updated_status,count(buf.received_company_name) as staffcount,buf.project_id,buf.id');
         $this->db->distinct('received_company_name');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->where('project_id',$project_id);
+        $this->db->join('companywise_allocation ca','ca.staff_id = buf.id','left');
+        $this->db->where('buf.project_id',$project_id);
         $this->db->group_by('received_company_name');
+        $this->db->where('ca.assigned_by',$this->session->userdata('id'));
+        $this->db->where('ca.status','1');
         $querys=$this->db->get();
-         
+        //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
 
     function getPreLastInfo($project_id,$rowid,$cmp_name){
-            $this->db->select('min(id) as myfirst,max(id) as mylast,project_id,received_company_name');
-            $this->db->from('bdcrm_uploaded_feildss');
-            $this->db->where('project_id',$project_id);
+            $this->db->select('min(buf.id) as myfirst,max(buf.id) as mylast,buf.project_id,buf.received_company_name');
+            $this->db->from('bdcrm_uploaded_feildss buf');
+            $this->db->where('buf.project_id',$project_id);
+            $this->db->join('companywise_allocation ca','ca.staff_id = buf.id','left');
             //$this->db->where('received_company_name',$cmp_name);
-            $querys=$this->db->get();
+           
             //echo $this->db->last_query();die();
+            $this->db->where('ca.assigned_by',$this->session->userdata('id'));
+            $this->db->where('ca.status','1');
+            $querys=$this->db->get();
             return $datas =  $querys->row_array();  
     }
 
