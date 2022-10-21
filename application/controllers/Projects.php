@@ -556,27 +556,34 @@ class Projects extends CI_Controller
         $data_array=array();
         foreach($totalData as $category_details_key => $data_row)
         {
-
-           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['id']."'>";
-
-           $staff_count = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;';
+           $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['staff_id']."'>";
+           $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;';
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $input_type.$data_row['project_name'];
-                $nestedData[] = $staff_count;
+                $nestedData[] = $staff_info;
+                $nestedData[] = $data_row['industry'];
+                $nestedData[] = $data_row['provided_staff_email'];
                 $nestedData[] = $data_row['received_company_name'];
+                $nestedData[] = $data_row['company_disposition'];
+                $nestedData[] = $data_row['web_disposition'];
+                $nestedData[] = $data_row['website_url'];
+                $nestedData[] = $data_row['no_of_emp'];
+                $nestedData[] = $data_row['revenue'];
                 $nestedData[] = $data_row['provided_job_title'];
                 $nestedData[] = $data_row['address1'];
-                $nestedData[] = $data_row['city'];
-                $nestedData[] = $data_row['postal_code'];
                 $nestedData[] = $data_row['country_name'];
-                $nestedData[] = $data_row['username'];
-                $nestedData[] = $data_row['designation_name'];
+                $nestedData[] = $data_row['region'];
+                $nestedData[] = $data_row['web_staff_disposition'];
+                $nestedData[] = $data_row['voice_staff_disposition'];
+                $nestedData[] = "<span class='badge btn btn-primary btn-sm'>".$data_row['assigned_to']."</span>";
+                $nestedData[] = "<span class='badge btn btn-warning btn-sm'>".$data_row['assigned_by']."</span>";
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
-                $nestedData[] = $data_row['id'];
+                $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['assigned_at']));
                 $data_array[] = $nestedData;
               
-       }
+    
+   }
       $output = array(
             "draw" => intval($_POST['draw']),
             "recordsTotal" => intval($count_all),
@@ -594,9 +601,7 @@ class Projects extends CI_Controller
         $company_name = $this->input->post('company_name');
         $perUser = count($assignee_users);
         $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-        
         for($i=0;$i<$perUser;$i++){
-
            $user_id = $assignee_users[$i];
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
@@ -607,6 +612,8 @@ class Projects extends CI_Controller
                 $user_id=$final_row['user_id'];
                 $staff_info=$final_rows;
                 $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                   $checkRecordsInfo  = $this->isDataExist($data1); 
+
                 $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
             }
         }
@@ -617,7 +624,48 @@ class Projects extends CI_Controller
         else{
             $this->session->set_flashdata("error", "Failed To Insert");  
         }
-        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)), $data);
+        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
+    }
+
+
+    public function isDataExist($data){
+        unset($data['assigned_at']);
+        unset($data['assigned_by']);
+        unset($data['user_id']);
+        $data['status'] = 1;
+        $datas = $this->model->getData('companywise_allocation', $data);
+        //  echo $this->db->last_query(); die;
+        // echo "<pre>";
+        
+        // print_r($data);
+        // // die;
+
+
+
+
+
+       if(!empty($datas)){
+        //echo "hello"; die;
+        if(count($datas) > 0){
+
+            echo count($datas); 
+            unset($data['status']);
+
+
+           
+
+
+            $deactivateAssignee= $this->model->updateData("companywise_allocation", array('status'=>0), $data);
+             echo $this->db->last_query(); 
+        // echo $this->db->last_query(); die;
+        }
+    }
+    else
+    {
+        //echo "hii";
+    }
+
+        return true;
     }
 
 }
