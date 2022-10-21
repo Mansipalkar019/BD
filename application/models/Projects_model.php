@@ -327,6 +327,19 @@ function getprojectrecord(){
     }
 
  
-
+    function excel_download($project_id){
+        $this->db->select('bmp.*,buf.*');
+        $this->db->distinct('received_company_name');
+        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('companywise_allocation ca','ca.staff_id = buf.id','left');
+        $this->db->where('buf.project_id',$project_id);
+        $this->db->group_by('received_company_name');
+        $this->db->where('ca.assigned_by',$this->session->userdata('id'));
+        $this->db->where('ca.status','1');
+        $querys=$this->db->get();
+        echo $this->db->last_query();die();
+        return $datas =  $querys->result_array();
+    }
     
 }
