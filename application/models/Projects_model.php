@@ -5,6 +5,8 @@ class Projects_Model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $designation_name = $this->session->userdata('designation_name');
+        $user_id = $this->session->userdata('id');
     }
 
     public function getAll()
@@ -83,6 +85,7 @@ class Projects_Model extends CI_Model
     $this->db->where('bmp.status','1');
     $this->db->order_by("bmp.id", "DESC");
     $query=$this->db->get();
+    $this->db->last_query(); 
     $data = $query->result_array();
     $fData=[];
     foreach ($data as $key => $value) {
@@ -97,10 +100,18 @@ class Projects_Model extends CI_Model
 
 
     function getCompanyInfoByProjectId($project_id){
-            $this->db->select('COUNT(DISTINCT received_company_name) as company_count,COUNT(id) as no_of_staff');
-            $this->db->from('bdcrm_uploaded_feildss');
-            $this->db->where('project_id',$project_id);
+            $this->db->select('COUNT(DISTINCT buf.received_company_name) as company_count,COUNT(buf.id) as no_of_staff');
+            $this->db->from('bdcrm_uploaded_feildss buf');
+            $designation_name = $this->session->userdata('designation_name');
+            $user_id = $this->session->userdata('id');
+            if(($designation_name=='Researcher') || $designation_name=='Caller'){
+                    $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
+                    $this->db->where('ca.user_id',$user_id);
+                    $this->db->where('ca.status',1);
+                }
+            $this->db->where('buf.project_id',$project_id);
             $querys=$this->db->get();
+            $this->db->last_query(); 
             return $datas =  $querys->row_array();
     }
 
@@ -143,6 +154,13 @@ class Projects_Model extends CI_Model
         $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
         $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
         $where = '((ca.status IS NULL OR ca.status=1) AND (bmp.status=1))';
+
+
+        $designation_name = $this->session->userdata('designation_name');
+        $user_id = $this->session->userdata('id');
+        if(($designation_name=='Researcher') || $designation_name=='Caller'){
+           $this->db->where('ca.user_id',$user_id);  
+        }
         $this->db->where($where);
 
         if($workstatus==1)
@@ -228,6 +246,13 @@ class Projects_Model extends CI_Model
         $this->db->join('users','companywise_allocation.assigned_by = users.id','left');
         $this->db->where('bmp.id',$project_id);
         $this->db->where('bmp.status',1);
+        $this->db->where('companywise_allocation.status',1);
+          $designation_name = $this->session->userdata('designation_name');
+          $user_id = $this->session->userdata('id');
+          if(($designation_name=='Researcher') || $designation_name=='Caller'){
+             $this->db->where('companywise_allocation.user_id',$user_id);
+          }
+
         if(!empty($slot_count)){
             $this->db->limit($slot_count);
         }

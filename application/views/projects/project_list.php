@@ -17,8 +17,9 @@ background-color: #F5F7FA;
                 <h4 class="page-title">Project List</h4>
             </div>
         </div>
-
-        <div class="col-6" >
+        <?php
+        if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') { $style=''; }else{ $style="style='display:none'";} ?> 
+        <div class="col-6"  <?= $style;?>>
            <div class="page-title-box">
               <a type='submit' href="<?php echo base_url(); ?>projects/new_projects" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #357a95;margin-top:20px;margin-right:3%;background-image: linear-gradient(to right,#ff4156,#FF9A49);">New Project</a>
             </div>
@@ -30,7 +31,7 @@ background-color: #F5F7FA;
 <form class="form-horizontal" action='<?php echo base_url('projects/upload_project'); ?>' method="post" enctype="multipart/form-data">
 <div class="grey-bg container-fluid">
 <section id="minimal-statistics">
-<div style="overflow-y: auto;">
+<div style="overflow-y: auto;"><br>
     <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
     <div class="form-group" style="float:right;">
     </div>

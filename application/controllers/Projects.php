@@ -25,16 +25,12 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-  
-
     public function project_list()
     {
         $data['projects']=$this->Projects_model->getprojectrecord();
         $data['main_content'] = "projects/project_list";
         $this->load->view("includes/template", $data);
     }
-
-  
     public function new_projects($id = 0)
     {
         $data['TaskType'] = $this->model->getData('bdcrm_project_type', array('status' => '1'));
@@ -44,8 +40,6 @@ class Projects extends CI_Controller
         $data['getAllCountry'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
         $this->load->view("includes/template", $data);
     }
-
-
     public function spreadhseet_format_download()
     {
         header('Content-Type: application/vnd.ms-excel');
@@ -60,8 +54,6 @@ class Projects extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
-
-
     public function upload_project(){
         // echo "<pre>";
         // print_r($_POST);die();
@@ -507,7 +499,8 @@ class Projects extends CI_Controller
          $data['received_company_name'] = base64_decode($_GET['received_company_name']);
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($data['id'],$data['received_company_name']);
          $data['users'] = $this->model->getData('users', array('status' => '1'));
-         $data['main_content'] = "projects/staff_info"; 
+         $data['main_content'] = "projects/staff_info";
+         //  echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
 
