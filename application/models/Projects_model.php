@@ -251,6 +251,7 @@ class Projects_Model extends CI_Model
           $user_id = $this->session->userdata('id');
           if(($designation_name=='Researcher') || $designation_name=='Caller'){
              $this->db->where('companywise_allocation.user_id',$user_id);
+             $this->db->where('companywise_allocation.status',1);
           }
 
         if(!empty($slot_count)){
@@ -288,7 +289,7 @@ class Projects_Model extends CI_Model
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('companywise_allocation ca','ca.company_disposition = bmp.id','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$company_name);
         
