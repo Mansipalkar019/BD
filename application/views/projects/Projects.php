@@ -507,7 +507,8 @@ class Projects extends CI_Controller
          $data['received_company_name'] = base64_decode($_GET['received_company_name']);
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($data['id'],$data['received_company_name']);
          $data['users'] = $this->model->getData('users', array('status' => '1'));
-         $data['main_content'] = "projects/staff_info"; 
+         $data['main_content'] = "projects/staff_info";
+         //  echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
 

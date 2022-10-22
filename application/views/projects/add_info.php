@@ -183,7 +183,7 @@
                   <?php if(in_array('state_name',$project_info)){ ?>
                   <div class="col">
                      <label for="state_name" class="col-form-label">State/County:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['state_country'])) ?  $allInfo[0]['state_country'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['state_county'])) ?  $allInfo[0]['state_county'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -225,7 +225,7 @@
             </div>
             <div class="col">
                <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
-                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #ff0740;margin-top:-3px;margin-right:3%;"><i class="fa fa-arrow-left" aria-hidden="true"></i>Home</a>
+                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #0e6efb;margin-top:-1px;margin-right:3%;color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                </div>
 
                <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
@@ -463,14 +463,14 @@
                      <label for="no_of_employee" class="col-form-label">No. of Employees:</label>
                      <!-- <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm"> -->
                      <select class='form-control form-control-sm' id="no_of_emp"  name='no_of_emp'>
-                        <option value=''>select No. of Employees</option>
-                        <option value='1-10' <?php if($allInfo[0]['no_of_emp'] == '1-10'){ ?>selected<?php } ?>>1-10</option>
-                        <option value='11-50' <?php if($allInfo[0]['no_of_emp'] == '11-50'){ ?>selected<?php } ?>>11-50</option>
-                        <option value='51-200' <?php if($allInfo[0]['no_of_emp'] == '51-200') {?>selected<?php } ?>>51-200</option>
-                        <option value='201-500' <?php if($allInfo[0]['no_of_emp'] == '201-500') {?>selected<?php } ?>>201-500</option>
-                        <option value='501-1000'<?php if($allInfo[0]['no_of_emp'] == '501-1000') {?>selected<?php } ?>>501-1000</option>
-                        <option value='1001-5000'<?php if($allInfo[0]['no_of_emp'] == '1001-5000') {?>selected<?php } ?>>1001-5000</option>
-                        <option value='10,001+more'<?php if($allInfo[0]['no_of_emp'] == '10,001+more') {?>selected<?php } ?>>10,001+more</option>
+                        <option value=''>Select No. of Employees</option>
+                        <option value='1-10 Employees' <?php if($allInfo[0]['no_of_emp'] == '1-10 Employees'){ ?>selected<?php } ?>>1-10</option>
+                        <option value='11-50 Employees ' <?php if($allInfo[0]['no_of_emp'] == '11-50 Employees'){ ?>selected<?php } ?>>11-50</option>
+                        <option value='51-200 Employees' <?php if($allInfo[0]['no_of_emp'] == '51-200 Employees') {?>selected<?php } ?>>51-200</option>
+                        <option value='201-500 Employees' <?php if($allInfo[0]['no_of_emp'] == '201-500 Employees') {?>selected<?php } ?>>201-500</option>
+                        <option value='501-1000 Employees'<?php if($allInfo[0]['no_of_emp'] == '501-1000 Employees') {?>selected<?php } ?>>501-1000</option>
+                        <option value='1001-5000 Employees'<?php if($allInfo[0]['no_of_emp'] == '1001-5000 Employees') {?>selected<?php } ?>>1001-5000</option>
+                        <option value='10,001 + Employees'<?php if($allInfo[0]['no_of_emp'] == '10,001 + Employees') {?>selected<?php } ?>>10,001+more</option>
                   </select>
                   </div>
                   <?php } ?>
@@ -1063,7 +1063,7 @@
          });
 
          $("#industry").select2({
-         placeholder: " Select Country",
+         placeholder: " Select Industry",
          allowClear: true
          });
 

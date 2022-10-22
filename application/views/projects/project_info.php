@@ -9,7 +9,7 @@ background-color: #F5F7FA;
 }
 </style>
 <div class="content-page">
-<div class="content">
+<div class="content"
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -62,9 +62,7 @@ background-color: #F5F7FA;
             </div>
             
         </div>
-       
-       
-                
+             
     </div>
      <div class="float-right">
             <button class="btn btn-primary" id="btn-search-by-date">Submit </button>

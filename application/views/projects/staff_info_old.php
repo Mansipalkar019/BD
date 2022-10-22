@@ -1,6 +1,10 @@
+<?php //$this->load->view("includes/header.php");
+//$this->load->view("includes/navbar.php");
+//$this->load->view("includes/left-sidebar.php");
+//$this->load->view("includes/right-sidebar.php");?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
- 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
        
 
 <style>
@@ -17,9 +21,7 @@ background-color: #F5F7FA;
 <div class="content-page">
 <div class="content">
 <div class="container-fluid">
-    <?php 
-
-    if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') {?>
+    <?php if($this->session->userdata('designation_id') == 8 || $this->session->userdata('designation_id') == 2 || $this->session->userdata('designation_id') == 1) {?>
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -77,20 +79,20 @@ background-color: #F5F7FA;
                 </select>
             </div>
         </div>
-        <div class="col-1">  
+        <div class="col-2">  
         <div class="page-title-box"> 
-               <button type="submit" value="" class="btn btn-primary form-control" id="btn-search-by-count" style="margin-top:30px;width:125%">Assign</button>
+               <button type="submit" value="" class="btn btn-danger form-control btn-sm" id="btn-search-by-count" style="margin-top:30px;">Submit</button>
         </div>
         </div>
-    </div>       <br><br>
-
+       
+    </div>
     <?php } ?>
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
-<div style="overflow-y: auto;"><br>
+<div style="overflow-y: auto;">
 <input type="hidden"  value="<?= $id;?>" id="staff_id">
 <input type="hidden"  value="<?= $received_company_name; ?>" id="received_company_name">
-    <table id="datatable1" class="table table-striped table-bordered"  cellspacing="0" width="100%" style="font-size: 88%;">
+    <table id="datatable1" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%" style="font-size: 88%;">
     <thead>
         <tr>
             <th>ID</th>
@@ -126,13 +128,13 @@ background-color: #F5F7FA;
 </form>
 <?php //$this->load->view("includes/footer.php"); ?>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<!-- <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
       
 <script type="text/javascript">
      $(".users").select2({
@@ -149,7 +151,6 @@ background-color: #F5F7FA;
         searchPlaceholder: ""
         
     },
-     order: [[3, 'desc']],
    'ajax': {
        'url': "<?= base_url() ?>Projects/getprojectrecord",
        'method': "POST",
@@ -165,14 +166,7 @@ background-color: #F5F7FA;
         $('td', row).eq(2).addClass('text-capitalize');
     },
 });
- table.on('order.dt search.dt', function () {
-      table.column(0, {
-         search: 'applied',
-         order: 'applied'
-      }).nodes().each(function (cell, i) {
-         cell.innerHTML = i + 1;
-      });
-   }).draw();
+
 $("#count").keyup(function(){
     simpletable.ajax.reload(null, false);
 });
