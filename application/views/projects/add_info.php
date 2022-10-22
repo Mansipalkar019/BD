@@ -966,7 +966,7 @@
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link active" id="company-tab1" data-bs-toggle="tab" data-bs-target="#company1" type="button" role="tab" aria-controls="company1" aria-selected="true"><?php if(!empty($staff_list)){ echo 'All ('.count($staff_list).')'; }else{ 'All (0)'; } ?></button>
+                     <button style='font-size:12px' class="nav-link active" id="company-tab1" data-bs-toggle="tab" data-bs-target="#company1" type="button" role="tab" aria-controls="company1" aria-selected="true"><?php if(!empty($allstaffinfo)){ echo 'All ('.count($allstaffinfo).')'; }else{ 'All (0)'; } ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>

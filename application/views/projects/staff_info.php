@@ -11,15 +11,33 @@ background-color: #F5F7FA;
 <div class="content-page">
 <div class="content"
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
+<?php 
+
+if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') {?>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
             <center><h4 class="page-title" style="color: black">Staff Informations of Project : <?= $received_company_name;?></h4></center>
-            </div>
         </div>
+        <?php if(!empty($this->session->flashdata("error"))){?>
+        <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?= $this->session->flashdata("error"); ?>
+        </div>
+        <?php }
+        ?>
+
+        <?php if(!empty($this->session->flashdata("success"))){?>
+        <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?= $this->session->flashdata("success"); ?>
+        </div>
+        <?php }
+        ?>
     </div>
- <p><?php echo $this->session->flashdata("error");?></p>
- <p><?php echo $this->session->flashdata("success");?></p>
+</div>
+
+<form action="<?php echo base_url('projects/getsInfo'); ?>" method="post">
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
     <div class="row">
@@ -34,7 +52,7 @@ background-color: #F5F7FA;
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Status</label>
-               <select  class="form-control" id="workalloc" onchange="getworkalloc(this.value)">
+               <select  class="form-control" id="workalloc">
                <option value="">Select Work Type</option>
                 <option value="Assigned">Assigned</option>
                 <option value="Unassigned">Unassigned</option>
@@ -62,6 +80,7 @@ background-color: #F5F7FA;
     </div>
     
         <br><br><br>
+        <?php } ?>
 <div style="overflow-y: auto;">
 <input type="hidden"  value="<?= $id;?>" id="staff_id">
 <input type="hidden"  value="<?= $received_company_name; ?>" id="received_company_name">
@@ -99,6 +118,7 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
+</form>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <!-- <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -141,10 +161,10 @@ $(document).ready(function (e) {
 $("#count").keyup(function(){
     table.ajax.reload(null, false);
 });
+$('#workalloc').change(function(){
+        table.ajax.reload();
+    });
 
-function getworkalloc($value)
-{
-    table.ajax.reload(null, false);
-}
 });
+
 </script>

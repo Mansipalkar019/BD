@@ -398,7 +398,7 @@ class Projects extends CI_Controller
 
     public function my_projects($pid,$rid,$cmp_name='')
     {
-
+        //echo $this->session->userdata('designation_id');
         $project_id=base64_decode($pid);
         $rowid=base64_decode($rid); 
         $cmp_name=base64_decode($cmp_name);
@@ -424,7 +424,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['allInfo']);die();
+        // print_r($data['allstaffinfo']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -755,6 +755,7 @@ class Projects extends CI_Controller
                 $workstatus =2;
            }
         }
+       // echo $workstatus;die();
         $rowno = $_POST['start'];
         $search_text = $_POST['search']['value'];   
         $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
