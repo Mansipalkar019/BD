@@ -21,10 +21,41 @@
          font-size: 3.5rem;
          }
          }
+         @media (min-width: 1024px) {
+            .table-bordered>:not(caption)>*>* {
+                  border-width: 0 1px;
+                  font-size: 10px !important;
+               }
+            .col-form-label {
+            font-size: 10px !important;
+         }
+         .form-control-sm {
+               font-size: 10px !important;
+            }
+            .alert .alert-warning .text-center .p-1{
+               font-size: 10 !important;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+               font-size: 10px !important;
+            }
+            .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+            font-size: 10 !important;
+            }
+            .btnsize{
+               font-size: 10 !important;
+            }
+            .container-fluid {
+               padding: 10px;
+               margin: 0px;
+            }
+            .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+               font-size: 10px !important;
+            }
+         }
+        
          /* Show it is fixed to the top */
          body {
-         min-height: 45rem;
-         padding-top: 4.5rem;
+        padding-top: 4.5rem;
          }
          .swal-text {
          padding: 17px;
@@ -34,6 +65,10 @@
          font-size: 17px;;
          text-align: center;
          color: #61534e;
+         }
+         .row1 {
+            overflow-y: hidden !important;
+            overflow-x: hidden;
          }
       </style>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
@@ -148,7 +183,7 @@
                   <?php if(in_array('state_name',$project_info)){ ?>
                   <div class="col">
                      <label for="state_name" class="col-form-label">State/County:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['state_country'])) ?  $allInfo[0]['state_country'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['state_county'])) ?  $allInfo[0]['state_county'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -165,7 +200,7 @@
                         <option value=''>Select Country</option>
                         <?php 
                            foreach ($country as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if(strtolower($allInfo[0]['country'])==strtolower($val['name'])){?>selected<?php } ?>><?= $val['name']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if(($allInfo[0]['country'])==($val['id'])){?>selected<?php } ?>><?= $val['name']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -186,54 +221,11 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
-               <?php 
-                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
-                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  ?>
-               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
-                  <?php if(in_array('ca1',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca1" class="col-form-label">CA1:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca1'])) ?  $allInfo[0]['ca1'] : ''  ?>" title="" id="ca1"  name='ca1' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca2',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca2" class="col-form-label">CA2:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca2'])) ?  $allInfo[0]['ca2'] : ''  ?>" title="" id="ca2"  name='ca2' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca3',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca3" class="col-form-label">CA3:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca3'])) ?  $allInfo[0]['ca3'] : ''  ?>" title="" id="ca3"  name='ca3' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('ca4',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca4" class="col-form-label">CA4:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca4'])) ?  $allInfo[0]['ca4'] : ''  ?>" title="" id="ca4"  name='ca4' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php
-
-                  // echo "<pre>";
-                  // print_r($project_info);
-                  // die;
-
-
-                   if(in_array('ca5',$project_info)){ ?>
-                  <div class="col">
-                     <label for="ca5" class="col-form-label">CA5:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="ca5"  name='ca5' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-               </div>
+             
             </div>
             <div class="col">
                <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
-                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #ff0740;margin-top:-3px;margin-right:3%;"><i class="fa fa-arrow-left" aria-hidden="true"></i>Home</a>
+                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #0e6efb;margin-top:-1px;margin-right:3%;color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                </div>
 
                <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
@@ -391,7 +383,7 @@
                </div>
                <div class="row g3 justify-content-md-center mt-4">
                <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
                   </div>
                   <div class="col-auto">
                      <div class="input-group mb-3">
@@ -403,10 +395,10 @@
                      </div>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="submit" id="update_company">Update</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="submit" id="update_company">Update</button>
                   </div>
                   <div class="col-auto">
-                     <button class="btn btn-outline-primary btn-sm" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
+                     <button class="btn btn-outline-primary btn-sm btnsize" type="button" id="paste_company" style="display:none;background-color:#0d6efd;color:white;">Paste</button>
                   </div>
                </div>
             </div>
@@ -420,17 +412,20 @@
                   <?php if(in_array('country_code',$project_info)){ ?>
                   <div class="col">
                      <label for="country_code" class="col-form-label">Country Code:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly>
+                     <input type="number" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly style="width:50px;">
                   </div>
                   <?php } ?>
-                  <!-- <div class="col">
-                     <label for="area_code" class="col-form-label">Area Code:</label>
-                     <input type="number" value="" title="" id="area_code"  name='area_code' class="form-control form-control-sm" size="6">
-                     </div> -->
+                 
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
                      <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('alternate_number',$project_info)){ ?>
+                  <div class="col">
+                     <label for="alternate_number" class="col-form-label">Alternate Number:</label>
+                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -440,12 +435,7 @@
                   $access9 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access9; ?>>
-                  <?php if(in_array('alternate_number',$project_info)){ ?>
-                  <div class="col">
-                     <label for="alternate_number" class="col-form-label">Alternate Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
+                 
                   <!-- <div class="col">
                      <label for="fax_number" class="col-form-label">Fax Number:</label>
                      <input type="number" value="" title="" id="fax_number"  name='fax_number' class="form-control form-control-sm">
@@ -458,7 +448,7 @@
                   <?php } ?>
                   <!-- check input access for email_address,no_of_employees -->
                   <?php 
-                     $div_count=div_access($project_info,array('email_address','no_of_employees'));
+                     $div_count=div_access($project_info,array('email_address','no_of_employee'));
                      $access10 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                      ?>
                   <!-- <div class="row g-3 align-items-center justify-content-md-center" <?= $access10; ?>>
@@ -468,10 +458,20 @@
                              <input type="email" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="email_address"  name='email_address' class="form-control form-control-sm">
                          </div>
                      <?php } ?> -->
-                  <?php if(in_array('no_of_employees',$project_info)){ ?>
+                  <?php if(in_array('no_of_employee',$project_info)){ ?>
                   <div class="col">
-                     <label for="no_of_employees" class="col-form-label">No. of Employees:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employees"  name='no_of_employees' class="form-control form-control-sm">
+                     <label for="no_of_employee" class="col-form-label">No. of Employees:</label>
+                     <!-- <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm"> -->
+                     <select class='form-control form-control-sm' id="no_of_emp"  name='no_of_emp'>
+                        <option value=''>Select No. of Employees</option>
+                        <option value='1-10 Employees' <?php if($allInfo[0]['no_of_emp'] == '1-10 Employees'){ ?>selected<?php } ?>>1-10</option>
+                        <option value='11-50 Employees ' <?php if($allInfo[0]['no_of_emp'] == '11-50 Employees'){ ?>selected<?php } ?>>11-50</option>
+                        <option value='51-200 Employees' <?php if($allInfo[0]['no_of_emp'] == '51-200 Employees') {?>selected<?php } ?>>51-200</option>
+                        <option value='201-500 Employees' <?php if($allInfo[0]['no_of_emp'] == '201-500 Employees') {?>selected<?php } ?>>201-500</option>
+                        <option value='501-1000 Employees'<?php if($allInfo[0]['no_of_emp'] == '501-1000 Employees') {?>selected<?php } ?>>501-1000</option>
+                        <option value='1001-5000 Employees'<?php if($allInfo[0]['no_of_emp'] == '1001-5000 Employees') {?>selected<?php } ?>>1001-5000</option>
+                        <option value='10,001 + Employees'<?php if($allInfo[0]['no_of_emp'] == '10,001 + Employees') {?>selected<?php } ?>>10,001+more</option>
+                  </select>
                   </div>
                   <?php } ?>
                </div>
@@ -491,12 +491,31 @@
                   $access11 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access11; ?>>
-                  <?php if(in_array('industry',$project_info)){ ?>
+               <?php if(in_array('industry',$project_info)){ ?>
                   <div class="col">
                      <label for="industry" class="col-form-label">Industry:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['industry'])) ?  $allInfo[0]['industry'] : ''  ?>" title="" id="industry"  name='industry' class="form-control form-control-sm">
+                     <select class='form-control form-control-sm' id="industry"  name='industry'>
+                        <option value=''>Select Industry</option>
+                        <?php 
+                      foreach ($industry as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if(($allInfo[0]['industry'])==($val['id'])){?>selected<?php } ?>><?= $val['Industries']; ?></option>
+                        <?php }
+                           ?>
+                     </select>
                   </div>
                   <?php } ?>
+
+
+
+                   
+
+
+
+
+
+
+
+
                   <?php if(in_array('revenue',$project_info)){ ?>
                   <div class="col">
                      <label for="revenue" class="col-form-label">Revenue:</label>
@@ -514,9 +533,48 @@
                   </div>
                   <?php } ?>
                </div>
+                 <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+                 <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('ca1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca1" class="col-form-label">CA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca1'])) ?  $allInfo[0]['ca1'] : ''  ?>" title="" id="ca1"  name='ca1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca2" class="col-form-label">CA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca2'])) ?  $allInfo[0]['ca2'] : ''  ?>" title="" id="ca2"  name='ca2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca3" class="col-form-label">CA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca3'])) ?  $allInfo[0]['ca3'] : ''  ?>" title="" id="ca3"  name='ca3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('ca4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca4" class="col-form-label">CA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca4'])) ?  $allInfo[0]['ca4'] : ''  ?>" title="" id="ca4"  name='ca4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php
+                   if(in_array('ca5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="ca5" class="col-form-label">CA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="ca5"  name='ca5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  
+               </div>
             </div>
          </div>
-         <?php echo form_close() ?>
+       
          <div class="row row1">
             <div class="col">
                <!-- check input access for first_name,last_name -->
@@ -597,7 +655,7 @@
                   </div>
                   <div class="col">
                      <div class="input-group">
-                        <input type="email" value="<?=  (!empty($allInfo[0]['staff_email'])) ?  $allInfo[0]['staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm">
+                        <input type="email" value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm">
                         <div class="input-group-text">
                            <input class="form-check-input mt-0" type="checkbox" value="" id="staff_email_verified" >
                         </div>
@@ -631,8 +689,13 @@
                      <label for="staff_url" class="col-form-label">Staff Source URL:</label>
                   </div>
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url' class="form-control form-control-sm">
+                  <div class="input-group mb-3">
+               
+                  <input type="text" class="form-control" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url'  aria-describedby="basic-addon1">
+                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
                   </div>
+                  </div>
+                  
                   <?php } ?>
                </div>
                <!-- check input access for staff_department -->
@@ -661,8 +724,12 @@
                      <label for="staff_email_harvesting" class="col-form-label">Email Source URL:</label>
                   </div>
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm">
-                  </div>
+                  <div class="input-group mb-3">
+               
+                  <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm">
+                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+               </div>
+                     </div>
                   <?php } ?>
                </div>
                <!-- check input access for staff_direct_tel,staff_mobile -->
@@ -676,6 +743,7 @@
                      <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
                   </div>
+
                   <!-- <div class="col">
                      <label for="staff_extension" class="col-form-label">Extension:</label>
                      <input type="text" value="" title="" id="staff_extension"  name='staff_extension' class="form-control form-control-sm">
@@ -686,43 +754,7 @@
                   </div>
                   <?php } ?>
                </div>
-               <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
-               <?php 
-                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
-                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  ?>
-               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
-                  <?php if(in_array('sa1',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa1" class="col-form-label">SA1:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa2',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa2" class="col-form-label">SA2:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa3',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa3" class="col-form-label">SA3:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa4',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa4" class="col-form-label">SA4:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-                  <?php if(in_array('sa5',$project_info)){ ?>
-                  <div class="col">
-                     <label for="sa5" class="col-form-label">SA5:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
-                  </div>
-                  <?php } ?>
-               </div>
+              
                <br><br><br>
             </div>
             <div class="col">
@@ -759,7 +791,7 @@
                         <option value=''>select Web Disposition</option>
                         <?php 
                         foreach ($webDispos as $key => $val) { ?>
-                        <option value='<?= $val['dispositions']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['dispositions']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
                         <?php }
                            ?>
                         <option value='Duplicate'>Duplicate</option>
@@ -769,7 +801,7 @@
                </div>
                <!-- check input access for voice_staff_disposition -->
                <?php
-                if($this->session->userdata('designation_id') == 3 ){ 
+                if($this->session->userdata('designation_id') == 3 || $this->session->userdata('designation_id') == 1 || $this->session->userdata('designation_id') == 2 ||  $this->session->userdata('designation_id') == 8 ){ 
                   $div_count=div_access($project_info,array('voice_staff_disposition'));
                   $access22 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -783,7 +815,7 @@
                         <option value=''>select Voice Staff Disposition</option>
                         <?php 
                         foreach ($VoiceDispos as $key => $val) { ?>
-                        <option value='<?= $val['voice_dispositions']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['voice_dispositions']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -849,30 +881,28 @@
                 <?php 
                   $div_count=div_access($project_info,array('research_remark'));
                   $access25 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
-                  if($userinfo == 3){
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
-                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <?php if(in_array('research_remark',$project_info)){ 
+                     if($userinfo == 3){
+                     ?>
                   <div class="col">
                      <label for="research_remark" class="col-form-label">Researcher Remark:</label>
                   </div>
                   <div class="col">
                      <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm" readonly><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
                   </div>
-                 
-               </div>
-               <?php } }else{?>
-                  <div class="row g-3 align-items-center justify-content-md-center" <?= $access25; ?>>
-                  <?php if(in_array('research_remark',$project_info)){ ?>
+                  <?php }else{ ?>
                   <div class="col">
                      <label for="research_remark" class="col-form-label">Researcher Remark:</label>
                   </div>
                   <div class="col">
                      <textarea title="" id="research_remark"  name='research_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['research_remark'])) ?  $allInfo[0]['research_remark'] : ''  ?></textarea>
                   </div>
-                 
+                  <?php } }?>
                </div>
-               <?php } }?>
+               
+                 
                <!-- check input access for Rearcher_remark-->
                <?php 
                   $div_count=div_access($project_info,array('voice_remark'));
@@ -891,8 +921,47 @@
                </div>
                   <?php }?>
                
+                   <!-- check input access for ca1,ca2,ca3,ca4,ca5 -->
+               <?php 
+                  $div_count=div_access($project_info,array('ca1','ca2','ca3','ca4','ca5'));
+                  $access2 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
+                  ?>
+               <div class="row g-3 align-items-center justify-content-md-center" <?= $access2; ?>>
+                  <?php if(in_array('sa1',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa1" class="col-form-label">SA1:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa1'])) ?  $allInfo[0]['sa1'] : ''  ?>" title="" id="sa1"  name='sa1' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa2',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa2" class="col-form-label">SA2:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa2'])) ?  $allInfo[0]['sa2'] : ''  ?>" title="" id="sa2"  name='sa2' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa3',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa3" class="col-form-label">SA3:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa3'])) ?  $allInfo[0]['sa3'] : ''  ?>" title="" id="sa3"  name='sa3' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa4',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa4" class="col-form-label">SA4:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa4'])) ?  $allInfo[0]['sa4'] : ''  ?>" title="" id="sa4"  name='sa4' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+                  <?php if(in_array('sa5',$project_info)){ ?>
+                  <div class="col">
+                     <label for="sa5" class="col-form-label">SA5:</label>
+                     <input type="text" value="<?=  (!empty($allInfo[0]['sa5'])) ?  $allInfo[0]['sa5'] : ''  ?>" title="" id="sa5"  name='sa5' class="form-control form-control-sm">
+                  </div>
+                  <?php } ?>
+               </div>
                <br><br><br>
             </div>
+
+            
             
             <div class="col">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -912,19 +981,22 @@
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
-                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
                               <th>Staff Name</th>
+                              <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
                               <th>Co. Disposition</th>
                               <th>Status</th>
+                            
                            </tr>
                            <?php 
                            foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
                               <tr  <?php if($allstaffinfo_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['first_name'].' '.$allstaffinfo_val['last_name']; ?></td>
                               <td><?= $allstaffinfo_val['comp_name']; ?></td>
-                              <td><?= $allstaffinfo_val['first_name'].$allstaffinfo_val['last_name']; ?></td>
+   
                               <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
                               <td><?php  if($allstaffinfo_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
+                             
                            </tr>
                            <?php } ?>
                         </table>
@@ -935,8 +1007,7 @@
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
+                              <th>Staff Name</th>
                               <th>Co. Disposition</th>
                               <th>Status</th>   
                            </tr>
@@ -944,8 +1015,7 @@
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
                               <tr  <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
-                              <td><?= $staff_list_val['first_name']; ?></td>
-                              <td><?= $staff_list_val['last_name']; ?></td>
+                              <td><?= $staff_list_val['first_name'].' '.$staff_list_val['last_name']; ?></td>
                               <td><?= $staff_list_val['company_dispostion']; ?></td>
                               <td><?php  if($staff_list_val['updated_status'] != ''){?><span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span><?php } ?></td>
                            </tr>
@@ -963,12 +1033,12 @@
                               <th>Co. Disposition</th>
                            </tr>
                            <?php 
-                           foreach($company_list as $company_list_key => $company_list_val) {?>
-                           <tr class="" <?php if($company_list_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
-                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($company_list_val['project_id']).'/'.base64_encode($company_list_val['id']).'/'.base64_encode($company_list_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
-                              <td><?= $company_list_val['received_company_name']; ?></td>
-                              <td><?= $company_list_val['staffcount']; ?></td>
-                              <td><?= $company_list_val['company_dispostion']; ?></td>
+                           foreach($company_list as $allstaffinfo_key => $allstaffinfo_val) {?>
+                           <tr class="" <?php if($allstaffinfo_val['received_company_name'] == $allInfo[0]['received_company_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
+                              <td><?= $allstaffinfo_val['received_company_name']; ?></td>
+                              <td><?= $allstaffinfo_val['staffcount']; ?></td>
+                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -977,6 +1047,7 @@
                </div>
             </div>
          </div>
+         <?php echo form_close() ?>
       </main>
       <script src="<?php echo base_url();?>public/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -990,6 +1061,15 @@
          placeholder: " Select Country",
          allowClear: true
          });
+
+         $("#industry").select2({
+         placeholder: " Select Industry",
+         allowClear: true
+         });
+
+
+         
+
       
          $("#web_staff_disposition").select2({
          placeholder: " Select Staff Voice Disposition",
@@ -1001,9 +1081,9 @@
          });
          $(document).ready(function() {
          
-         $('.row1').css({
-             height: ($('body').height() - 11) / 2 //divide the body into to 2 rows
-         });
+         // $('.row1').css({
+         //     height: ($('body').height() - 11) / 2 //divide the body into to 2 rows
+         // });
          
          // // populate href of first,prev,next & last buttons...
          // $('#first').attr('href', $('table#company_table').first().find('a').attr('href'));
@@ -1053,7 +1133,7 @@
                country_code:$('#country_code').val(),
                tel_number:$('#tel_number').val(),
                alternate_number:$('#alternate_number').val(),
-               industry:$('#industry').val(),
+               industry:$("#industry option:selected").val(), 
                revenue:$('#revenue').val(),
                revenue_currency:$('#revenue_currency').text(),
                }];
@@ -1068,7 +1148,7 @@
          $('#paste_company').click(function(){
             var getitems=JSON.parse(localStorage.getItem('company_details'));
             console.log(getitems);
-            console.log(getitems[0].company_name);
+            
             $('#company_name').val(getitems[0].company_name);
             $('#address_1').val(getitems[0].address_1);
             $('#address_2').val(getitems[0].address_2);
@@ -1077,6 +1157,7 @@
             $('#postal_code').val(getitems[0].postal_code);
             $('#state_name').val(getitems[0].state_name);
             $('#country').val(getitems[0].country).trigger('change');
+            $('#industry').val(getitems[0].industry).trigger('change');
             $('#region_name').val(getitems[0].region_name);
             $('#address_source_url').val(getitems[0].address_source_url);
             $('#ca1').val(getitems[0].ca1);
@@ -1092,7 +1173,7 @@
             $('#country_code').val(getitems[0].country_code);
             $('#tel_number').val(getitems[0].tel_number);
             $('#alternate_number').val(getitems[0].alternate_number);
-            $('#industry').val(getitems[0].industry);
+            
             $('#revenue').val(getitems[0].revenue);
             $('#revenue_currency').text(getitems[0].revenue_currency).trigger('change');
          });
@@ -1107,6 +1188,7 @@
                },
                success: function (data) {
                   $("#country_code").val(data.phonecode);
+                  $("#region_name").val(data.region);
                }
             });
          }

@@ -1,37 +1,58 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<<<<<<< HEAD
-=======
-       
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
+    
 
 <style>
+    #code{width:100%;height:200px}
 .grey-bg {  
 background-color: #F5F7FA;
 }
 </style>
 <div class="content-page">
-<div class="content">
+<div class="content"
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <center><h4 class="page-title" style="color: black">Staff Informations of Project : <?= $received_company_name;?></h4></center>
-            </div>
+<?php 
+
+if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') {?>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <center><h4 class="page-title" style="color: black">Staff Informations of Project : <?= $received_company_name;?></h4></center>
         </div>
+        <?php if(!empty($this->session->flashdata("error"))){?>
+        <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?= $this->session->flashdata("error"); ?>
+        </div>
+        <?php }
+        ?>
+
+        <?php if(!empty($this->session->flashdata("success"))){?>
+        <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?= $this->session->flashdata("success"); ?>
+        </div>
+        <?php }
+        ?>
     </div>
+</div>
+
+<form action="<?php echo base_url('projects/getsInfo'); ?>" method="post">
+<div class="grey-bg container-fluid" style="font-size: 100%">
+<section id="minimal-statistics">
     <div class="row">
-        <div class="col-3">
+    <div class="col-3">
             <div class="page-title-box">
                <label>Enter count</label>
                <input type="text" value="" class="form-control" id="count">
+               <input type="hidden" value="<?= $received_company_name;?>" class="form-control" name="company_name" id="company_name">
+               <input type="hidden" value="<?= $id;?>" class="form-control" name="project_id" id="company_name">
             </div>
         </div>
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Status</label>
-               <select  class="form-control" id="workalloc" onchange="getworkalloc(this.value)">
+               <select  class="form-control" id="workalloc">
                <option value="">Select Work Type</option>
                 <option value="Assigned">Assigned</option>
                 <option value="Unassigned">Unassigned</option>
@@ -41,7 +62,7 @@ background-color: #F5F7FA;
         <div class="col-3">
             <div class="page-title-box">
                <label>Select Users</label>
-               <select  class="form-control users" id="users[]" multiple>
+               <select  class="form-control users" id="users[]" multiple name="users[]"> 
                 <option value="">Select Users</option>
                 <?php 
                 foreach($users as $user_key => $user_row)
@@ -52,62 +73,44 @@ background-color: #F5F7FA;
                 </select>
             </div>
         </div>
-        <div class="col-1">  
-        <div class="page-title-box"> 
-               <button type="submit" value="" class="btn btn-danger form-control" id="btn-search-by-count" style="margin-top:30px;">Submit</button>
-        </div>
-        </div>
+        <div class="float-right">
+        <button type="submit" value="" class="btn btn-primary form-control" id="btn-search-by-count" style="margin-top:30px;width:125%">Assign</button>
+        
+        </div> 
     </div>
- <p><?php echo $this->session->flashdata("error");?></p>
- <p><?php echo $this->session->flashdata("success");?></p>
-<div class="grey-bg container-fluid" style="font-size: 100%">
-<br>
-<div class="row">
-    <div class="col-sm-2">
-         <input type="text" class="form-control" value="" placeholder="Records Counts" name="records_counts" onchange="test()">
-    </div>
-     <div class="col-sm-3">
-           <select class='form-control form-control-sm' id="country"  name='country' multiple="" onchange="getcountrycode(this.value)">
-            <option>Please Select User</option>
-           <?php 
-           foreach($getAllUsers as $val){ ?>
-            <option value="<? $val['id']; ?>"><?= $val['first_name'].' '.$val['last_name'];?></option>
-           <?php }
-
-           ?>
-          </select>
-    </div>
-    <div class="col-sm-2">
-         <input type="button" class="form-control" value="" placeholder="Ex: B2B-19" name="project_name" required="">
-    </div>
-
-</div>
-<br>
-
-
-<section id="minimal-statistics">
+    
+        <br><br><br>
+        <?php } ?>
 <div style="overflow-y: auto;">
 <input type="hidden"  value="<?= $id;?>" id="staff_id">
 <input type="hidden"  value="<?= $received_company_name; ?>" id="received_company_name">
-    <table id="datatable1" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
+    <table id="company_staff_count_datatable" class="table table-striped table-bordered "  cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Project Name</th>
-            <th>Staff Name</th>
-            <th>Company Received</th>
-            <th>Provided Job Title</th>
+        <th>ID</th>
+            <th>Project</th>
+            <th>Staff </th>
+            <th>Industry</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Company Dispo</th>
+            <th>Company Web Dispo</th>
+            <th>Website</th>
+            <th>Emp Size</th>
+            <th>Revenue</th>
+            <th>Job Title</th>
             <th>Address</th>
-            <th>City</th>
-            <th>Postal Code</th>
             <th>Country</th>
-            <th>Assigned By</th>
-            <th>Designation</th>
+            <th>Region</th>
+            <th>Web Staff Disposition</th>
+            <th>Web Voice Disposition</th>
+            <th>Ass. To</th>
+            <th>Ass. By</th>
             <th>Created At</th>
-            <th>Staff Id</th>
+            <th>Assigned At</th>
         </tr>
         </thead>
-       
+        
 </table>
 </div>
 </section>
@@ -115,78 +118,53 @@ background-color: #F5F7FA;
 </div>
 </div>
 </div>
-<<<<<<< HEAD
-<script >
-  
-</script>
-=======
-<?php //$this->load->view("includes/footer.php"); ?>
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
+</form>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<!-- <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<<<<<<< HEAD
- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script> -->
 
-=======
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-      
->>>>>>> cdb639e2b592d6678c37d5b549547b15bd44df7a
 <script type="text/javascript">
-     $(".users").select2({
+    $(".users").select2({
          placeholder: " Select Users",
          allowClear: true
          });
-  var simpletable = $('#datatable1').DataTable({
-    "responsive": true,
-    'processing': true,
-    'serverSide': true,
-    'serverMethod': 'post',
-    'language': {
-        'processing': '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>',
-        searchPlaceholder: ""
-        
-    },
-   'ajax': {
-       'url': "<?= base_url() ?>Projects/getprojectrecord",
-       'method': "POST",
-       'dataType':'json',
-       "data": function (data) {
-         data.staffid=$('#staff_id').val();
-         data.received_company_name=$('#received_company_name').val();
-         data.count=$('#count').val();
-         data.workalloc=$('#workalloc').find(":selected").val();
-       }
-   }, 
-   createdRow: function (row, data, index) {
-        $('td', row).eq(2).addClass('text-capitalize');
-    },
-});
+    var frontend_path = "<?=base_url()?>";
+$(document).ready(function (e) {
+    var table = $('#company_staff_count_datatable').DataTable({
+        'ajax': {
+           'url':frontend_path + 'projects/getprojectrecord',
+           'type':"POST",
+           'data': function(data){
+            data.staffid=$('#staff_id').val();
+            data.received_company_name=$('#received_company_name').val();
+            data.count=$('#count').val();
+            data.workalloc=$('#workalloc').find(":selected").val();
+           }
+        },
+   });
+
+   table.on('order.dt search.dt', function () {
+      table.column(0, {
+         search: 'applied',
+         order: 'applied'
+      }).nodes().each(function (cell, i) {
+         cell.innerHTML = i + 1;
+      });
+   }).draw();
+
 
 $("#count").keyup(function(){
-    simpletable.ajax.reload(null, false);
+    table.ajax.reload(null, false);
+});
+$('#workalloc').change(function(){
+        table.ajax.reload();
+    });
+
 });
 
-function getworkalloc($value)
-{
-    simpletable.ajax.reload(null, false);
-}
-simpletable.column([12]).visible(false);
 </script>
-<script >
-    $("#country").select2({
-         placeholder: " Select Country",
-         allowClear: true
-     });
-
-
-    function test(){
-        alert('hoo')
-    }
-</script>
-      
-      

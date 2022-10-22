@@ -23,14 +23,12 @@
                         <?php 
                         if(!empty($getFormInfo)){
                             $country_id = $getFormInfo['id'];
-                            $sortname = $getFormInfo['sortname'];
                             $name = $getFormInfo['name'];
                             $phonecode = $getFormInfo['phonecode'];
                             $button = "Update";
                         }else{
 
                             $country_id = "";
-                            $sortname = "";
                             $name = "";
                             $phonecode = "";
                             $button = "Add";
@@ -43,12 +41,6 @@
                                 <input type="hidden" name="country_id" value="<?= $country_id;?>">
                                 <input type="text" name="country_name" class="form-control" 
                                 placeholder="Country Name" required="" value="<?= $name;?>"> 
-                            </div>
-
-                            <div class="form-group">
-                                <label>Sort Name</label>
-                                <input type="text" name="sortname" class="form-control" 
-                                placeholder="Sort Name" required="" value="<?= $sortname;?>"> 
                             </div>
 
                             <div class="form-group">
@@ -74,7 +66,6 @@
                                     <thead>
                                         <tr>
                                             <th>Sr</th>
-                                            <th>Sort Name</th>
                                             <th>Country Name</th>
                                             <th>Phone Code</th>
                                             <th>Action</th>
@@ -89,7 +80,6 @@
 
                                         <tr>
                                             <td><?= $key+1; ?></td>
-                                            <td><?= $value['sortname'];?></td>
                                             <td><?= $value['name'];?></td>
                                             <td><?= $value['phonecode'];?></td>
                                             <td><a href="<?php echo base_url("master/add_country/"); ?><?php echo $value['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>&nbsp;&nbsp;&nbsp;
