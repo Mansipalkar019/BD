@@ -263,8 +263,10 @@ class Projects_Model extends CI_Model
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$company_name);
+        
         $querys=$this->db->get();
         return $datas =  $querys->result_array();
     }
@@ -283,7 +285,7 @@ class Projects_Model extends CI_Model
        
         
         $querys=$this->db->get();
-        echo $this->db->last_query();die();
+        //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
 
