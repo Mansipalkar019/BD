@@ -108,6 +108,26 @@
         }
     }
 
+    if (!function_exists('have_access')) {
+        function have_access($data)
+        {
+           
+
+            $designation_name = $this->ci->userdata('designation_name');
+            echo "<pre>";
+            print_r($data);
+            die;
+            $user_id = $this->session->userdata('id');
+             if(($designation_name=='Researcher') || $designation_name=='Caller'){
+                return 0;
+             }else{
+                return 1;
+             }
+        }
+    }
+
+
+
 
     
 

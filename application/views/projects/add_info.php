@@ -48,6 +48,9 @@
                padding: 10px;
                margin: 0px;
             }
+            .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+               font-size: 10px !important;
+            }
          }
         
          /* Show it is fixed to the top */
@@ -180,7 +183,7 @@
                   <?php if(in_array('state_name',$project_info)){ ?>
                   <div class="col">
                      <label for="state_name" class="col-form-label">State/County:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['state_country'])) ?  $allInfo[0]['state_country'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['state_county'])) ?  $allInfo[0]['state_county'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm">
                   </div>
                   <?php } ?>
                </div>
@@ -222,7 +225,7 @@
             </div>
             <div class="col">
                <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
-                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #ff0740;margin-top:-3px;margin-right:3%;"><i class="fa fa-arrow-left" aria-hidden="true"></i>Home</a>
+                <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #0e6efb;margin-top:-1px;margin-right:3%;color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                </div>
 
                <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
@@ -458,7 +461,17 @@
                   <?php if(in_array('no_of_employee',$project_info)){ ?>
                   <div class="col">
                      <label for="no_of_employee" class="col-form-label">No. of Employees:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm">
+                     <!-- <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm"> -->
+                     <select class='form-control form-control-sm' id="no_of_emp"  name='no_of_emp'>
+                        <option value=''>Select No. of Employees</option>
+                        <option value='1-10 Employees' <?php if($allInfo[0]['no_of_emp'] == '1-10 Employees'){ ?>selected<?php } ?>>1-10</option>
+                        <option value='11-50 Employees ' <?php if($allInfo[0]['no_of_emp'] == '11-50 Employees'){ ?>selected<?php } ?>>11-50</option>
+                        <option value='51-200 Employees' <?php if($allInfo[0]['no_of_emp'] == '51-200 Employees') {?>selected<?php } ?>>51-200</option>
+                        <option value='201-500 Employees' <?php if($allInfo[0]['no_of_emp'] == '201-500 Employees') {?>selected<?php } ?>>201-500</option>
+                        <option value='501-1000 Employees'<?php if($allInfo[0]['no_of_emp'] == '501-1000 Employees') {?>selected<?php } ?>>501-1000</option>
+                        <option value='1001-5000 Employees'<?php if($allInfo[0]['no_of_emp'] == '1001-5000 Employees') {?>selected<?php } ?>>1001-5000</option>
+                        <option value='10,001 + Employees'<?php if($allInfo[0]['no_of_emp'] == '10,001 + Employees') {?>selected<?php } ?>>10,001+more</option>
+                  </select>
                   </div>
                   <?php } ?>
                </div>
@@ -561,7 +574,7 @@
                </div>
             </div>
          </div>
-         <?php echo form_close() ?>
+       
          <div class="row row1">
             <div class="col">
                <!-- check input access for first_name,last_name -->
@@ -642,7 +655,7 @@
                   </div>
                   <div class="col">
                      <div class="input-group">
-                        <input type="email" value="<?=  (!empty($allInfo[0]['staff_email'])) ?  $allInfo[0]['staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm">
+                        <input type="email" value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm">
                         <div class="input-group-text">
                            <input class="form-check-input mt-0" type="checkbox" value="" id="staff_email_verified" >
                         </div>
@@ -679,7 +692,7 @@
                   <div class="input-group mb-3">
                
                   <input type="text" class="form-control" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url'  aria-describedby="basic-addon1">
-                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
                   </div>
                   </div>
                   
@@ -714,7 +727,7 @@
                   <div class="input-group mb-3">
                
                   <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm">
-                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
                </div>
                      </div>
                   <?php } ?>
@@ -778,7 +791,7 @@
                         <option value=''>select Web Disposition</option>
                         <?php 
                         foreach ($webDispos as $key => $val) { ?>
-                        <option value='<?= $val['dispositions']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['dispositions']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
                         <?php }
                            ?>
                         <option value='Duplicate'>Duplicate</option>
@@ -788,7 +801,7 @@
                </div>
                <!-- check input access for voice_staff_disposition -->
                <?php
-                if($this->session->userdata('designation_id') == 3 ){ 
+                if($this->session->userdata('designation_id') == 3 || $this->session->userdata('designation_id') == 1 || $this->session->userdata('designation_id') == 2 ||  $this->session->userdata('designation_id') == 8 ){ 
                   $div_count=div_access($project_info,array('voice_staff_disposition'));
                   $access22 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
@@ -802,7 +815,7 @@
                         <option value=''>select Voice Staff Disposition</option>
                         <?php 
                         foreach ($VoiceDispos as $key => $val) { ?>
-                        <option value='<?= $val['voice_dispositions']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['voice_dispositions']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
                         <?php }
                            ?>
                      </select>
@@ -1034,6 +1047,7 @@
                </div>
             </div>
          </div>
+         <?php echo form_close() ?>
       </main>
       <script src="<?php echo base_url();?>public/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -1049,7 +1063,7 @@
          });
 
          $("#industry").select2({
-         placeholder: " Select Country",
+         placeholder: " Select Industry",
          allowClear: true
          });
 
