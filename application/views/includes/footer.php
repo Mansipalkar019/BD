@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <b>2007 - 2022 &copy; BDCRM</b>
+                <b>2007 - <?=date("Y")?> &copy; BDCRM</b>
             </div>
             <div class="col-md-6 text-right">
                 <b>Design & Developed By <a href="https://www.stzsoft.com">STZSOFT</a></b>
