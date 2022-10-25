@@ -1,7 +1,3 @@
-<?php 
-    $controller_name = $this->router->fetch_class();
-    $method_name = $this->router->fetch_method();
-?>
 <!-- Footer Start -->
 <footer class="footer">
     <div class="container-fluid">
@@ -42,7 +38,7 @@
 <script src="<?php echo base_url(); ?>assets/js/pages/dashboard.init.js"></script>
 
 <!-- App js -->
-    <!-- <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script> -->
+    <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script>
      <script src="<?php echo base_url(); ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/pages/sweetalerts.init.js"></script>
    
@@ -60,7 +56,7 @@
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.keyTable.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.fixedHeader.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.scroller.min.js"></script>
-    <!-- <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.fixedColumns.min.html"></script> -->
+    <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.fixedColumns.min.html"></script>
     <script src="<?php echo base_url(); ?>assets/libs/jszip/jszip.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/pdfmake/pdfmake.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/pdfmake/vfs_fonts.js"></script>
@@ -73,12 +69,6 @@
     <script type="text/javascript">
           var bases_url="<?=base_url() ?>";
     </script>
-    <?php 
-        if($controller_name=='Projects' && $method_name == 'ProjectInfo'){ 
-    ?>
-    <script src="<?php echo base_url(); ?>assets/js/view_js/projects/project_info.js"></script>
-    <?php } ?>
-    
 
     <!-- Nested Table  -->
     
