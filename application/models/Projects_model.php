@@ -138,45 +138,42 @@ class Projects_Model extends CI_Model
 
 
     function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-
-           $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
-        bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,buf.provided_staff_email,bcd.company_dispostion as company_disposition,bwd.web_disposition_name as web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,bsvd.voice_dispositions as voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
-        $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
-        $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-        $this->db->join('users us','ca.user_id=us.id','left');
-        $this->db->join('users usd','ca.assigned_by=usd.id','left');
-        $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
-        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
-        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
-        $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
-        $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
-        $where = '((ca.status IS NULL OR ca.status=1) AND (bmp.status=1))';
-
-
-        $designation_name = $this->session->userdata('designation_name');
-        $user_id = $this->session->userdata('id');
-        if(($designation_name=='Researcher') || $designation_name=='Caller'){
-           $this->db->where('ca.user_id',$user_id);  
-        }
-        $this->db->where($where);
-
-        if($workstatus==1)
-        {
-            $this->db->where('ca.assigned_by !=""');  
-        }
-        elseif($workstatus==2){
-            $this->db->where('ca.assigned_by IS NULL');   
-        }
-        $this->db->limit($rowperpage,$rowno);
-        $this->db->group_by('buf.id');
-         $query=$this->db->get(); 
-         //echo $this->db->last_query(); die();
-        return $data = $query->result_array();
-
-    }
+        $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
+     bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,buf.provided_staff_email,bcd.company_dispostion as company_disposition,bwd.web_disposition_name as web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,bsvd.voice_dispositions as voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
+     $this->db->from('bdcrm_uploaded_feildss as buf');
+     $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
+     $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
+     $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
+     $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
+     $this->db->join('users us','ca.user_id=us.id','left');
+     $this->db->join('users usd','ca.assigned_by=usd.id','left');
+     $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
+     $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+     $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
+     $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
+     $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
+     $where = '((ca.status IS NULL OR ca.status=1) AND (bmp.status=1))';
+     $this->db->where('buf.received_company_name',$received_company_name);
+     ;
+     $designation_name = $this->session->userdata('designation_name');
+     $user_id = $this->session->userdata('id');
+     if(($designation_name=='Researcher') || $designation_name=='Caller'){
+        $this->db->where('ca.user_id',$user_id);
+     }
+     $this->db->where($where);
+     if($workstatus==1)
+     {
+         $this->db->where('ca.assigned_by !=""');
+     }
+     elseif($workstatus==2){
+         $this->db->where('ca.assigned_by IS NULL');
+     }
+     $this->db->limit($rowperpage,$rowno);
+     $this->db->group_by('buf.id');
+      $query=$this->db->get();
+    //echo  $this->db->last_query(); die;
+     return $data = $query->result_array();
+ }
     
     function get_no_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
          $this->db->select('cmpallo.status as assigne_status,cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,CONCAT(us.first_name," ",us.last_name) as assigned_to,users.username,md.designation_name');
@@ -246,7 +243,6 @@ class Projects_Model extends CI_Model
         $this->db->join('users','companywise_allocation.assigned_by = users.id','left');
         $this->db->where('bmp.id',$project_id);
         $this->db->where('bmp.status',1);
-        $this->db->where('companywise_allocation.status',1);
           $designation_name = $this->session->userdata('designation_name');
           $user_id = $this->session->userdata('id');
           if(($designation_name=='Researcher') || $designation_name=='Caller'){
@@ -289,7 +285,6 @@ class Projects_Model extends CI_Model
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->join('companywise_allocation ca','ca.company_disposition = bmp.id','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$company_name);
         

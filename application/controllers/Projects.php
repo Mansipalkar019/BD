@@ -224,8 +224,8 @@ class Projects extends CI_Controller
             $data = array(
                 'error' => validation_errors()
             );
-            echo "<pre>";
-            print_r($data);die();
+            // echo "<pre>";
+            // print_r($data);die();
             $this->session->set_flashdata("error", $data['error']);
             redirect(base_url("projects/new_projects"));
         }
@@ -564,6 +564,7 @@ class Projects extends CI_Controller
         $sa3=$this->input->post('sa3');
         $sa4=$this->input->post('sa4');
         $sa5=$this->input->post('sa5');
+        $website_url=$this->input->post('website_url');
         //$check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
             'company_name'=>$company_name,
@@ -617,7 +618,7 @@ class Projects extends CI_Controller
             'sa3'=>$sa3,
             'sa4'=>$sa4,
             'sa5'=>$sa5,
-           
+            'website_url'=>$website_url,
         );
         // echo "<pre>";
         // print_r($company_details);
