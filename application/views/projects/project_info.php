@@ -56,14 +56,6 @@
                      </select>
                   </div>
                </div>
-               <!--<div class="col-md-2">-->
-               <!--    <div class="form-group">-->
-               <!--        <label>Total Staff Count</label>-->
-               <!--        <div>-->
-               <!--            <span id="total_staff_count"></span>-->
-               <!--        </div>-->
-               <!--    </div>-->
-               <!--</div>-->
                <div class="col-md-2">
                   <div class="form-group">
                      <div>
@@ -84,7 +76,7 @@
                            <th>Staff Count</th>
                            <th>Company Received</th>
                            <th>Created At</th>
-                           <th>Assigned Name</th>
+                           <th>Assigned By</th>
                            <th>Action</th>
                         </tr>
                      </thead>

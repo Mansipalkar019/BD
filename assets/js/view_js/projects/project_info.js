@@ -1,5 +1,7 @@
 $(document).ready(function (e) {
-   $('#user_list').select2();
+
+	$('#user_list').select2();
+
    var table = $('#company_staff_count_datatable').DataTable({
       'ajax': {
          'url': bases_url + 'projects/display_all_company_staff',
@@ -63,7 +65,8 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
-            $('#total_staff_count').val(response.total_staff_count);
+            $('#total_staff_count').text(response.total_staff_count);
+
          },
       });
    });
@@ -82,7 +85,9 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
+
             $('#total_staff_count').val(response.total_staff_count);
+
          },
       });
    });
@@ -124,7 +129,6 @@ $(document).ready(function (e) {
                var td_text = td.innerHTML;
                company_name.push(td_text);
                // }
-               console.log(company_name);
             }
          }
          if (user_list == "") {
@@ -134,7 +138,9 @@ $(document).ready(function (e) {
                icon: 'warning',
                showCancelButton: true,
                confirmButtonColor: '#FD7E14',
-               confirmButtonText: 'OK!',
+               confirmButtonText: 'Yes!',
+               cancelButtonText: 'No.',
+
             });
          } else {
             if (company_name) {
@@ -148,6 +154,34 @@ $(document).ready(function (e) {
                      project_id: id,
                   },
                   success: function (response) {
+
+                  	if(response.status=='success'){
+                  		Swal.fire(
+								  'Good job!',
+								  	response.message,
+								  'success'
+								).then((result) => {
+								  if (result.isConfirmed) {
+								    location.reload();
+								  }
+								})
+								setTimeout(function(){location.reload()},3000);
+                  	} else if(response.status=='failure'){
+                  		
+                  		Swal.fire({
+								  title: 'Oops...',
+								  text: response.message,
+								  icon: 'error',
+								  confirmButtonColor: '#3085d6',
+								  confirmButtonText: 'Ok'
+								}).then((result) => {
+								  if (result.isConfirmed) {
+								    setTimeout(function(){location.reload()},2000);
+								  }
+								})
+                  	}
+                  	
+
                      if(response.status=='success'){
                         Swal.fire(
                           'Good job!',
@@ -174,7 +208,7 @@ $(document).ready(function (e) {
                         })
                      }
                      
-                     // swal({
+                  // swal({
                      //    title: 'success',
                      //    text: response.message,
                      //    icon: 'success',
