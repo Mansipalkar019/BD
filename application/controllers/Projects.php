@@ -416,7 +416,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['allstaffinfo']);die();
+        // print_r($data['company_list']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -540,6 +540,7 @@ class Projects extends CI_Controller
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
         $revenue=$this->input->post('revenue');
+        $revenue_curr=$this->input->post('revenue_currency');
         $no_of_emp=$this->input->post('no_of_emp');
         $first_name=$this->input->post('first_name');
         $last_name=$this->input->post('last_name');
@@ -593,6 +594,7 @@ class Projects extends CI_Controller
             'alternate_number'=>$alternate_number,
             'industry'=>$industry,
             'revenue'=>$revenue,
+            'revenue_curr'=>$revenue_curr,
             'updated_at'=>date('Y-m-d H:i:s'),
             'updated_by'=>$this->session->userdata('designation_id'),
             'first_name'=>$first_name,
@@ -620,8 +622,8 @@ class Projects extends CI_Controller
             'sa5'=>$sa5,
             'website_url'=>$website_url,
         );
-        // echo "<pre>";
-        // print_r($company_details);
+        echo "<pre>";
+        print_r($company_details);
         if( $this->model->updateData('bdcrm_uploaded_feildss',$company_details,array('project_id'=>$project_id,'id'=>$staff_id)))
         {
             $response['status']='success';
@@ -664,6 +666,7 @@ class Projects extends CI_Controller
     // }
 
     public function save_company_allocation_data(){
+       
         $company_name = $this->input->post('company_name');
         $user_list = $this->input->post('user_list');
         $project_id = $this->input->post('project_id');
@@ -835,6 +838,7 @@ class Projects extends CI_Controller
     public function getsInfo(){
         $project_id = $this->input->post('project_id');
         $staff_info = $this->input->post('staff_info');
+        //print_r($staff_info);die();
         $assignee_users = $this->input->post('users');
         $company_name = $this->input->post('company_name');
         $perUser = count($assignee_users);
@@ -844,7 +848,7 @@ class Projects extends CI_Controller
            $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
           
         }
-        foreach($final as $final_key => $final_row){
+       foreach($final as $final_key => $final_row){
             foreach($final_row['staff_info'] as $final_keys =>$final_rows)
             {
                 $user_id=$final_row['user_id'];
@@ -881,10 +885,6 @@ class Projects extends CI_Controller
             echo count($datas); 
             unset($data['status']);
 
-
-           
-
-
             $deactivateAssignee= $this->model->updateData("companywise_allocation", array('status'=>0), $data);
              echo $this->db->last_query(); 
         // echo $this->db->last_query(); die;
@@ -900,9 +900,99 @@ class Projects extends CI_Controller
 
     function excel_download()
     {
-        $project_id=$_GET['id'];
-        $this->load->library('excel');
-        $totalData=$this->Projects_model->excel_download($project_id); 
+        error_reporting(0);
+        $project_id=base64_decode($_GET['id']);
+       
+       // load excel library
+       $this->load->library('excel');
+       $totalData=$this->Projects_model->excel_download($project_id);  
+       //echo '<pre>'; print_r($totalData); exit;
+       $objPHPExcel = new PHPExcel();
+       $objPHPExcel->setActiveSheetIndex(0);
+       // set Header
+       $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'ID');
+       $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Salutation');
+       $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'First Name');
+       $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Last Name');
+       $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Provided Job Title');
+       $objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Job Title');
+       $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'Linkedin Connection');     
+       $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'Staff Url');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('I1', 'Received Company Name');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('J1', 'Company Name');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('K1', 'Address1');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('L1', 'Address2');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('M1', 'Address3');     
+       $objPHPExcel->getActiveSheet()->SetCellValue('N1', 'City');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('O1', 'State');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('P1', 'Postalcode');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('Q1', 'Provided Country');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'Country');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('S1', 'Region');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('T1', 'Provided Email');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('U1', 'Email');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('V1', 'Assumed Email');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('W1', 'Email Harvesting');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('X1', 'Provided Direct Tel');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('Y1', 'Direct Tel');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('Z1', 'Provided Company Tel');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('AA1', 'Company Tel');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('AB1', 'Alternate Company Tel');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('AC1', 'Extension');   
+       $objPHPExcel->getActiveSheet()->SetCellValue('AD1', 'Mobile'); 
+       $objPHPExcel->getActiveSheet()->SetCellValue('AE1', 'Website'); 
+       $objPHPExcel->getActiveSheet()->SetCellValue('AF1', 'Address'); 
+       $objPHPExcel->getActiveSheet()->SetCellValue('AG1', 'Remarks'); 
+       $objPHPExcel->getActiveSheet()->SetCellValue('AH1', 'Industry'); 
+       $objPHPExcel->getActiveSheet()->SetCellValue('AI1', 'General Notes');        
+       $rowCount = 2;
+        $i=1;
+       foreach($totalData as $totalData_key => $totalData_row)
+       {
+        $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $i);
+        $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $totalData_row['prefix']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $totalData_row['first_name']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $totalData_row['last_name']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $totalData_row['provided_job_title']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $totalData_row['provided_job_title']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $totalData_row['staff_linkedin_con']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $totalData_row['staff_url']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $totalData_row['received_company_name']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $totalData_row['company_name']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $totalData_row['address1']); 
+        $objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $totalData_row['address2']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $totalData_row['address3']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('N' . $rowCount, $totalData_row['city']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('O' . $rowCount, $totalData_row['state_county']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('P' . $rowCount, $totalData_row['postal_code']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('Q' . $rowCount, $totalData_row['countryname']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('R' . $rowCount, $totalData_row['countryname']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('S' . $rowCount, $totalData_row['region']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('T' . $rowCount, $totalData_row['provided_staff_email']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('U' . $rowCount, $totalData_row['staff_email']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('V' . $rowCount, $totalData_row['assumed_email']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('W' . $rowCount, $totalData_row['staff_email_harvesting']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('X' . $rowCount, $totalData_row['provided_direct_tel']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('Y' . $rowCount, $totalData_row['staff_direct_tel']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('Z' . $rowCount, $totalData_row['provided_comp_tel_number']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('AA' . $rowCount, $totalData_row['tel_number']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('AB' . $rowCount, $totalData_row['alternate_number']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('AC' . $rowCount, $totalData_row['extention']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('AD' . $rowCount, $totalData_row['staff_mobile']);  
+        $objPHPExcel->getActiveSheet()->SetCellValue('AE' . $rowCount, $totalData_row['website_url']);  
+        $objPHPExcel->getActiveSheet()->SetCellValue('AF' . $rowCount, $totalData_row['address_url']);  
+        $objPHPExcel->getActiveSheet()->SetCellValue('AG' . $rowCount, $totalData_row['remarks']);  
+        $objPHPExcel->getActiveSheet()->SetCellValue('AH' . $rowCount, $totalData_row['Industries']);  
+        $objPHPExcel->getActiveSheet()->SetCellValue('AI' . $rowCount, $totalData_row['genral_notes']);      
+        $rowCount++; $i++;
+       }
+        $filename = FCPATH . "uploads/projects/".$totalData_row['project_name'].".xls";
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="01simple.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save($filename);
+        redirect(base_url("uploads/projects/".$totalData_row['project_name'].".xls"));
     }
 
 }

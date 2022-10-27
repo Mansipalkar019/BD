@@ -210,14 +210,19 @@
                   <?php if(in_array('region_name',$project_info)){ ?>
                   <div class="col">
                      <label for="region_name" class="col-form-label">Region:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['region'])) ?  $allInfo[0]['region'] : ''  ?>" title="" id="region_name"  name='region_name' class="form-control form-control-sm">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['region'])) ?  $allInfo[0]['region'] : ''  ?>" title="" id="region_name"  name='region_name' class="form-control form-control-sm" >
                   </div>
                   <?php } ?>
                   <!-- check input access for address_url -->
                   <?php if(in_array('address_source_url',$project_info)){ ?>
                   <div class="col">
+                    
                      <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm">
+                     <div class="input-group mb-3">
+               
+                     <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm" style="margin-top:15px;">
+                     <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" style="margin-top:15px;"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                  </div>
                   </div>
                   <?php } ?>
                </div>
@@ -442,8 +447,13 @@
                      </div> -->
                   <?php if(in_array('website_url',$project_info)){ ?>
                   <div class="col">
-                     <label for="website_url" class="col-form-label">Website URL:</label>
+                    
+                    <label for="website_url" class="col-form-label">Website URL:</label>
+                    <div class="input-group mb-3">
+               
                      <input type="text" value="<?=  (!empty($allInfo[0]['website_url'])) ?  $allInfo[0]['website_url'] : ''  ?>" title="" id="website_url"  name='website_url' class="form-control form-control-sm">
+                     <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" style="margin-top:15px;"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                    </div>
                   </div>
                   <?php } ?>
                   <!-- check input access for email_address,no_of_employees -->
@@ -464,13 +474,13 @@
                      <!-- <input type="number" value="<?=  (!empty($allInfo[0]['no_of_emp'])) ?  $allInfo[0]['no_of_emp'] : ''  ?>" title="" id="no_of_employee"  name='no_of_employee' class="form-control form-control-sm"> -->
                      <select class='form-control form-control-sm' id="no_of_emp"  name='no_of_emp'>
                         <option value=''>Select No. of Employees</option>
-                        <option value='1-10 Employees' <?php if($allInfo[0]['no_of_emp'] == '1-10 Employees'){ ?>selected<?php } ?>>1-10</option>
-                        <option value='11-50 Employees ' <?php if($allInfo[0]['no_of_emp'] == '11-50 Employees'){ ?>selected<?php } ?>>11-50</option>
-                        <option value='51-200 Employees' <?php if($allInfo[0]['no_of_emp'] == '51-200 Employees') {?>selected<?php } ?>>51-200</option>
-                        <option value='201-500 Employees' <?php if($allInfo[0]['no_of_emp'] == '201-500 Employees') {?>selected<?php } ?>>201-500</option>
-                        <option value='501-1000 Employees'<?php if($allInfo[0]['no_of_emp'] == '501-1000 Employees') {?>selected<?php } ?>>501-1000</option>
-                        <option value='1001-5000 Employees'<?php if($allInfo[0]['no_of_emp'] == '1001-5000 Employees') {?>selected<?php } ?>>1001-5000</option>
-                        <option value='10,001 + Employees'<?php if($allInfo[0]['no_of_emp'] == '10,001 + Employees') {?>selected<?php } ?>>10,001+more</option>
+                        <option value='1-10 Employees' <?php if($allInfo[0]['no_of_emp'] == '1-10 Employees'){ ?>selected<?php } ?>>1-10 Employees</option>
+                        <option value='11-50 Employees' <?php if($allInfo[0]['no_of_emp'] == '11-50 Employees'){ ?>selected<?php } ?>>11-50 Employees</option>
+                        <option value='51-200 Employees' <?php if($allInfo[0]['no_of_emp'] == '51-200 Employees') {?>selected<?php } ?>>51-200 Employees</option>
+                        <option value='201-500 Employees' <?php if($allInfo[0]['no_of_emp'] == '201-500 Employees') {?>selected<?php } ?>>201-500 Employees</option>
+                        <option value='501-1000 Employees'<?php if($allInfo[0]['no_of_emp'] == '501-1000 Employees') {?>selected<?php } ?>>501-1000 Employees</option>
+                        <option value='1001-5000 Employees'<?php if($allInfo[0]['no_of_emp'] == '1001-5000 Employees') {?>selected<?php } ?>>1001-5000 Employees</option>
+                        <option value='10,001 + Employees'<?php if($allInfo[0]['no_of_emp'] == '10,001 + Employees') {?>selected<?php } ?>>10,001+more Employees</option>
                   </select>
                   </div>
                   <?php } ?>
@@ -505,23 +515,12 @@
                   </div>
                   <?php } ?>
 
-
-
-                   
-
-
-
-
-
-
-
-
                   <?php if(in_array('revenue',$project_info)){ ?>
                   <div class="col">
                      <label for="revenue" class="col-form-label">Revenue:</label>
                      <div class="input-group">
                         <input type="text" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency">$</button>
+                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency" name="revenue_currency"></button>
                         <ul class="dropdown-menu dropdown-menu-end revenue_currency">
                            <?php 
                               foreach ($currency as $key => $val) { ?>
@@ -972,7 +971,7 @@
                      <button style='font-size:12px' class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="true"><?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?><?=  (!empty($staff_list)) ?  ' ('.count($staff_list).')' : '(0)' ?></button>
                   </li>
                   <li class="nav-item" role="presentation">
-                     <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($allInfo[0]['project_name'])) ?  $allInfo[0]['project_name'] : ''  ?> <?=  (!empty($allInfo[0]['company_count'])) ?  '('.$allInfo[0]['company_count'].')' : '(0)' ?></button>
+                     <button style='font-size:12px' class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><?=  (!empty($company_list[0]['project_name'])) ?  $company_list[0]['project_name'] : ''  ?> <?=  (!empty($company_list[0]['project_name'])) ?  '('.count($company_list).')' : '(0)' ?></button>
                   </li>
                </ul>
                <div class="tab-content" id="myTabContent">
@@ -1098,7 +1097,7 @@
          });
          
          $('ul.revenue_currency li').click(function(){
-             $('#revenue_currency').text($(this).text());
+             alert($('#revenue_currency').text($(this).text()));
          });
          if(localStorage.getItem('company_details') != '')
          {
@@ -1136,7 +1135,10 @@
                industry:$("#industry option:selected").val(), 
                revenue:$('#revenue').val(),
                revenue_currency:$('#revenue_currency').text(),
+               no_of_emp:$("#no_of_emp option:selected").text(), 
+               website_url:$("#website_url").val(),
                }];
+              
             localStorage.setItem('company_details',JSON.stringify(items));
             swal({
                      text: 'Company Details Copied Successfully',
@@ -1175,7 +1177,9 @@
             $('#alternate_number').val(getitems[0].alternate_number);
             
             $('#revenue').val(getitems[0].revenue);
-            $('#revenue_currency').text(getitems[0].revenue_currency).trigger('change');
+            $('#revenue_currency').val(getitems[0].revenue_currency).trigger('change');
+            $('#no_of_emp').val(getitems[0].no_of_emp).trigger('change');
+            $('#website_url').val(getitems[0].website_url);
          });
 
          function getcountrycode(country) {

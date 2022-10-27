@@ -138,7 +138,8 @@ class Projects_Model extends CI_Model
 
 
     function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-        $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
+        $rowperpage=100;
+    $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
      bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,buf.provided_staff_email,bcd.company_dispostion as company_disposition,bwd.web_disposition_name as web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,bsvd.voice_dispositions as voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
      $this->db->from('bdcrm_uploaded_feildss as buf');
      $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
@@ -311,10 +312,11 @@ class Projects_Model extends CI_Model
     }
 
     function getCompanyInfoDetails($project_id,$cmp_name){
-        $this->db->select('bmp.*,buf.received_company_name,count(bmp.id) as staffcount,buf.updated_status,count(buf.received_company_name) as staffcount,buf.project_id,buf.id');
+        $this->db->select('bmp.*,bmap.project_name,buf.received_company_name,count(bmp.id) as staffcount,buf.updated_status,count(buf.received_company_name) as staffcount,buf.project_id,buf.id');
         $this->db->distinct('received_company_name');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('bdcrm_master_projects bmap','buf.project_id = bmap.id','left');
         $this->db->where('project_id',$project_id);
         $this->db->where('received_company_name',$cmp_name);
         $this->db->group_by('received_company_name');
@@ -335,5 +337,24 @@ class Projects_Model extends CI_Model
 
  
 
+	function excel_download($product_id="")
+    {
+        $this->db->select('bmp.*,buf.*,bin.Industries,bswd.dispositions,bsvd.voice_dispositions,bcd.company_dispostion,bwd.web_disposition_name,bdcrm_name_prefix.prefix,bdcrm_countries.name as countryname,bdcrm_countries.region');
+        $this->db->from('bdcrm_master_projects bmp');
+		$this->db->join('bdcrm_uploaded_feildss buf','buf.project_id=bmp.id','left');
+		$this->db->join('bdcrm_countries','bdcrm_countries.id=buf.provided_country','left');
+        $this->db->join('bdcrm_name_prefix','bdcrm_name_prefix.id=buf.suffix','left');
+        $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
+        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
+        $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
+        $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
+       
+        $this->db->where('bmp.status',1);
+		$this->db->where('bmp.id',$product_id);
+		$query=$this->db->get();
+        //echo $this->db->last_query();die();
+        return $query->result_array();
+    }
     
 }

@@ -71,10 +71,10 @@ background-color: #F5F7FA;
                          <?php 
                          if(($designation_name!='Researcher') AND $designation_name!='Caller'){ ?>
                            <td>
-                            <a href="<?= base_url().$value['file_path']; ?>" title='Download File'><i class="fas fa-download"></i></a>
-                           &nbsp; <a href="<?= base_url().$value['file_path']; ?>"><i class="fa-solid fa-pen-to-square"></i></i></a>
+                            <!-- <a href="<?= base_url().$value['file_path']; ?>" title='Download File'><i class="fas fa-download"></i></a> -->
+                           <a href="<?= base_url().$value['file_path']; ?>"><i class="fa-solid fa-pen-to-square"></i></i></a>
                            &nbsp; <a onclick=" return confirm('are you sure you want to delete this project')" href="<?= base_url().'Projects/DeleteProjects/'.$value['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                           &nbsp; <a href="<?= base_url().'Projects/excel_download?id='.$value['id']; ?>"><i class="fas fa-download"></i></i></a>
+                           &nbsp; <a href="<?= base_url().'Projects/excel_download?id='.base64_encode($value['id']); ?>"><i class="fas fa-download"></i></i></a>
                         </td>
                          <?php } ?>
                         
