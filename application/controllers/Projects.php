@@ -925,10 +925,6 @@ class Projects extends CI_Controller
 
             echo count($datas); 
             unset($data['status']);
-<<<<<<< HEAD
-
-=======
->>>>>>> 83632674b531f9e16cfffb1e5e9c34bea2cf38dc
             $deactivateAssignee= $this->model->updateData("companywise_allocation", array('status'=>0), $data);
              echo $this->db->last_query(); 
         // echo $this->db->last_query(); die;
