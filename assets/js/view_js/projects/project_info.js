@@ -124,7 +124,6 @@ $(document).ready(function (e) {
                var td_text = td.innerHTML;
                company_name.push(td_text);
                // }
-               console.log(company_name);
             }
          }
          if (user_list == "") {
