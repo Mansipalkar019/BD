@@ -25,16 +25,12 @@ class Projects extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
-  
-
     public function project_list()
     {
         $data['projects']=$this->Projects_model->getprojectrecord();
         $data['main_content'] = "projects/project_list";
         $this->load->view("includes/template", $data);
     }
-
-  
     public function new_projects($id = 0)
     {
         $data['TaskType'] = $this->model->getData('bdcrm_project_type', array('status' => '1'));
@@ -44,8 +40,6 @@ class Projects extends CI_Controller
         $data['getAllCountry'] = $this->model->getData('bdcrm_countries', array('status' => '1'));
         $this->load->view("includes/template", $data);
     }
-
-
     public function spreadhseet_format_download()
     {
         header('Content-Type: application/vnd.ms-excel');
@@ -60,8 +54,6 @@ class Projects extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
-
-
     public function upload_project(){
         // echo "<pre>";
         // print_r($_POST);die();
@@ -423,7 +415,8 @@ class Projects extends CI_Controller
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
-        
+        // echo "<pre>";
+        // print_r($data['allInfo']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -502,11 +495,12 @@ class Projects extends CI_Controller
             echo json_encode($response);  
     }
     public function get_staff_info(){
-         $id=base64_decode($_GET['id']);
-         $received_company_name = base64_decode($_GET['received_company_name']);
-         $data['ProjectInfo'] = $this->Projects_model->get_staff_info($id,$received_company_name);
+         $data['id']=base64_decode($_GET['id']);
+         $data['received_company_name'] = base64_decode($_GET['received_company_name']);
+         $data['ProjectInfo'] = $this->Projects_model->get_staff_info($data['id'],$data['received_company_name']);
+         $data['users'] = $this->model->getData('users', array('status' => '1'));
          $data['main_content'] = "projects/staff_info";
-          // echo '<pre>'; print_r($data['ProjectInfo']); exit;   
+         //  echo '<pre>'; print_r($data['ProjectInfo']); exit;   
          $this->load->view("includes/template", $data);
     }
 
@@ -519,7 +513,6 @@ class Projects extends CI_Controller
 
     public function update_company_details()
     {
-
         $project_id=$this->input->post('project_id');
         $staff_id=$this->input->post('staff_id');
         $company_name=$this->input->post('company_name');
@@ -547,6 +540,30 @@ class Projects extends CI_Controller
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
         $revenue=$this->input->post('revenue');
+        $no_of_emp=$this->input->post('no_of_emp');
+        $first_name=$this->input->post('first_name');
+        $last_name=$this->input->post('last_name');
+        $provided_job_title=$this->input->post('job_title');
+        $staff_job_function=$this->input->post('staff_job_function');
+        $staff_email=$this->input->post('staff_email');
+        $staff_department=$this->input->post('staff_department');
+        $staff_url=$this->input->post('staff_url');
+        $assumed_email=$this->input->post('assumed_email');
+        $staff_email_harvesting=$this->input->post('staff_email_harvesting');
+        $staff_direct_tel=$this->input->post('staff_direct_tel');
+        $staff_mobile=$this->input->post('staff_mobile');
+        $web_staff_disposition=$this->input->post('web_staff_disposition');
+        $voice_staff_disposition=$this->input->post('voice_staff_disposition');
+        $staff_linkedin_con=$this->input->post('staff_linkedin_count');
+        $staff_note=$this->input->post('staff_note');
+        $staff_remark=$this->input->post('staff_remark');
+        $research_remark=$this->input->post('research_remark');
+        $voice_remark=$this->input->post('voice_remark');
+        $sa1=$this->input->post('sa1');
+        $sa2=$this->input->post('sa2');
+        $sa3=$this->input->post('sa3');
+        $sa4=$this->input->post('sa4');
+        $sa5=$this->input->post('sa5');
         //$check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
             'company_name'=>$company_name,
@@ -560,6 +577,7 @@ class Projects extends CI_Controller
             'country_code'=>$country_code,
             'region'=>$region_name,
             'address_souce_url'=>$address_source_url,
+            'no_of_emp'=>$no_of_emp,
             'ca1'=>$ca1,
             'ca2'=>$ca2,
             'ca3'=>$ca3,
@@ -567,7 +585,7 @@ class Projects extends CI_Controller
             'ca5'=>$ca5,
             'company_disposition'=>$company_disposition,
             'web_disposition'=>$company_web_dispositon,
-            'voice_disposition'=>$company_voice_disposition,
+            'voice_staff_disposition'=>$voice_staff_disposition,
             'genral_notes'=>$company_genaral_notes,
             'remarks'=>$company_remark,
             'tel_number'=>$tel_number,
@@ -576,8 +594,30 @@ class Projects extends CI_Controller
             'revenue'=>$revenue,
             'updated_at'=>date('Y-m-d H:i:s'),
             'updated_by'=>$this->session->userdata('designation_id'),
-            'updated_status'=>'Updated',
-         
+            'first_name'=>$first_name,
+            'last_name'=>$last_name,
+            'provided_job_title'=>$provided_job_title,
+            'staff_job_function'=>$staff_job_function,
+            'staff_email'=>$staff_email,
+            'staff_department'=>$staff_department,
+            'staff_url'=>$staff_url,
+            'assumed_email'=>$assumed_email,
+            'staff_email_harvesting'=>$staff_email_harvesting,
+            'voice_disposition'=>$company_voice_disposition,
+            'staff_direct_tel'=>$staff_direct_tel,
+            'staff_mobile'=>$staff_mobile,
+            'web_staff_disposition'=>$web_staff_disposition,
+            'staff_linkedin_con'=>$staff_linkedin_con,
+            'staff_note'=>$staff_note,
+            'staff_remark'=>$staff_remark,
+            'research_remark'=>$research_remark,
+            'voice_remark'=>$voice_remark,
+            'sa1'=>$sa1,
+            'sa2'=>$sa2,
+            'sa3'=>$sa3,
+            'sa4'=>$sa4,
+            'sa5'=>$sa5,
+           
         );
         // echo "<pre>";
         // print_r($company_details);
@@ -792,6 +832,39 @@ class Projects extends CI_Controller
         echo json_encode($output);
     }
 
+    // public function getsInfo(){
+    //     $project_id = $this->input->post('project_id');
+    //     $staff_info = $this->input->post('staff_info');
+    //     $assignee_users = $this->input->post('users');
+    //     $company_name = $this->input->post('company_name');
+    //     $perUser = count($assignee_users);
+    //     $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
+    //     for($i=0;$i<$perUser;$i++){
+    //        $user_id = $assignee_users[$i];
+    //        $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
+          
+    //     }
+    //     foreach($final as $final_key => $final_row){
+    //         foreach($final_row['staff_info'] as $final_keys =>$final_rows)
+    //         {
+    //             $user_id=$final_row['user_id'];
+    //             $staff_info=$final_rows;
+    //             $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+    //                $checkRecordsInfo  = $this->isDataExist($data1); 
+
+    //             $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+    //         }
+    //     }
+    //     if($addProjectInfo)
+    //     {
+    //         $this->session->set_flashdata("success", "Records Inserted Successfully");
+    //     }
+    //     else{
+    //         $this->session->set_flashdata("error", "Failed To Insert");  
+    //     }
+    //     redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
+    // }
+
     public function getsInfo(){
         $project_id = $this->input->post('project_id');
         $staff_info = $this->input->post('staff_info');
@@ -851,6 +924,13 @@ class Projects extends CI_Controller
     }
 
         return true;
+    }
+
+    function excel_download()
+    {
+        $project_id=$_GET['id'];
+        $this->load->library('excel');
+        $totalData=$this->Projects_model->excel_download($project_id); 
     }
 
 }
