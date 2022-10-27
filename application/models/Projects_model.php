@@ -297,10 +297,16 @@ class Projects_Model extends CI_Model
 
     function getAllStaffInfoDetails($project_id){
         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-        $this->db->from('bdcrm_uploaded_feildss buf');
+        $this->db->from('companywise_allocation ca');
+        $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->where('buf.project_id',$project_id);
+        // if($this->session->userdata('designation_name') != 'Superadmin' && $this->session->userdata('designation_name') != 'Project Manger' && $this->session->userdata('designation_name') != 'Team Leader')
+        // {
+        //     $this->db->where('ca.user_id',$this->session->userdata('id'));
+        //     $this->db->where('ca.status','1');
+        // }
         $querys=$this->db->get();
+        //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
 

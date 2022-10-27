@@ -435,7 +435,9 @@ class Projects extends CI_Controller
     }
 
     public function ProjectInfo($id){
+
          $id=base64_decode($id);
+          // echo '<pre>'; print_r($id); exit;
          $data['id'] = $id;
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
@@ -497,6 +499,9 @@ class Projects extends CI_Controller
     public function get_staff_info(){
          $data['id']=base64_decode($_GET['id']);
          $data['received_company_name'] = base64_decode($_GET['received_company_name']);
+         // echo '<pre>'; print_r($data['id']);
+         // echo '<pre>'; print_r($data['received_company_name']);
+         //  exit;
          $data['ProjectInfo'] = $this->Projects_model->get_staff_info($data['id'],$data['received_company_name']);
          $data['users'] = $this->model->getData('users', array('status' => '1'));
          $data['main_content'] = "projects/staff_info";

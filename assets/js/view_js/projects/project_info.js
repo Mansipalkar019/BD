@@ -1,9 +1,7 @@
 $(document).ready(function (e) {
-<<<<<<< HEAD
+
 	$('#user_list').select2();
-=======
-   $('#user_list').select2();
->>>>>>> 4f0c93636259f42c11568a04a200dc7ed3429f24
+
    var table = $('#company_staff_count_datatable').DataTable({
       'ajax': {
          'url': bases_url + 'projects/display_all_company_staff',
@@ -67,11 +65,8 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
-<<<<<<< HEAD
             $('#total_staff_count').text(response.total_staff_count);
-=======
-            $('#total_staff_count').val(response.total_staff_count);
->>>>>>> 4f0c93636259f42c11568a04a200dc7ed3429f24
+
          },
       });
    });
@@ -90,11 +85,9 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
-<<<<<<< HEAD
-            $('#total_staff_count').text(response.total_staff_count);
-=======
+
             $('#total_staff_count').val(response.total_staff_count);
->>>>>>> 4f0c93636259f42c11568a04a200dc7ed3429f24
+
          },
       });
    });
@@ -142,18 +135,12 @@ $(document).ready(function (e) {
             Swal.fire({
                title: 'Warning',
                text: "Please Select User",
-<<<<<<< HEAD
-               icon: 'error',
-               showCancelButton: true,
-               confirmButtonColor: '#FD7E14',
-               confirmButtonText: 'Yes!',
-               cancelButtonText: 'No.'
-=======
                icon: 'warning',
                showCancelButton: true,
                confirmButtonColor: '#FD7E14',
-               confirmButtonText: 'OK!',
->>>>>>> 4f0c93636259f42c11568a04a200dc7ed3429f24
+               confirmButtonText: 'Yes!',
+               cancelButtonText: 'No.',
+
             });
          } else {
             if (company_name) {
@@ -167,7 +154,7 @@ $(document).ready(function (e) {
                      project_id: id,
                   },
                   success: function (response) {
-<<<<<<< HEAD
+
                   	if(response.status=='success'){
                   		Swal.fire(
 								  'Good job!',
@@ -194,7 +181,7 @@ $(document).ready(function (e) {
 								})
                   	}
                   	
-=======
+
                      if(response.status=='success'){
                         Swal.fire(
                           'Good job!',
@@ -221,8 +208,7 @@ $(document).ready(function (e) {
                         })
                      }
                      
->>>>>>> 4f0c93636259f42c11568a04a200dc7ed3429f24
-                     // swal({
+                  // swal({
                      //    title: 'success',
                      //    text: response.message,
                      //    icon: 'success',
