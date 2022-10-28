@@ -394,7 +394,10 @@ class Projects extends CI_Controller
         $project_id=base64_decode($pid);
         $rowid=base64_decode($rid); 
         $cmp_name=base64_decode($cmp_name);
+        // echo '<pre>'; print_r($project_id); 
+        // echo '<pre>'; print_r($cmp_name); exit;
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
+        
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
@@ -410,19 +413,22 @@ class Projects extends CI_Controller
         $data['allInfo'] =  $this->Projects_model->getProjectInfoByStaffId($project_id,$rowid);
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id,$cmp_name);
-        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$rowid,$cmp_name);
+        $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$cmp_name);
+        // echo '<pre>'; print_r($project_id); 
+        // echo '<pre>'; print_r($data['project_info']); 
+        // exit;
         $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
+        // echo '<pre>'; print_r($data['minmax']['current']); exit;
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['company_list']);die();
+        // print_r($data['minmax']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
         foreach($staff as $k =>$val){
-            if($val['id']==$rowid){
-                
+            if($val['id']==$rowid){                
                     $key = $k+1;                
             }
         }
@@ -430,7 +436,6 @@ class Projects extends CI_Controller
         $final = $key-2;
         $prev  = (!empty($staff[$final]['id'])) ? $staff[$final]['id'] : $rowid ;
         $data = array('current'=>$key,'prev'=>$prev,'next'=>$next);
-      
        return $data;
     }
 
