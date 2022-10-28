@@ -391,13 +391,14 @@ class Projects extends CI_Controller
     public function my_projects($pid,$rid,$cmp_name='')
     {
         //echo $this->session->userdata('designation_id');
-        $project_id=base64_decode($pid);
-        $rowid=base64_decode($rid); 
-        $cmp_name=base64_decode($cmp_name);
+        $project_id=$pid;
+        $rowid=$rid; 
+        // echo '<pre>'; print_r($rowid); exit;
+        $cmp_name=$cmp_name;
         // echo '<pre>'; print_r($project_id); 
         // echo '<pre>'; print_r($cmp_name); exit;
-        $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
-        
+     
+        // echo '<pre>'; print_r($data['minmax']); exit;
         $data['webDispo'] = $this->model->getData('bdcrm_web_disposition', array('status' => '1'));
         $data['compDispo'] = $this->model->getData('bdcrm_company_disposition', array('status' => '1'));
         $data['VoiceDispo'] = $this->model->getData('bdcrm_caller_disposition', array('status' => '1'));
@@ -414,19 +415,19 @@ class Projects extends CI_Controller
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id,$cmp_name);
         $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$cmp_name);
-        // echo '<pre>'; print_r($project_id); 
-        // echo '<pre>'; print_r($data['project_info']); 
-        // exit;
+        $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);
+          
         $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
-        // echo '<pre>'; print_r($data['minmax']['current']); exit;
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
-        // echo "<pre>";
-        // print_r($data['minmax']);die();
+        // echo '<pre>'; print_r($data['minmax']); exit;
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
+        // echo '<pre>'; print_r($staff); 
+        // echo '<pre>'; print_r($rowid); 
+        // exit;
         foreach($staff as $k =>$val){
             if($val['id']==$rowid){                
                     $key = $k+1;                
@@ -811,7 +812,9 @@ class Projects extends CI_Controller
         foreach($totalData as $category_details_key => $data_row)
         {
            $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['staff_id']."'>";
-          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
+          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.$data_row['project_id'].'/'.$data_row['staff_id'].'/'.$data_row['received_company_name'].'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
+          // $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
+          // echo '<pre>'; print_r($data_row['staff_id']); 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;
                 $nestedData[] = $input_type.$data_row['project_name'];
@@ -838,6 +841,7 @@ class Projects extends CI_Controller
               
     
    }
+   // exit;
       $output = array(
             "draw" => intval($_POST['draw']),
             "recordsTotal" => intval($count_all),
