@@ -105,15 +105,16 @@ $(document).ready(function (e) {
       var user_list = $('#user_list').val();
       var id = $('#id').val();
       if (slot_allocation == "") {
-         swal({
-            title: 'Warning',
-            text: "Please Enter Slot Allocation Count",
-            icon: 'error',
-            showCancelButton: true,
-            confirmButtonColor: '#FD7E14',
-            confirmButtonText: 'Yes!',
-            cancelButtonText: 'No.'
-         });
+          Swal.fire({
+               title: 'Warning',
+               text: "Please Enter Slot Allocation Count",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#FD7E14',
+               confirmButtonText: 'Yes!',
+               cancelButtonText: 'No.',
+
+            });
       } else {
          for (var i = 0; i < slot_allocation; i++) {
             d = table.rows({
