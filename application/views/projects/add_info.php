@@ -390,16 +390,8 @@
                <div class="col-auto">
                      <button class="btn btn-outline-primary btn-sm btnsize" type="button" id="copy_company" style="background-color:#0d6efd;color:white;">Copy</button>
                   </div>
+                 
                   <div class="col-auto">
-                     <div class="input-group mb-3">
-                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$minmax['project_id'].'/'.$minmax['myfirst'].'/'.$minmax['received_company_name'];?>" title="First" id=""><<</a>
-                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$minmax['project_id'].'/'.$minmax['prev'].'/'.$minmax['received_company_name'];?>" title="Previous" id=""><</a>
-                        <input type="text" class="form-control form-control-sm text-center" placeholder="Co. Id" size="6" value="<?= $minmax['current']; ?>" disabled>
-                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$minmax['project_id'].'/'.$minmax['next'].'/'.$minmax['received_company_name'];?>" title="Next" id="">></a>
-                        <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.$minmax['project_id'].'/'.$minmax['mylast'].'/'.$minmax['received_company_name'];?>" title="Last" id="">>></a>
-                     </div>
-                  </div>
-                 <!--  <div class="col-auto">
                      <div class="input-group mb-3">
                         <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['myfirst']).'/'.base64_encode($minmax['received_company_name']);?>" title="First" id=""><<</a>
                         <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['prev']).'/'.base64_encode($minmax['received_company_name']);?>" title="Previous" id=""><</a>
@@ -407,7 +399,7 @@
                         <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['next']).'/'.base64_encode($minmax['received_company_name']);?>" title="Next" id="">></a>
                         <a class="btn btn-outline-secondary btn-sm" href="<?php echo base_url().'Projects/my_projects/'.base64_encode($minmax['project_id']).'/'.base64_encode($minmax['mylast']).'/'.base64_encode($minmax['received_company_name']);?>" title="Last" id="">>></a>
                      </div>
-                  </div> -->
+                  </div>
                   <div class="col-auto">
                      <button class="btn btn-outline-primary btn-sm btnsize" type="submit" id="update_company">Update</button>
                   </div>
@@ -1021,7 +1013,7 @@
                            </tr>
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {?>
-                              <tr  <?php if($staff_list_val['first_name'] == $allInfo[0]['first_name']){ ?>style="background: yellow;" <?php } ?>>
+                              <tr  <?php if($staff_list_val['id'] == $allInfo[0]['id']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name'].' '.$staff_list_val['last_name']; ?></td>
                               <td><?= $staff_list_val['company_dispostion']; ?></td>

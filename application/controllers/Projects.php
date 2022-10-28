@@ -391,10 +391,10 @@ class Projects extends CI_Controller
     public function my_projects($pid,$rid,$cmp_name='')
     {
         //echo $this->session->userdata('designation_id');
-        $project_id=$pid;
-        $rowid=$rid; 
+        $project_id=base64_decode($pid);
+        $rowid=base64_decode($rid); 
         // echo '<pre>'; print_r($rowid); exit;
-        $cmp_name=$cmp_name;
+        $cmp_name=base64_decode($cmp_name);
         // echo '<pre>'; print_r($project_id); 
         // echo '<pre>'; print_r($cmp_name); exit;
      
@@ -812,8 +812,8 @@ class Projects extends CI_Controller
         foreach($totalData as $category_details_key => $data_row)
         {
            $input_type = "<input type='hidden' name='staff_info[]' value="."'".$data_row['staff_id']."'>";
-          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.$data_row['project_id'].'/'.$data_row['staff_id'].'/'.$data_row['received_company_name'].'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
-          // $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
+          // $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.$data_row['project_id'].'/'.$data_row['staff_id'].'/'.$data_row['received_company_name'].'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
+          $staff_info = '<a class="" href="'.base_url().'Projects/my_projects/'.base64_encode($data_row['project_id']).'/'.base64_encode($data_row['staff_id']).'/'.base64_encode($data_row['received_company_name']).'">'.$data_row['salutation'].'. '. $data_row['first_name'].' '.$data_row['last_name'].'</a>&nbsp;&nbsp;'; 
           // echo '<pre>'; print_r($data_row['staff_id']); 
             $nestedData=array();
                 $nestedData[] = ++$category_details_key;

@@ -9,7 +9,7 @@ background-color: #F5F7FA;
 }
 </style>
 <div class="content-page">
-<div class="content"
+<div class="content">
 <div class="container-fluid">
 <?php 
 
