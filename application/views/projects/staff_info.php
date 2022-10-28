@@ -37,7 +37,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
     </div>
 </div>
 
-<form action="<?php echo base_url('projects/getsInfo'); ?>" method="post">
+
 <div class="grey-bg container-fluid" style="font-size: 100%">
 <section id="minimal-statistics">
     <div class="row">
@@ -118,7 +118,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
 </div>
 </div>
 </div>
-</form>
+
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <!-- <script src="   https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -148,6 +148,68 @@ $(document).ready(function (e) {
         },
    });
 
+   $('#btn-search-by-count').click(function () {
+    var staff_info = [];
+    var count = $('#count').val();
+    var users =  $('.users').val();
+    var project_id = $('#project_id').val();
+    var company_name=$('#received_company_name').val();
+    for (var i = 0; i < count; i++) {
+            d = table.rows({
+               search: 'applied'
+            }).nodes()[i];
+            if (d) {
+               var td = d.getElementsByTagName("td")[21];
+              
+               var td_text = td.innerHTML;
+               staff_info.push(td_text);
+            }
+         }
+
+         if (staff_info) {
+               $.ajax({
+                  dataType: 'json',
+                  type: 'POST',
+                  url: bases_url + 'projects/getsInfo',
+                  data: {
+                    staff_info: staff_info,
+                     users: users,
+                     project_id: project_id,
+                     company_name:company_name,
+                  },
+                  success: function (response) {
+                  	if(response.status=='success'){
+                  		Swal.fire(
+								  'Good job!',
+								  	response.message,
+								  'success'
+								).then((result) => {
+								  if (result.isConfirmed) {
+								    location.reload();
+								  }
+								})
+								setTimeout(function(){location.reload()},3000);
+                  	} else if(response.status=='failure'){
+                  		
+                  		Swal.fire({
+								  title: 'Oops...',
+								  text: response.message,
+								  icon: 'error',
+								  confirmButtonColor: '#3085d6',
+								  confirmButtonText: 'Ok'
+								}).then((result) => {
+								  if (result.isConfirmed) {
+								    setTimeout(function(){location.reload()},2000);
+								  }
+								})
+                  	}
+                  	
+                  }
+               });
+            }
+});    
+
+
    table.on('order.dt search.dt', function () {
       table.column(0, {
          search: 'applied',
@@ -166,5 +228,6 @@ $('#workalloc').change(function(){
     });
 
 });
+
 
 </script>

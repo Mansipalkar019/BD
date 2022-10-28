@@ -216,12 +216,12 @@
                   <!-- check input access for address_url -->
                   <?php if(in_array('address_source_url',$project_info)){ ?>
                   <div class="col">
-                    
-                     <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
-                     <div class="input-group mb-3">
-               
-                     <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm" style="margin-top:15px;">
-                     <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" style="margin-top:15px;"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                  <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
+                     <div class="input-group " >
+                     
+                   
+                     <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm">
+                     <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" ><span class="fa fa-arrow-right">-></span></a>
                   </div>
                   </div>
                   <?php } ?>
@@ -448,11 +448,11 @@
                   <?php if(in_array('website_url',$project_info)){ ?>
                   <div class="col">
                     
-                    <label for="website_url" class="col-form-label">Website URL:</label>
-                    <div class="input-group mb-3">
+                  <label for="website_url" class="col-form-label">Website URL:</label>
+                    <div class="input-group">
                
                      <input type="text" value="<?=  (!empty($allInfo[0]['website_url'])) ?  $allInfo[0]['website_url'] : ''  ?>" title="" id="website_url"  name='website_url' class="form-control form-control-sm">
-                     <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" style="margin-top:15px;"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                     <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right">-></span></a>
                     </div>
                   </div>
                   <?php } ?>
@@ -520,14 +520,23 @@
                      <label for="revenue" class="col-form-label">Revenue:</label>
                      <div class="input-group">
                         <input type="text" value="<?=  (!empty($allInfo[0]['revenue'])) ?  $allInfo[0]['revenue'] : ''  ?>" title="" id="revenue"  name='revenue' class="form-control form-control-sm">
-                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency" name="revenue_currency"></button>
-                        <ul class="dropdown-menu dropdown-menu-end revenue_currency">
+                        <!-- <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="revenue_currency" name="revenue_currency"></button>
+                        <ul class="dropdown-menu dropdown-menu-end revenue_currency" name="revenue_currency" id="revenue_currency">
                            <?php 
                               foreach ($currency as $key => $val) { ?>
                            <li><a href="#" class="dropdown-item"><?= $val['currency_name']." (".$val['currency_symbol'].")";?></a></li>
                            <?php }
                               ?>
-                        </ul>
+                        </ul> -->
+                        <select class="browser-default custom-select" id="revenue_cur" name="revenue_cur">
+                           <option>$</option>
+                           <?php 
+                              foreach ($currency as $key => $val) { ?>
+                           <option value="<?= $val['id']?>" <?php if($allInfo[0]['revenue_curr'] == $val['id']){?> selected <?php } ?>><?= $val['currency_name']." (".$val['currency_symbol'].")";?></option>
+                           <?php }
+                              ?>
+                        </select>
+                       
                      </div>
                   </div>
                   <?php } ?>
@@ -610,6 +619,11 @@
                      <label for="last_name" class="col-form-label">Last Name:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['last_name'])) ?  $allInfo[0]['last_name'] : ''  ?>"  id="last_name"  name='last_name' class="form-control form-control-sm">
                   </div>
+                 <div class="col">
+                 <div class="input-group" style="margin-top:20px;">
+                  <a  class="btn-sm btn-warning input-group-text" target="_blank"  id="link"><span class="fa fa-arrow-right">-></span></a>
+                  </div>
+                 </div>
                   <?php } ?>
                </div>
                <!-- check input access for job_title -->
@@ -873,6 +887,7 @@
                   <div class="col">
                      <textarea title="" id="staff_remark"  name='staff_remark' class="form-control form-control-sm"><?=  (!empty($allInfo[0]['staff_remark'])) ?  $allInfo[0]['staff_remark'] : ''  ?></textarea>
                   </div>
+                 
                   <?php } ?>
                </div>
 
@@ -1054,9 +1069,25 @@
       <script src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>
       <script src="<?= base_url();?>assets/js/update_company_details.js"></script>
       <script>
+         // function searchGoogle() {
+         //    alert();
+         //       var search = $("#company_name").val()+'+'+$("#first_name").val()+'+'+$("#last_name").val();
+         //       var two = 'http://www.google.com/search?q=' + search;
+         //    }
+         document.addEventListener('DOMContentLoaded', function() {
+         var link = document.getElementById('link');
+         // onClick's logic below:
+         link.addEventListener('click', function() {
 
+            //there is no need to declare a new function here.
 
-         $("#country").select2({
+            var one = $("#company_name").val()+'+'+$("#first_name").val()+'+'+$("#last_name").val();
+            var two = 'https://www.google.com/search?q=' + encodeURIComponent(one);
+            var redirectWindow = window.open(two, '_blank');
+
+         });
+         });
+            $("#country").select2({
          placeholder: " Select Country",
          allowClear: true
          });
@@ -1066,12 +1097,9 @@
          allowClear: true
          });
 
-
-         
-
       
          $("#web_staff_disposition").select2({
-         placeholder: " Select Staff Voice Disposition",
+         placeholder: " Select Staff Web Disposition",
          allowClear: true
          });
          $("#voice_staff_disposition").select2({
@@ -1097,7 +1125,12 @@
          });
          
          $('ul.revenue_currency li').click(function(){
-             alert($('#revenue_currency').text($(this).text()));
+            $('#revenue_currency').text($(this).text());
+         });
+
+         $(".dropdown-menu li a").click(function(){
+         var selText = $(this).text();
+         $('#revenue_cur').val(selText);
          });
          if(localStorage.getItem('company_details') != '')
          {
@@ -1134,11 +1167,11 @@
                alternate_number:$('#alternate_number').val(),
                industry:$("#industry option:selected").val(), 
                revenue:$('#revenue').val(),
-               revenue_currency:$('#revenue_currency').text(),
+               revenue_cur:$("#revenue_cur option:selected").val(), 
                no_of_emp:$("#no_of_emp option:selected").text(), 
                website_url:$("#website_url").val(),
                }];
-              
+           
             localStorage.setItem('company_details',JSON.stringify(items));
             swal({
                      text: 'Company Details Copied Successfully',
@@ -1149,7 +1182,6 @@
 
          $('#paste_company').click(function(){
             var getitems=JSON.parse(localStorage.getItem('company_details'));
-            console.log(getitems);
             
             $('#company_name').val(getitems[0].company_name);
             $('#address_1').val(getitems[0].address_1);
@@ -1177,7 +1209,7 @@
             $('#alternate_number').val(getitems[0].alternate_number);
             
             $('#revenue').val(getitems[0].revenue);
-            $('#revenue_currency').val(getitems[0].revenue_currency).trigger('change');
+            $('#revenue_cur').val(getitems[0].revenue_cur).trigger('change');
             $('#no_of_emp').val(getitems[0].no_of_emp).trigger('change');
             $('#website_url').val(getitems[0].website_url);
          });

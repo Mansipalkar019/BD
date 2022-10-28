@@ -319,7 +319,7 @@ class Projects_Model extends CI_Model
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
         $this->db->join('bdcrm_master_projects bmap','buf.project_id = bmap.id','left');
         $this->db->where('project_id',$project_id);
-        $this->db->where('received_company_name',$cmp_name);
+        //$this->db->where('received_company_name',$cmp_name);
         $this->db->group_by('received_company_name');
         $querys=$this->db->get();
         // echo $this->db->last_query();die();

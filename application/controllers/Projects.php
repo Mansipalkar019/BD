@@ -545,7 +545,7 @@ class Projects extends CI_Controller
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
         $revenue=$this->input->post('revenue');
-        $revenue_curr=$this->input->post('revenue_currency');
+        $revenue_curr=$this->input->post('revenue_cur');
         $no_of_emp=$this->input->post('no_of_emp');
         $first_name=$this->input->post('first_name');
         $last_name=$this->input->post('last_name');
@@ -573,6 +573,7 @@ class Projects extends CI_Controller
         $website_url=$this->input->post('website_url');
         //$check_country = $this->model->selectWhereData('bdcrm_countries', array('id' => $country), array('name'));
         $company_details=array(
+            
             'company_name'=>$company_name,
             'address1'=>$address_1,
             'address2'=>$address_2,
@@ -607,6 +608,7 @@ class Projects extends CI_Controller
             'provided_job_title'=>$provided_job_title,
             'staff_job_function'=>$staff_job_function,
             'staff_email'=>$staff_email,
+            'provided_staff_email'=>$staff_email,
             'staff_department'=>$staff_department,
             'staff_url'=>$staff_url,
             'assumed_email'=>$assumed_email,
@@ -627,8 +629,8 @@ class Projects extends CI_Controller
             'sa5'=>$sa5,
             'website_url'=>$website_url,
         );
-        echo "<pre>";
-        print_r($company_details);
+        // echo "<pre>";
+        // print_r($company_details);
         if( $this->model->updateData('bdcrm_uploaded_feildss',$company_details,array('project_id'=>$project_id,'id'=>$staff_id)))
         {
             $response['status']='success';
