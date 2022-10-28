@@ -634,6 +634,7 @@ class Projects extends CI_Controller
             'sa4'=>$sa4,
             'sa5'=>$sa5,
             'website_url'=>$website_url,
+            'updated_status'=>'Updated',
         );
         // echo "<pre>";
         // print_r($company_details);
@@ -716,12 +717,15 @@ class Projects extends CI_Controller
         $perUser = count($user_list);
         $company_count = count($company_name);
         $break = round(count($company_name) / $perUser);
+        
         if(!empty($break)){
             $user_list_last_key = array_key_last($user_list);
             $start = 0;
             foreach ($user_list as $user_list_key => $user_list_row) {
+                
                 if($user_list_last_key == $user_list_key){
-                    if(!empty($company_name)){
+                    //echo $user_list_key;
+                     if(!empty($company_name)){
                         foreach ($company_name as $company_name_key => $company_name_row) {
                             $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name_row,'project_id'=>$project_id),array('id','project_id'),false);
                             if(!empty($company_name_id_info[0])){
@@ -732,15 +736,17 @@ class Projects extends CI_Controller
                                         'user_id'=> $user_list_row,
                                         'assigned_by'=> $this->session->userdata('id'),
                                     );
-                                 
-                                    $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                                    echo "<pre>";
+                                    print_r($insert_companywise_allocation);
+                                    //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                                 }
                             }
                         }
                        
                     }
-                    break;
-                } else {
+                   break;
+                }
+                else {
                     for ($i=$start; $i < $break ; $i++) { 
                         $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name[$i],'project_id'=>$project_id),array('id','project_id'),false);
                         if(!empty($company_name_id_info[0])){
@@ -751,8 +757,8 @@ class Projects extends CI_Controller
                                     'user_id'=> $user_list_row,
                                     'assigned_by'=> $this->session->userdata('id') ,
                                 );
-                               
-                                $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                              
+                                //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                             }
                            
                         }
@@ -762,6 +768,7 @@ class Projects extends CI_Controller
                     $break = $break+$break;
                 }
             }
+            die();
             $response['message'] = "Company Allocation Inserted Successfully";
             $response['status'] = "success";
         } else {
@@ -770,16 +777,90 @@ class Projects extends CI_Controller
         }
         echo json_encode($response);
     }
-    // public function get_staff_info(){
-    //      $data['id']=base64_decode($_GET['id']);
-    //      $data['received_company_name'] = base64_decode($_GET['received_company_name']);
-    //      $data['users'] = $this->model->getData('users', array('status' => '1'));
-    //      $data['main_content'] = "projects/staff_info";
+ 
+    public function getsInfo(){
+        $project_id = $this->input->post('project_id');
+        $staff_info = $this->input->post('staff_info');
+        $assignee_users = $this->input->post('users');
+        $company_name = $this->input->post('company_name');
+        $perUser = count($assignee_users);
+       
+        $break = round(count($staff_info) / $perUser);
+        if(!empty($break)){
+            $user_list_last_key = array_key_last($assignee_users);
+             $start = 0;
+            foreach ($assignee_users as $user_list_key => $user_list_row) {
+               // echo $user_list_last_key;
+                if($user_list_last_key == $user_list_key){
+                   //print_r($staff_info);
+                    if(!empty($staff_info)){
+                        foreach ($staff_info as $staff_info_key => $staff_info_row) {
+                            $data1=array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                           
+                            $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+                        }
+                       
+                    }
+                    break;
+                }else{
+                   
+                    for ($i=$start; $i < $break ; $i++) { 
+                        if(!empty($staff_info)){
+                            $data1=array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info[$i],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                            $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+                          
+                        }
+                        unset($staff_info[$i]);
+                     
+                    }
+                    
+                    $start = $start+$break;
+                    $break = $break+$break; 
+                  
+                }
+               
+            }
+            $response['message'] = "Company Allocation Inserted Successfully";
+            $response['status'] = "success";
+          
+        }
+        else {
+            $response['message'] = "Userlist Cannot Be Greater Than Companies";
+            $response['status'] = "failure";
+        }
+    //     $project_id = $this->input->post('project_id');
+    //     $staff_info = $this->input->post('staff_info');
+    //     //print_r($staff_info);die();
+    //     $assignee_users = $this->input->post('users');
+    //     $company_name = $this->input->post('company_name');
+    //     $perUser = count($assignee_users);
+    //     $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
+    //     for($i=0;$i<$perUser;$i++){
+    //        $user_id = $assignee_users[$i];
+    //        $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
+          
+    //     }
+    //    foreach($final as $final_key => $final_row){
+    //         foreach($final_row['staff_info'] as $final_keys =>$final_rows)
+    //         {
+    //             $user_id=$final_row['user_id'];
+    //             $staff_info=$final_rows;
+    //             $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+    //                $checkRecordsInfo  = $this->isDataExist($data1); 
 
-    //       // echo '<pre>'; print_r($data['ProjectInfo']); exit;
-    //      $this->load->view("includes/template",$data);
-    // }
-
+    //             $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
+    //         }
+    //     }
+    //     if($addProjectInfo)
+    //     {
+    //         $this->session->set_flashdata("success", "Records Inserted Successfully");
+    //     }
+    //     else{
+    //         $this->session->set_flashdata("error", "Failed To Insert");  
+    //     }
+    print_r($response);die();
+      redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
+    }
     public function getprojectrecord()
     {
         $data[] = json_encode($_POST);  
@@ -839,6 +920,7 @@ class Projects extends CI_Controller
                 $nestedData[] = "<span class='badge btn btn-warning btn-sm'>".$data_row['assigned_by']."</span>";
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['created_date']));
                 $nestedData[] = date(('d-m-Y h:i A'),strtotime($data_row['assigned_at']));
+                $nestedData[] = $data_row['staff_id'];
                 $data_array[] = $nestedData;
               
     
@@ -854,72 +936,8 @@ class Projects extends CI_Controller
         echo json_encode($output);
     }
 
-    // public function getsInfo(){
-    //     $project_id = $this->input->post('project_id');
-    //     $staff_info = $this->input->post('staff_info');
-    //     $assignee_users = $this->input->post('users');
-    //     $company_name = $this->input->post('company_name');
-    //     $perUser = count($assignee_users);
-    //     $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-    //     for($i=0;$i<$perUser;$i++){
-    //        $user_id = $assignee_users[$i];
-    //        $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
-          
-    //     }
-    //     foreach($final as $final_key => $final_row){
-    //         foreach($final_row['staff_info'] as $final_keys =>$final_rows)
-    //         {
-    //             $user_id=$final_row['user_id'];
-    //             $staff_info=$final_rows;
-    //             $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
-    //                $checkRecordsInfo  = $this->isDataExist($data1); 
 
-    //             $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
-    //         }
-    //     }
-    //     if($addProjectInfo)
-    //     {
-    //         $this->session->set_flashdata("success", "Records Inserted Successfully");
-    //     }
-    //     else{
-    //         $this->session->set_flashdata("error", "Failed To Insert");  
-    //     }
-    //     redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
-    // }
 
-    public function getsInfo(){
-        $project_id = $this->input->post('project_id');
-        $staff_info = $this->input->post('staff_info');
-        //print_r($staff_info);die();
-        $assignee_users = $this->input->post('users');
-        $company_name = $this->input->post('company_name');
-        $perUser = count($assignee_users);
-        $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-        for($i=0;$i<$perUser;$i++){
-           $user_id = $assignee_users[$i];
-           $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
-          
-        }
-       foreach($final as $final_key => $final_row){
-            foreach($final_row['staff_info'] as $final_keys =>$final_rows)
-            {
-                $user_id=$final_row['user_id'];
-                $staff_info=$final_rows;
-                $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
-                   $checkRecordsInfo  = $this->isDataExist($data1); 
-
-                $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
-            }
-        }
-        if($addProjectInfo)
-        {
-            $this->session->set_flashdata("success", "Records Inserted Successfully");
-        }
-        else{
-            $this->session->set_flashdata("error", "Failed To Insert");  
-        }
-        redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
-    }
 
 
     public function isDataExist($data){

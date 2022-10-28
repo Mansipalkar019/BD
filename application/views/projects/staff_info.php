@@ -46,7 +46,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
                <label>Enter count</label>
                <input type="text" value="" class="form-control" id="count">
                <input type="hidden" value="<?= $received_company_name;?>" class="form-control" name="company_name" id="company_name">
-               <input type="hidden" value="<?= $id;?>" class="form-control" name="project_id" id="company_name">
+               <input type="hidden" value="<?= $id;?>" class="form-control" name="project_id" id="project_id">
             </div>
         </div>
         <div class="col-3">
@@ -108,6 +108,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
             <th>Ass. By</th>
             <th>Created At</th>
             <th>Assigned At</th>
+            <th>Staff Id</th>
         </tr>
         </thead>
         
@@ -146,8 +147,9 @@ $(document).ready(function (e) {
             data.workalloc=$('#workalloc').find(":selected").val();
            }
         },
+       
    });
-
+   table.column( 21 ).visible( false );
    $('#btn-search-by-count').click(function () {
     var staff_info = [];
     var count = $('#count').val();
@@ -159,13 +161,14 @@ $(document).ready(function (e) {
                search: 'applied'
             }).nodes()[i];
             if (d) {
+                table.column( 21 ).visible( true );
                var td = d.getElementsByTagName("td")[21];
               
                var td_text = td.innerHTML;
                staff_info.push(td_text);
             }
          }
-
+         table.column( 21 ).visible( false );
          if (staff_info) {
                $.ajax({
                   dataType: 'json',
