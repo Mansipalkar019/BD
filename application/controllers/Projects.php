@@ -804,38 +804,8 @@ class Projects extends CI_Controller
             $response['message'] = "Userlist Cannot Be Greater Than Companies";
             $response['status'] = "failure";
         }
-    //     $project_id = $this->input->post('project_id');
-    //     $staff_info = $this->input->post('staff_info');
-    //     //print_r($staff_info);die();
-    //     $assignee_users = $this->input->post('users');
-    //     $company_name = $this->input->post('company_name');
-    //     $perUser = count($assignee_users);
-    //     $Assignee_info = array_chunk($staff_info, ceil(count($staff_info) / $perUser));
-    //     for($i=0;$i<$perUser;$i++){
-    //        $user_id = $assignee_users[$i];
-    //        $final[] = array('user_id'=>$user_id,'staff_info'=>$Assignee_info[$i]);
-          
-    //     }
-    //    foreach($final as $final_key => $final_row){
-    //         foreach($final_row['staff_info'] as $final_keys =>$final_rows)
-    //         {
-    //             $user_id=$final_row['user_id'];
-    //             $staff_info=$final_rows;
-    //             $data1=array('project_id'=>$project_id,'user_id'=>$user_id,'staff_id'=>$staff_info,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
-    //                $checkRecordsInfo  = $this->isDataExist($data1); 
-
-    //             $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
-    //         }
-    //     }
-    //     if($addProjectInfo)
-    //     {
-    //         $this->session->set_flashdata("success", "Records Inserted Successfully");
-    //     }
-    //     else{
-    //         $this->session->set_flashdata("error", "Failed To Insert");  
-    //     }
-    print_r($response);die();
-      redirect(base_url("Projects/get_staff_info?id=".base64_encode($project_id).'&received_company_name='.base64_encode($company_name)));
+        echo json_encode($response);
+  
     }
     public function getprojectrecord()
     {
@@ -858,6 +828,7 @@ class Projects extends CI_Controller
                 $workstatus =2;
            }
         }
+        //echo $counter;die();
         $rowno = $_POST['start'];
         $search_text = $_POST['search']['value'];   
         $totalData=$this->Projects_model->get_staff_info($staffid,$received_company_name,$rowno,$counter,$workstatus);
