@@ -224,6 +224,7 @@ $(document).ready(function (e) {
 
 
 $("#count").keyup(function(){
+    alert();
     table.ajax.reload(null, false);
 });
 $('#workalloc').change(function(){

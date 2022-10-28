@@ -29,8 +29,13 @@ $(document).ready(function (e) {
             },
          },
          {
+
+            "data": "completed_updated_status"
+         },
+         {
             "data": "received_company_name"
          },
+
          {
             "data": "created_date"
          },
@@ -50,7 +55,17 @@ $(document).ready(function (e) {
          [0, 'desc']
       ]
    });
-   $('#slot_allocation').keyup(function () {
+     var designation_name = $('#designation_name').val();
+     if(designation_name=="Researcher"){
+         $('#company_staff_count_datatable').DataTable().column(2).visible(false);
+         $('#company_staff_count_datatable').DataTable().column(6).visible(false);
+
+     }
+      if(designation_name=="Superadmin"){
+         $('#company_staff_count_datatable').DataTable().column(6).visible(false);
+     }
+
+     $('#slot_allocation').keyup(function () {
       table.ajax.reload();
       var id = $('#id').val();
       var slot_count = $('#slot_allocation').val();

@@ -427,8 +427,11 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['id'] = $id;
+          $designation_name = $this->session->userdata('designation_name');
+
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
+         $data['designation_name'] =$designation_name;
          $data['main_content'] = "projects/project_info"; 
          $this->load->view("includes/template", $data);
     }
@@ -473,6 +476,7 @@ class Projects extends CI_Controller
             $workalloc= $this->input->post('workalloc');
          
             $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc);  
+            // echo '<pre>'; print_r($ProjectInfo); exit;
             if(!empty($ProjectInfo)){
                foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
                          $total_count[]=$ProjectInfo_row['staff_count'];
@@ -839,6 +843,7 @@ class Projects extends CI_Controller
     }
     public function getprojectrecord()
     {
+        // echo '<pre>'; print_r($_POST); exit;
         $data[] = json_encode($_POST);  
         $staffid = $_POST['staffid'];
         $received_company_name = $_POST['received_company_name'];
