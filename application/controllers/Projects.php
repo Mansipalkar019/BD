@@ -486,7 +486,6 @@ class Projects extends CI_Controller
  // echo '<pre>'; print_r($completed_status_count); 
                }     
             }
-            echo '<pre>'; print_r($ProjectInfo); exit;
             $response['data']=$ProjectInfo;
             $response['total_staff_count'] = array_sum($total_count);
             echo json_encode($response);  
