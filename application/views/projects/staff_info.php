@@ -149,7 +149,7 @@ $(document).ready(function (e) {
         },
        
    });
-   table.column( 21 ).visible( false );
+   //table.column( 21 ).visible( false );
    $('#btn-search-by-count').click(function () {
     var staff_info = [];
     var count = $('#count').val();
@@ -161,14 +161,14 @@ $(document).ready(function (e) {
                search: 'applied'
             }).nodes()[i];
             if (d) {
-                table.column( 21 ).visible( true );
+                //table.column( 21 ).visible( true );
                var td = d.getElementsByTagName("td")[21];
               
                var td_text = td.innerHTML;
                staff_info.push(td_text);
             }
          }
-         table.column( 21 ).visible( false );
+         //table.column( 21 ).visible( false );
          if (staff_info) {
                $.ajax({
                   dataType: 'json',
@@ -224,8 +224,7 @@ $(document).ready(function (e) {
 
 
 $("#count").keyup(function(){
-    alert();
-    table.ajax.reload(null, false);
+    table.ajax.reload();
 });
 $('#workalloc').change(function(){
         table.ajax.reload();

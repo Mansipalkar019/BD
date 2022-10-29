@@ -46,9 +46,6 @@
      <script src="<?php echo base_url(); ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/pages/sweetalerts.init.js"></script>
    
-
-
-    
     <script src="<?php echo base_url(); ?>assets/libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.responsive.min.js"></script>
@@ -57,9 +54,9 @@
     <script src="<?php echo base_url(); ?>assets/libs/datatables/buttons.bootstrap4.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/buttons.html5.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/buttons.print.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.keyTable.min.js"></script>
+    <!-- <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.keyTable.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.fixedHeader.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.scroller.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.scroller.min.js"></script> -->
     <!-- <script src="<?php echo base_url(); ?>assets/libs/datatables/dataTables.fixedColumns.min.html"></script> -->
     <script src="<?php echo base_url(); ?>assets/libs/jszip/jszip.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/pdfmake/pdfmake.min.js"></script>
