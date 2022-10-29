@@ -475,13 +475,18 @@ class Projects extends CI_Controller
             $slot_count= $this->input->post('slot_count');
             $workalloc= $this->input->post('workalloc');
          
-            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc);  
-            // echo '<pre>'; print_r($ProjectInfo); exit;
+            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc); 
+
+            
             if(!empty($ProjectInfo)){
                foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
+                        $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
                          $total_count[]=$ProjectInfo_row['staff_count'];
+                         $ProjectInfo[$ProjectInfo_key]['completed_updated_status']=$completed_status_count['completed_updated_status'];
+ // echo '<pre>'; print_r($completed_status_count); 
                }     
             }
+            echo '<pre>'; print_r($ProjectInfo); exit;
             $response['data']=$ProjectInfo;
             $response['total_staff_count'] = array_sum($total_count);
             echo json_encode($response);  
