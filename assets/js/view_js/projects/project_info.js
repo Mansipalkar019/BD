@@ -1,7 +1,5 @@
 $(document).ready(function (e) {
-
-	$('#user_list').select2();
-
+   $('#user_list').select2();
    var table = $('#company_staff_count_datatable').DataTable({
       'ajax': {
          'url': bases_url + 'projects/display_all_company_staff',
@@ -28,14 +26,13 @@ $(document).ready(function (e) {
                return display_status_name;
             },
          },
-         {
+    {
 
             "data": "completed_updated_status"
          },
          {
             "data": "received_company_name"
          },
-
          {
             "data": "created_date"
          },
@@ -58,14 +55,13 @@ $(document).ready(function (e) {
      var designation_name = $('#designation_name').val();
      if(designation_name=="Researcher"){
          $('#company_staff_count_datatable').DataTable().column(2).visible(false);
-         $('#company_staff_count_datatable').DataTable().column(6).visible(false);
+    $('#company_staff_count_datatable').DataTable().column(6).visible(false);
 
      }
-      if(designation_name=="Superadmin"){
+     if(designation_name=="Superadmin"){
          $('#company_staff_count_datatable').DataTable().column(6).visible(false);
      }
-
-     $('#slot_allocation').keyup(function () {
+   $('#slot_allocation').keyup(function () {
       table.ajax.reload();
       var id = $('#id').val();
       var slot_count = $('#slot_allocation').val();
@@ -80,8 +76,7 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
-            $('#total_staff_count').text(response.total_staff_count);
-
+            $('#total_staff_count').val(response.total_staff_count);
          },
       });
    });
@@ -100,9 +95,7 @@ $(document).ready(function (e) {
             workalloc: workalloc
          },
          success: function (response) {
-
             $('#total_staff_count').val(response.total_staff_count);
-
          },
       });
    });
@@ -136,7 +129,7 @@ $(document).ready(function (e) {
                search: 'applied'
             }).nodes()[i];
             if (d) {
-               var td = d.getElementsByTagName("td")[2];
+               var td = d.getElementsByTagName("td")[3];
                // var assigned_td = d.getElementsByTagName("td")[4];
                // var assigned_td_1 = assigned_td.innerHTML;
                // if (assigned_td_1) {
@@ -145,6 +138,7 @@ $(document).ready(function (e) {
                var td_text = td.innerHTML;
                company_name.push(td_text);
                // }
+               console.log(company_name);
             }
          }
          if (user_list == "") {
@@ -154,12 +148,14 @@ $(document).ready(function (e) {
                icon: 'warning',
                showCancelButton: true,
                confirmButtonColor: '#FD7E14',
-               confirmButtonText: 'Yes!',
-               cancelButtonText: 'No.',
-
+               confirmButtonText: 'OK!',
             });
          } else {
             if (company_name) {
+               console.log("in");
+               console.log(company_name);
+               console.log(user_list);
+               console.log(id);
                $.ajax({
                   dataType: 'json',
                   type: 'POST',
@@ -170,34 +166,6 @@ $(document).ready(function (e) {
                      project_id: id,
                   },
                   success: function (response) {
-
-                  	if(response.status=='success'){
-                  		Swal.fire(
-								  'Good job!',
-								  	response.message,
-								  'success'
-								).then((result) => {
-								  if (result.isConfirmed) {
-								    location.reload();
-								  }
-								})
-								setTimeout(function(){location.reload()},3000);
-                  	} else if(response.status=='failure'){
-                  		
-                  		Swal.fire({
-								  title: 'Oops...',
-								  text: response.message,
-								  icon: 'error',
-								  confirmButtonColor: '#3085d6',
-								  confirmButtonText: 'Ok'
-								}).then((result) => {
-								  if (result.isConfirmed) {
-								    setTimeout(function(){location.reload()},2000);
-								  }
-								})
-                  	}
-                  	
-
                      if(response.status=='success'){
                         Swal.fire(
                           'Good job!',
@@ -223,21 +191,7 @@ $(document).ready(function (e) {
                           }
                         })
                      }
-                     
-                  // swal({
-                     //    title: 'success',
-                     //    text: response.message,
-                     //    icon: 'success',
-                     //    showCancelButton: true,
-                     //    confirmButtonColor: '#FD7E14',
-                     //    confirmButtonText: 'Yes!',
-                     //    cancelButtonText: 'No.'
-                     // }).then(() => {
-                     //    if (result.value) {
-                     //       location.reload();
-                     //    }
-                     // });
-                     // location.reload();
+                  
                   }
                });
             }

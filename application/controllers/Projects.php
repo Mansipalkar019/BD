@@ -696,23 +696,19 @@ class Projects extends CI_Controller
     //     echo json_encode($response);
     // }
 
-    public function save_company_allocation_data(){
-       
+     public function save_company_allocation_data(){
         $company_name = $this->input->post('company_name');
         $user_list = $this->input->post('user_list');
         $project_id = $this->input->post('project_id');
         $perUser = count($user_list);
         $company_count = count($company_name);
         $break = round(count($company_name) / $perUser);
-        
         if(!empty($break)){
             $user_list_last_key = array_key_last($user_list);
             $start = 0;
             foreach ($user_list as $user_list_key => $user_list_row) {
-                
                 if($user_list_last_key == $user_list_key){
-                    //echo $user_list_key;
-                     if(!empty($company_name)){
+                    if(!empty($company_name)){
                         foreach ($company_name as $company_name_key => $company_name_row) {
                             $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name_row,'project_id'=>$project_id),array('id','project_id'),false);
                             if(!empty($company_name_id_info[0])){
@@ -723,17 +719,15 @@ class Projects extends CI_Controller
                                         'user_id'=> $user_list_row,
                                         'assigned_by'=> $this->session->userdata('id'),
                                     );
-                                    echo "<pre>";
-                                    print_r($insert_companywise_allocation);
-                                    //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                                 
+                                    $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                                 }
                             }
                         }
                        
                     }
-                   break;
-                }
-                else {
+                    break;
+                } else {
                     for ($i=$start; $i < $break ; $i++) { 
                         $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name[$i],'project_id'=>$project_id),array('id','project_id'),false);
                         if(!empty($company_name_id_info[0])){
@@ -744,8 +738,8 @@ class Projects extends CI_Controller
                                     'user_id'=> $user_list_row,
                                     'assigned_by'=> $this->session->userdata('id') ,
                                 );
-                              
-                                //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                               
+                                $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                             }
                            
                         }
@@ -755,7 +749,6 @@ class Projects extends CI_Controller
                     $break = $break+$break;
                 }
             }
-            die();
             $response['message'] = "Company Allocation Inserted Successfully";
             $response['status'] = "success";
         } else {
