@@ -483,7 +483,7 @@ class Projects extends CI_Controller
                         $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
                          $total_count[]=$ProjectInfo_row['staff_count'];
                          $ProjectInfo[$ProjectInfo_key]['completed_updated_status']=$completed_status_count['completed_updated_status'];
- // echo '<pre>'; print_r($completed_status_count); 
+                         $ProjectInfo[$ProjectInfo_key]['created_date']=date(('d-m-Y h:i A'),strtotime($ProjectInfo_row['created_date']));
                }     
             }
             $response['data']=$ProjectInfo;
