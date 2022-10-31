@@ -1012,4 +1012,26 @@ class Projects extends CI_Controller
         redirect(base_url("uploads/projects/".$totalData_row['project_name'].".xls"));
     }
 
+    function FinalSubmit($project_id,$user_id){
+        
+        if(!empty($project_id) && !empty($user_id)){
+         $assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
+         
+       
+        if(!empty($assigned_records)){
+         $date = date('Y-m-d H:i:s');
+         foreach($assigned_records as $key => $values){
+            $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
+        }
+         $this->session->set_flashdata("success", "Successfully Project Submited.");  
+        }
+        $this->session->set_flashdata("error", "Something Went Wrong.");  
+        }else{
+        $this->session->set_flashdata("error", "Something Went Wrong.");  
+        }
+        redirect(base_url("projects/project_list"), $data);
+
+        
+    }
+
 }

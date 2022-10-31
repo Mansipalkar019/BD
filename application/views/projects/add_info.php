@@ -229,20 +229,20 @@
              
             </div>
             <div class="col">
-               <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
+            <div class="alert alert-warning text-center p-1" role="alert">
+                    <?php
+                        $project_id = $allInfo[0]['project_id'];
+                        $user_id = $allInfo[0]['assigned_to'];
+                        
+                        if(!empty($project_id) && !empty($user_id)){
+                            $url = "projects/FinalSubmit/".$project_id.'/'.$user_id; 
+                            ?>
+                            <a  onclick="return confirm('Do you want to submit this project..?')" href="<?php echo base_url().$url; ?>" class='btn btn-purple btn-sm waves-effect waves-light' style="float:left;background-color: #0e6efb;margin-top:-4px;margin-right:1%;color:white;" >Submit</i></a>
+                            <?php
+                        }
+                    ?>
+                   <?= $allInfo[0]['project_name']; ?> / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
                 <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #0e6efb;margin-top:-1px;margin-right:3%;color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
-               </div>
-
-               <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="briefDetailsLabel">Project - Company Brief</h5>
-                        </div>
-                        <div class="modal-body text-center"><b><?=  (!empty($allInfo[0]['project_breif'])) ?  $allInfo[0]['project_breif'] : ''  ?></b></div>
-                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
-                     </div>
-                  </div>
                </div>
 
                <!-- check input access for company_disposition -->
@@ -529,8 +529,8 @@
                            <?php }
                               ?>
                         </ul> -->
-                        <select class="browser-default custom-select" id="revenue_cur" name="revenue_cur">
-                           <option>$</option>
+                        <select class="browser-default custom-select" id="revenue_cur" name="revenue_cur" placeholder="Select Revenue">
+                          
                            <?php 
                               foreach ($currency as $key => $val) { ?>
                            <option value="<?= $val['id']?>" <?php if($allInfo[0]['revenue_curr'] == $val['id']){?> selected <?php } ?>><?= $val['currency_name']." (".$val['currency_symbol'].")";?></option>

@@ -67,7 +67,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
                 <?php 
                 foreach($users as $user_key => $user_row)
                 {?>
-                <option value="<?= $user_row['id']; ?>"><?= $user_row['username']; ?></option>
+                <option value="<?= $user_row['id']; ?>"><?= $user_row['first_name'].' '.$user_row['last_name']; ?></option>
                 <?php }
                 ?>
                 </select>

@@ -229,7 +229,22 @@ body { padding: 1px;  }
 
 
         <div class="col">
-            <div class="alert alert-warning text-center p-1" role="alert">(BTB-02-T) / (NMD) / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)</div>
+        <?php
+                   
+                   $project_id = $allInfo[0]['project_id'];
+                   $user_id = $allInfo[0]['assigned_to'];
+                   
+                   if(!empty($project_id) && !empty($user_id)){
+                       $url = "projects/FinalSubmit/".$project_id.'/'.$user_id; 
+                       ?>
+                       <a  onclick="return confirm('Do you want to submit this project..?')" href="<?php echo base_url().$url; ?>" class='btn btn-purple btn-sm waves-effect waves-light' style="float:left;background-color: #0e6efb;margin-top:-4px;margin-right:1%;color:white;" >Submit</i></a>
+                       <?php
+                   }
+               
+               ?>
+               
+              <?= $allInfo[0]['project_name']; ?> / (<a data-bs-toggle="modal" data-bs-target="#briefDetails" href="#" class="text-underline">CO. BRIEF</a>)
+           <a type='submit' href="<?php echo base_url(); ?>projects/project_list" class='btn btn-purple btn-sm waves-effect waves-light' style="float:right;background-color: #0e6efb;margin-top:-1px;margin-right:3%;color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
             <div class="modal fade" id="briefDetails" tabindex="-1" aria-labelledby="briefDetailsLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
