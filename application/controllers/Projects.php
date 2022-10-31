@@ -430,8 +430,11 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['id'] = $id;
+          $designation_name = $this->session->userdata('designation_name');
+
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
+         $data['designation_name'] =$designation_name;
          $data['main_content'] = "projects/project_info"; 
          $this->load->view("includes/template", $data);
     }
@@ -475,10 +478,15 @@ class Projects extends CI_Controller
             $slot_count= $this->input->post('slot_count');
             $workalloc= $this->input->post('workalloc');
          
-            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc);  
+            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc); 
+
+            
             if(!empty($ProjectInfo)){
                foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
+                        $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
                          $total_count[]=$ProjectInfo_row['staff_count'];
+                         $ProjectInfo[$ProjectInfo_key]['completed_updated_status']=$completed_status_count['completed_updated_status'];
+                         $ProjectInfo[$ProjectInfo_key]['created_date']=date(('d-m-Y h:i A'),strtotime($ProjectInfo_row['created_date']));
                }     
             }
             $response['data']=$ProjectInfo;
@@ -812,6 +820,7 @@ class Projects extends CI_Controller
     }
     public function getprojectrecord()
     {
+        // echo '<pre>'; print_r($_POST); exit;
         $data[] = json_encode($_POST);  
         $staffid = $_POST['staffid'];
         $received_company_name = $_POST['received_company_name'];

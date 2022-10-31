@@ -20,11 +20,13 @@
          </div>
          <p><?php echo $this->session->flashdata("error");?></p>
          <p><?php echo $this->session->flashdata("success");?></p>
+          <input type="hidden" id="designation_name" name="designation_name" value="<?=$designation_name?>">
          <?php
             if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') { $style=''; }else{ $style="style='display:none'";} ?> 
          <div id="have_access" <?= $style; ?>>
             <div class="row">
                <input type="hidden" id="id" name="id" value="<?=$id?>">
+              
                <div class="col-md-2">
                   <label>Companies Count</label>
                   <input type="text" name="slot_allocation" id="slot_allocation" class="form-control company_allocation">
@@ -74,6 +76,13 @@
                         <tr>
                            <th>ID</th>
                            <th>Staff Count</th>
+                           <?php
+                           // $designation_name = $this->session->userdata('designation_name');
+                           // if($designation_name!='Researcher'){ ?>
+     
+                           <th>Completed Staff Count</th>
+                        <?php 
+                     // }?>
                            <th>Company Received</th>
                            <th>Created At</th>
                            <th>Assigned By</th>
@@ -87,4 +96,3 @@
       </div>
    </div>
 </div>
-

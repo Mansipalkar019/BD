@@ -138,7 +138,6 @@ class Projects_Model extends CI_Model
 
 
     function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-      
     $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
      bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,buf.provided_staff_email,bcd.company_dispostion as company_disposition,bwd.web_disposition_name as web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,bsvd.voice_dispositions as voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
      $this->db->from('bdcrm_uploaded_feildss as buf');
@@ -172,7 +171,6 @@ class Projects_Model extends CI_Model
      $this->db->limit($rowperpage,$rowno);
      $this->db->group_by('buf.id');
       $query=$this->db->get();
-    //echo  $this->db->last_query(); die;
      return $data = $query->result_array();
  }
     
@@ -237,7 +235,7 @@ class Projects_Model extends CI_Model
         return $this->db->count_all_results();     
     }
   function getProjectInfo($project_id="",$slot_count="",$workalloc=""){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name');
+        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,count(buf.updated_status) as completed_updated_status,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
