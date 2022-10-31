@@ -1075,16 +1075,34 @@
          //       var search = $("#company_name").val()+'+'+$("#first_name").val()+'+'+$("#last_name").val();
          //       var two = 'http://www.google.com/search?q=' + search;
          //    }
-         document.addEventListener('DOMContentLoaded', function() {
+          document.addEventListener('DOMContentLoaded', function() {
          var link = document.getElementById('link');
-         // onClick's logic below:
          link.addEventListener('click', function() {
 
-            //there is no need to declare a new function here.
-
-            var one = $("#company_name").val()+'+'+$("#first_name").val()+'+'+$("#last_name").val();
-            var two = 'https://www.google.com/search?q=' + encodeURIComponent(one);
-            var redirectWindow = window.open(two, '_blank');
+           var one = $("#company_name").val()+', '+$("#first_name").val()+' '+$("#last_name").val();
+            var country = $("#country option:selected").text();
+            var company_country = $("#company_name").val()+', '+country;
+            var website_url = $('#website_url').val();
+            var web_url = new URL(website_url);
+         
+            let result = web_url['host'].substr(0, 4);
+            var redirect_url="";
+            if(result=="www."){
+              
+            }else{
+               web_url['host'] = "www."+web_url['host'];
+            }
+            redirect_url = web_url['protocol']+"//"+web_url['host'];
+            // console.log(redirect_url);return;
+            var domain_name = redirect_url.split("http://www.");
+            // console.log(domain_name);return;
+            var email = '"'+'* * * * * @'+domain_name[1]+'"'+' '+"email"; 
+            var email1 = 'Email "'+'* * * * * @'+domain_name[1]+'"'+' '+$("#first_name").val()+' '+$("#last_name").val(); 
+            var data = [one,company_country,email,email1];
+            for (var i = 0; i < data.length; i++) {
+                var two = 'https://www.google.com/search?q=' + encodeURIComponent(data[i]);     
+                 var redirectWindow = window.open(two, '_blank');
+            }
 
          });
          });
