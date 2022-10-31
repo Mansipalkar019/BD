@@ -96,6 +96,7 @@ class Projects extends CI_Controller
                 $project_breif = $this->security->xss_clean($this->input->post("project_breif"));
                 $created_by = $this->session->userdata('id');
                 $valid = 1;
+                
                 $error = [];
               
                 for ($i = 1; $i < count($file_data); $i++) {
@@ -169,6 +170,7 @@ class Projects extends CI_Controller
                     $new[] = $file_datas[$i];
                    
                 }
+               
                     $projects_info = array('project_name' => $project_name, 'project_type' => $project_type, 'task_type' => $task_type, 'project_breif' => $project_breif, 'created_by' => $created_by, 'created_at' => date('Y-m-d H:i:s'), 'file_path' => $filepath, 'file_name' => $filename);
                     $addProjectInfo  = $this->model->insertData('bdcrm_master_projects', $projects_info);
                     if(!empty($_POST['feild_access']))
@@ -282,6 +284,7 @@ class Projects extends CI_Controller
                 'name'  => 'Verdana'
             )
         );
+       
         $objPHPExcel->setActiveSheetIndex(0);
         $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Salutation');
         $objPHPExcel->getActiveSheet()->getStyle("A1")->applyFromArray($styleArray);
@@ -371,8 +374,8 @@ class Projects extends CI_Controller
         $objPHPExcel->getActiveSheet()->getStyle("AQ1")->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->SetCellValue('AR1', 'SA5');
         $objPHPExcel->getActiveSheet()->getStyle("AR1")->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->SetCellValue('AS1', 'Product Id');
-        $objPHPExcel->getActiveSheet()->getStyle("AS1")->applyFromArray($styleArray);
+        // $objPHPExcel->getActiveSheet()->SetCellValue('AS1', 'Project Id');
+        // $objPHPExcel->getActiveSheet()->getStyle("AS1")->applyFromArray($styleArray);
         $filename = FCPATH . "uploads/projects/" . $fileName;
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="01simple.xls"');

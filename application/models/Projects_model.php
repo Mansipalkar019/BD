@@ -415,7 +415,13 @@ class Projects_Model extends CI_Model
             return $datas =  $querys->row_array();  
     }
 
- 
+    function get_maxproject_id(){
+        $this->db->select('max(bdcrm_uploaded_feildss.id)');
+        $this->db->from('bdcrm_uploaded_feildss');
+        $querys=$this->db->get();
+        //echo $this->db->last_query();die();
+        return $datas =  $querys->row_array();  
+    }
 
 	function excel_download($product_id="")
     {
