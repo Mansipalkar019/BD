@@ -19,12 +19,13 @@ $(document).ready(function (e) {
             "data": null
          },
          {
-            "data": "staff_count",
-            render: function (data, type, row) {
-               let staff_count = row.staff_count;
-               var display_status_name = '<span><a href=' + bases_url + 'Projects/get_staff_info?id="' + btoa(row['project_id']) + '"&received_company_name="' + btoa(row['received_company_name']) + '" class="badge btn btn-primary btn-sm">' + staff_count + '</a></span>';
-               return display_status_name;
-            },
+            "data": "staff_count",     
+
+              render: function (data, type, row) {               
+                 let staff_count = row.staff_count;
+                   var display_status_name = '<span><a href=' + bases_url + 'Projects/get_staff_info?id="' + btoa(row['project_id']) + '"&received_company_name="' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + '" class="badge btn btn-primary btn-sm">' + staff_count + '</a></span>';
+                 return display_status_name;
+         },
          },
     {
 
@@ -43,7 +44,7 @@ $(document).ready(function (e) {
             "data": "project_id",
             render: function (data, type, row) {
                let project_id = row.project_id;
-               var display_status_name = "<a href=" + bases_url + 'Projects/my_projects/' + btoa(row['project_id']) + '/' + btoa(row['id']) + '/' + btoa(row['received_company_name']) + "><i class='fa-solid fa-eye'></i></i></a>";
+               var display_status_name = "<a href=" + bases_url + 'Projects/my_projects/' + btoa(row['project_id']) + '/' + btoa(row['id']) + '/' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + "><i class='fa-solid fa-eye'></i></i></a>";
                return display_status_name;
             },
          },
