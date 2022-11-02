@@ -80,7 +80,7 @@ class Projects_Model extends CI_Model
     if(($designation_name=='Researcher') || $designation_name=='Caller'){
        $this->db->join('companywise_allocation ca','bmp.id = ca.project_id','left');
        $this->db->where('ca.user_id',$user_id);
-       $this->db->where('ca.is_final_submited',0);
+       $this->db->where('ca.project_status',0);
        $this->db->group_by('bmp.id');
     }
     $this->db->where('bmp.status','1');
@@ -171,10 +171,12 @@ class Projects_Model extends CI_Model
      elseif($workstatus==2){
          $this->db->where('ca.assigned_by IS NULL');
      }
+     elseif($workstatus==3){
+        $this->db->where('ca.is_final_submited',0);
+    }
      $this->db->limit($rowperpage,$rowno);
      $this->db->group_by('buf.id');
-      $query=$this->db->get();
-    //echo  $this->db->last_query(); die;
+     $query=$this->db->get();
      return $data = $query->result_array();
  }
     
@@ -472,4 +474,18 @@ class Projects_Model extends CI_Model
         }
         return $result;
     }
+
+    function get_final_submit_record($project_id,$user_id){
+        $this->db->select('ca.*');
+        $this->db->from('companywise_allocation ca');
+        $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
+        $this->db->where('ca.project_id',$project_id);
+        $this->db->where('ca.user_id',$user_id);
+        $this->db->where('ca.status','1');
+        $this->db->where('buf.updated_status','Updated');
+        $querys=$this->db->get();
+        //echo $this->db->last_query();die();
+        return $datas =  $querys->result_array();
+    }
+    
 }

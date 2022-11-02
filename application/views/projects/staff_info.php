@@ -56,6 +56,7 @@ if($this->session->userdata('designation_name') == 'Superadmin' || $this->sessio
                <option value="">Select Work Type</option>
                 <option value="Assigned">Assigned</option>
                 <option value="Unassigned">Unassigned</option>
+                <option value="Pending">Pending</option>
                 </select>
             </div>
         </div>
@@ -149,7 +150,7 @@ $(document).ready(function (e) {
         },
        
    });
-   //table.column( 21 ).visible( false );
+   table.column( 21 ).visible( false );
    $('#btn-search-by-count').click(function () {
     var staff_info = [];
     var count = $('#count').val();
@@ -161,14 +162,14 @@ $(document).ready(function (e) {
                search: 'applied'
             }).nodes()[i];
             if (d) {
-                //table.column( 21 ).visible( true );
+                table.column( 21 ).visible( true );
                var td = d.getElementsByTagName("td")[21];
               
                var td_text = td.innerHTML;
                staff_info.push(td_text);
             }
          }
-         //table.column( 21 ).visible( false );
+         table.column( 21 ).visible( false );
          if (staff_info) {
                $.ajax({
                   dataType: 'json',

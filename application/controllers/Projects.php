@@ -955,8 +955,11 @@ class Projects extends CI_Controller
            if($_POST['workalloc'] == 'Assigned')
            {
                 $workstatus=1;
-           }else{
+           }elseif($_POST['workalloc'] == 'Unassigned'){
                 $workstatus =2;
+           }
+           else{
+                $workstatus =3;
            }
         }
         //echo $counter;die();
@@ -1131,16 +1134,17 @@ class Projects extends CI_Controller
     function FinalSubmit($project_id,$user_id){
         $user_id=$this->session->userdata('id');
          if(!empty($project_id) && !empty($user_id)){
-          $assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
-         //echo "<pre>";
-        //print_r($assigned_records);die();
+        $assigned_records=$this->Projects_model->get_final_submit_record($project_id,$user_id);
+          //$assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
+        //  echo "<pre>";
+        // print_r($assigned_records);die();
          if(!empty($assigned_records)){
           $date = date('Y-m-d H:i:s');
           foreach($assigned_records as $key => $values){
-             $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
+             $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$values['project_id'],'user_id'=>$values['user_id'],'staff_id'=>$values['staff_id'],'status'=>'1'));
             
          }
-         
+          $this->model->updateData('companywise_allocation',array('project_status'=>'1'),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
           $this->session->set_flashdata("success", "Successfully Project Submited.");  
          }
          $this->session->set_flashdata("error", "Something Went Wrong.");  
