@@ -251,6 +251,8 @@ class Projects extends CI_Controller
             return $row = $query->row_array();
     }
 
+    
+
     public function getSuffixInfoByName($suffix){
             $suffix = strtolower($suffix);
             $sql = "SELECT id FROM `bdcrm_name_prefix` WHERE lower(prefix) = '$suffix' AND status='1'"; 
@@ -412,6 +414,8 @@ class Projects extends CI_Controller
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
+        // echo "<pre>";
+        // print_r($data['staff_list']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -509,6 +513,121 @@ class Projects extends CI_Controller
         echo json_encode($country_info);
     }
 
+    public function getcountry()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_countries","name");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["name"]);
+              $new_row['value']=stripslashes($row["name"]);
+              $new_row['phonecode']=stripslashes($row["phonecode"]);
+              $new_row['region']=stripslashes($row["region"]);
+                  $row_set[] = $new_row; //build an array
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getindustry()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_industries","Industries");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["Industries"]);
+              $new_row['value']=stripslashes($row["Industries"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getcompany_disposition()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_company_disposition","company_dispostion");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["company_dispostion"]);
+              $new_row['value']=stripslashes($row["company_dispostion"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getcompany_web_dispositon()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_web_disposition","web_disposition_name");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["web_disposition_name"]);
+              $new_row['value']=stripslashes($row["web_disposition_name"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getcompany_voice_disposition()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_caller_disposition","caller_disposition");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["caller_disposition"]);
+              $new_row['value']=stripslashes($row["caller_disposition"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getweb_staff_disposition()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_staff_web_disposition","dispositions");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["dispositions"]);
+              $new_row['value']=stripslashes($row["dispositions"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+    public function getvoice_staff_disposition()
+    {
+        if(isset($_POST['search'])){
+            $search = strtolower($this->input->post('search'));
+          }else{ $search = ''; }
+        $country_info = $this->Projects_model->getautocompleteofdata($search,"bdcrm_staff_voice_dispositions","voice_dispositions");
+        if(count($country_info) > 0){
+            foreach ($country_info as $row){
+              $new_row['label']=stripslashes($row["voice_dispositions"]);
+              $new_row['value']=stripslashes($row["voice_dispositions"]);
+              $row_set[] = $new_row; 
+                }
+                echo json_encode($row_set);
+        }
+    }
+
+
     public function update_company_details()
     {
         $project_id=$this->input->post('project_id');
@@ -521,6 +640,7 @@ class Projects extends CI_Controller
         $postal_code=$this->input->post('postal_code');
         $state_name=$this->input->post('state_name');
         $country=$this->input->post('country');
+        $country_id = $this->model->selectWhereData('bdcrm_countries', array('name' => $country), array('id'));
         $region_name=$this->input->post('region_name');
         $address_source_url=$this->input->post('address_source_url');
         $ca1=$this->input->post('ca1');
@@ -529,14 +649,18 @@ class Projects extends CI_Controller
         $ca4=$this->input->post('ca4');
         $ca5=$this->input->post('ca5');
         $company_disposition=$this->input->post('company_disposition');
+        $company_disposition_id = $this->model->selectWhereData('bdcrm_company_disposition', array('company_dispostion' => $company_disposition), array('id'));
         $company_web_dispositon=$this->input->post('company_web_dispositon');
+        $company_web_dispositon_id = $this->model->selectWhereData('bdcrm_web_disposition', array('web_disposition_name' => $company_web_dispositon), array('id'));
         $company_voice_disposition=$this->input->post('company_voice_disposition');
+        $company_voice_disposition_id = $this->model->selectWhereData('bdcrm_caller_disposition', array('caller_disposition' => $company_voice_disposition), array('id'));
         $company_genaral_notes=$this->input->post('company_genaral_notes');
         $company_remark=$this->input->post('company_remark');
         $country_code=$this->input->post('country_code');
         $tel_number=$this->input->post('tel_number');
         $alternate_number=$this->input->post('alternate_number');
         $industry=$this->input->post('industry');
+        $industry_id = $this->model->selectWhereData('bdcrm_industries', array('Industries' => $industry), array('id'));
         $revenue=$this->input->post('revenue');
         $revenue_curr=$this->input->post('revenue_cur');
         $no_of_emp=$this->input->post('no_of_emp');
@@ -552,7 +676,9 @@ class Projects extends CI_Controller
         $staff_direct_tel=$this->input->post('staff_direct_tel');
         $staff_mobile=$this->input->post('staff_mobile');
         $web_staff_disposition=$this->input->post('web_staff_disposition');
+        $web_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_web_disposition', array('dispositions' => $web_staff_disposition), array('id'));
         $voice_staff_disposition=$this->input->post('voice_staff_disposition');
+        $voice_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_voice_dispositions', array('voice_dispositions' => $voice_staff_disposition), array('id'));
         $staff_linkedin_con=$this->input->post('staff_linkedin_count');
         $staff_note=$this->input->post('staff_note');
         $staff_remark=$this->input->post('staff_remark');
@@ -574,7 +700,7 @@ class Projects extends CI_Controller
             'city'=>$city_name,
             'postal_code'=>$postal_code,
             'state_county'=>$state_name,
-            'country'=>$country,
+            'country'=>$country_id['id'],
             'country_code'=>$country_code,
             'region'=>$region_name,
             'address_souce_url'=>$address_source_url,
@@ -584,14 +710,14 @@ class Projects extends CI_Controller
             'ca3'=>$ca3,
             'ca4'=>$ca4,
             'ca5'=>$ca5,
-            'company_disposition'=>$company_disposition,
-            'web_disposition'=>$company_web_dispositon,
-            'voice_staff_disposition'=>$voice_staff_disposition,
+            'company_disposition'=>$company_disposition_id['id'],
+            'web_disposition'=>$company_web_dispositon_id['id'],
+            'voice_staff_disposition'=>$voice_staff_disposition_id['id'],
             'genral_notes'=>$company_genaral_notes,
             'remarks'=>$company_remark,
             'tel_number'=>$tel_number,
             'alternate_number'=>$alternate_number,
-            'industry'=>$industry,
+            'industry'=>$industry_id['id'],
             'revenue'=>$revenue,
             'revenue_curr'=>$revenue_curr,
             'updated_at'=>date('Y-m-d H:i:s'),
@@ -606,10 +732,10 @@ class Projects extends CI_Controller
             'staff_url'=>$staff_url,
             'assumed_email'=>$assumed_email,
             'staff_email_harvesting'=>$staff_email_harvesting,
-            'voice_disposition'=>$company_voice_disposition,
+            'voice_disposition'=>$company_voice_disposition_id['id'],
             'staff_direct_tel'=>$staff_direct_tel,
             'staff_mobile'=>$staff_mobile,
-            'web_staff_disposition'=>$web_staff_disposition,
+            'web_staff_disposition'=>$web_staff_disposition_id['id'],
             'staff_linkedin_con'=>$staff_linkedin_con,
             'staff_note'=>$staff_note,
             'staff_remark'=>$staff_remark,
@@ -697,22 +823,18 @@ class Projects extends CI_Controller
     // }
 
     public function save_company_allocation_data(){
-       
         $company_name = $this->input->post('company_name');
         $user_list = $this->input->post('user_list');
         $project_id = $this->input->post('project_id');
         $perUser = count($user_list);
         $company_count = count($company_name);
         $break = round(count($company_name) / $perUser);
-        
         if(!empty($break)){
             $user_list_last_key = array_key_last($user_list);
             $start = 0;
             foreach ($user_list as $user_list_key => $user_list_row) {
-                
                 if($user_list_last_key == $user_list_key){
-                    //echo $user_list_key;
-                     if(!empty($company_name)){
+                    if(!empty($company_name)){
                         foreach ($company_name as $company_name_key => $company_name_row) {
                             $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name_row,'project_id'=>$project_id),array('id','project_id'),false);
                             if(!empty($company_name_id_info[0])){
@@ -723,17 +845,15 @@ class Projects extends CI_Controller
                                         'user_id'=> $user_list_row,
                                         'assigned_by'=> $this->session->userdata('id'),
                                     );
-                                    echo "<pre>";
-                                    print_r($insert_companywise_allocation);
-                                    //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                                 
+                                    $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                                 }
                             }
                         }
                        
                     }
-                   break;
-                }
-                else {
+                    break;
+                } else {
                     for ($i=$start; $i < $break ; $i++) { 
                         $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name[$i],'project_id'=>$project_id),array('id','project_id'),false);
                         if(!empty($company_name_id_info[0])){
@@ -744,8 +864,8 @@ class Projects extends CI_Controller
                                     'user_id'=> $user_list_row,
                                     'assigned_by'=> $this->session->userdata('id') ,
                                 );
-                              
-                                //$this->model->insertData('companywise_allocation',$insert_companywise_allocation);
+                               
+                                $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
                             }
                            
                         }
@@ -755,7 +875,6 @@ class Projects extends CI_Controller
                     $break = $break+$break;
                 }
             }
-            die();
             $response['message'] = "Company Allocation Inserted Successfully";
             $response['status'] = "success";
         } else {
@@ -764,7 +883,7 @@ class Projects extends CI_Controller
         }
         echo json_encode($response);
     }
- 
+
     public function getsInfo(){
         $project_id = $this->input->post('project_id');
         $staff_info = $this->input->post('staff_info');
@@ -890,9 +1009,6 @@ class Projects extends CI_Controller
     }
 
 
-
-
-
     public function isDataExist($data){
         unset($data['assigned_at']);
         unset($data['assigned_by']);
@@ -1013,25 +1129,27 @@ class Projects extends CI_Controller
     }
 
     function FinalSubmit($project_id,$user_id){
-        
-        if(!empty($project_id) && !empty($user_id)){
-         $assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
+        $user_id=$this->session->userdata('id');
+         if(!empty($project_id) && !empty($user_id)){
+          $assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
+         //echo "<pre>";
+        //print_r($assigned_records);die();
+         if(!empty($assigned_records)){
+          $date = date('Y-m-d H:i:s');
+          foreach($assigned_records as $key => $values){
+             $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
+            
+         }
          
-       
-        if(!empty($assigned_records)){
-         $date = date('Y-m-d H:i:s');
-         foreach($assigned_records as $key => $values){
-            $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
-        }
-         $this->session->set_flashdata("success", "Successfully Project Submited.");  
-        }
-        $this->session->set_flashdata("error", "Something Went Wrong.");  
-        }else{
-        $this->session->set_flashdata("error", "Something Went Wrong.");  
-        }
-        redirect(base_url("projects/project_list"), $data);
-
-        
-    }
+          $this->session->set_flashdata("success", "Successfully Project Submited.");  
+         }
+         $this->session->set_flashdata("error", "Something Went Wrong.");  
+         }else{
+         $this->session->set_flashdata("error", "Something Went Wrong.");  
+         }
+         redirect(base_url("projects/project_list"));
+ 
+         
+     }
 
 }

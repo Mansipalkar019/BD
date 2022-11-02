@@ -31,7 +31,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Nested Table -->
     <!-- <link href="assets/libs/nestable2/jquery.nestable.min.css" rel="stylesheet" type="text/css" /> -->
-    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 </head>
 
 <body>

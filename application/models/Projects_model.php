@@ -275,10 +275,17 @@ class Projects_Model extends CI_Model
 
     function getProjectInfoByStaffId($pid,$sid){
         
-        $this->db->select('ca.user_id as assigned_to,buf.*,bmp.project_name,bmp.project_breif');
+        $this->db->select('ca.user_id as assigned_to,buf.*,bmp.project_name,bmp.project_breif,bdctry.name as countryname,bcd.company_dispostion as companydispostion,bi.Industries as industryname,bwd.web_disposition_name as webdispositionname,bcld.caller_disposition as voicedispositionname,bswd.dispositions as webstaffdis,bsvd.voice_dispositions as voicestaffdis');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
+        $this->db->join('bdcrm_countries bdctry','buf.country = bdctry.id','left');
+        $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition = bcd.id','left');
+        $this->db->join('bdcrm_industries bi','buf.industry = bi.id','left');
+        $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition = bwd.id','left');
+        $this->db->join('bdcrm_caller_disposition bcld','buf.voice_disposition = bcld.id','left');
+        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
         $this->db->where('buf.project_id',$pid);
         $this->db->where('buf.id',$sid);
         $this->db->where('bmp.status',1);
@@ -368,9 +375,11 @@ class Projects_Model extends CI_Model
     function getStaffInfoDetails($project_id,$company_name){
         $designation_name = $this->session->userdata('designation_name');
           $user_id = $this->session->userdata('id');
-        $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
+        $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id,bswd.dispositions,bsvd.voice_dispositions');
         $this->db->from('bdcrm_uploaded_feildss buf');
-        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');          
+        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');  
+        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');        
           if(($designation_name=='Researcher') || $designation_name=='Caller'){
              $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
              $this->db->where('ca.user_id',$user_id);
@@ -386,9 +395,11 @@ class Projects_Model extends CI_Model
     }
 
     function getAllStaffInfoDetails($project_id){
-         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
+         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id,bswd.dispositions,bsvd.voice_dispositions');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
+        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
+        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
 
           $designation_name = $this->session->userdata('designation_name');
           $user_id = $this->session->userdata('id');
@@ -445,5 +456,20 @@ class Projects_Model extends CI_Model
         return $query->result_array();
     }
 
+    function getautocompleteofdata($search_term, $tablename, $field_name){
+        if($this->db->table_exists($tablename)){
+            $this->db->select("*");
+            $this->db->from($tablename);
     
+            $this->db->like("LOWER(".$field_name.")", $search_term);
+           
+            $this->db->group_by($field_name);
+            $query = $this->db->get();
+            //echo $this->db->last_query();die();
+            $result = $query->result_array();
+        }else{
+            $result = array();
+        }
+        return $result;
+    }
 }
