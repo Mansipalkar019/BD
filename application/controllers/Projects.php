@@ -822,11 +822,7 @@ class Projects extends CI_Controller
     //     echo json_encode($response);
     // }
 
-<<<<<<< HEAD
     public function save_company_allocation_data(){
-=======
-     public function save_company_allocation_data(){
->>>>>>> 3598eee6e45e46a451f2c9d1cfa6352bea529e79
         $company_name = $this->input->post('company_name');
         $user_list = $this->input->post('user_list');
         $project_id = $this->input->post('project_id');
