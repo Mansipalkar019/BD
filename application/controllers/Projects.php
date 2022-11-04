@@ -415,7 +415,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['staff_list']);die();
+        // print_r($data['allInfo']);die();u144953935_u144953935stz
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -1038,7 +1038,7 @@ class Projects extends CI_Controller
     {
         error_reporting(0);
         $project_id=base64_decode($_GET['id']);
-       
+        //echo $project_id;die();
        // load excel library
        $this->load->library('excel');
        $totalData=$this->Projects_model->excel_download($project_id);  

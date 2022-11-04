@@ -243,7 +243,7 @@
                    
                         $project_id = $allInfo[0]['project_id'];
                         $user_id = $allInfo[0]['assigned_to'];
-                        
+                       //$user_id=$this->session->userdata('id');
                         if(!empty($project_id) && !empty($user_id)){
                             $url = "projects/FinalSubmit/".$project_id.'/'.$user_id; 
                             ?>
@@ -1113,6 +1113,7 @@
          link.addEventListener('click', function() {
            var one = $("#company_name").val()+', '+$("#first_name").val()+' '+$("#last_name").val();
             var country = $("#country option:selected").text();
+            console.log(country);
             var company_country = $("#company_name").val()+', '+country;
             var website_url = $('#website_url').val();
             var web_url = new URL(website_url);

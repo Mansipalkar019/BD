@@ -452,7 +452,7 @@ class Projects_Model extends CI_Model
         $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
        
         $this->db->where('bmp.status',1);
-        
+        $this->db->where('buf.project_id',$product_id);
         $query=$this->db->get();
         //echo $this->db->last_query();die();
         return $query->result_array();
