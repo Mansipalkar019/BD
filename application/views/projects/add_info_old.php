@@ -280,14 +280,8 @@
                      <label for="company_disposition" class="col-form-label">Co. Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_disposition"  name='company_disposition'>
-                        <option value=''>Select Co. Disposition</option>
-                        <?php 
-                     foreach ($compDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($val['id'] == $allInfo[0]['company_disposition']){?>selected<?php } ?> ><?= $val['company_dispostion']; ?></option>
-                        <?php }
-                           ?>
-                     </select>
+                     <input type="text" value="<?= $allInfo[0]['companydispostion']; ?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Co. Disposition" title="" id="company_disposition"  name='company_disposition' class="autosearch-input form-control form-control-sm" tabindex="24">
                   </div>
                   <?php } ?>
                </div>
@@ -302,14 +296,9 @@
                      <label for="company_web_dispositon" class="col-form-label">Co. Web Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon'>
-                        <option value=''>Select Web Disposition</option>
-                        <?php 
-                           foreach ($webDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['id']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
-                        <?php }
-                           ?>
-                     </select>
+
+                     <input type="text" value="<?=$allInfo[0]['webdispositionname']; ?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Co. Web Disposition" title="" id="company_web_dispositon"  name='company_web_dispositon' class="autosearch-input form-control form-control-sm" tabindex="25">
                   </div>
                   <?php } ?>
                </div>
@@ -325,14 +314,10 @@
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
-                        <option value=''>Select Voice Disposition</option>
-                        <?php 
-                           foreach ($VoiceDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
-                        <?php }
-                           ?>
-                     </select>
+      
+                     <input type="text" value="<?=$allInfo[0]['voicedispositionname']; ?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Co. Voice Disposition" title="" id="company_voice_disposition"  name='company_voice_disposition' class="autosearch-input form-control form-control-sm" tabindex="26">
+         
                   </div>
                  
                </div>
@@ -346,14 +331,10 @@
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
-                        <option value=''>Select Voice Disposition</option>
-                        <?php 
-                           foreach ($VoiceDispo as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_disposition']==$val['id']){?>selected<?php } ?>><?= $val['caller_disposition']; ?></option>
-                        <?php }
-                           ?>
-                     </select>
+                  
+                     <input type="text" value="<?=$allInfo[0]['voicedispositionname']; ?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Co. Voice Disposition" title="" id="company_voice_disposition"  name='company_voice_disposition' class="autosearch-input form-control form-control-sm" tabindex="27">
+         
                   </div>
                  
                </div>
@@ -812,15 +793,9 @@
                      <label for="web_staff_disposition" class="col-form-label">Web Staff Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="web_staff_disposition"  name='web_staff_disposition'>
-                        <option value=''>select Web Disposition</option>
-                        <?php 
-                        foreach ($webDispos as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
-                        <?php }
-                           ?>
-                        <option value='Duplicate'>Duplicate</option>
-                     </select>
+                   
+                     <input type="text" value="<?=$allInfo[0]['webstaffdis']?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Web Staff Disposition" title="" id="web_staff_disposition"  name='web_staff_disposition' class="autosearch-input form-control form-control-sm" tabindex="44">
                   </div>
                   <?php } ?>
                </div>
@@ -836,14 +811,9 @@
                      <label for="voice_staff_disposition" class="col-form-label">Voice Staff Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="voice_staff_disposition"  name='voice_staff_disposition'>
-                        <option value=''>select Voice Staff Disposition</option>
-                        <?php 
-                        foreach ($VoiceDispos as $key => $val) { ?>
-                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['voice_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['voice_dispositions']; ?></option>
-                        <?php }
-                           ?>
-                     </select>
+   
+                     <input type="text" value="<?=$allInfo[0]['voicestaffdis']?>" type="text" size="50" autocomplete="on"
+                        placeholder="Search Voice Staff Disposition" title="" id="voice_staff_disposition"  name='voice_staff_disposition' class="autosearch-input form-control form-control-sm" tabindex="45">
                   </div>
                 
                </div>
@@ -1026,7 +996,7 @@
                               $designation_name = $this->session->userdata('designation_name');
                               if($designation_name=='Researcher')
                               {
-                                 if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
+                                 if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced') {?>
                                     <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'staff left' || strtolower($allstaffinfo_val['dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['dispositions']) == 'no answer'){?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
@@ -1039,7 +1009,7 @@
                                     <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'staff left' || strtolower($allstaffinfo_val['voice_dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['voice_dispositions']) == 'no answer'){?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
-                                <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result' || strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result'){
                                  ?>
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
@@ -1075,7 +1045,7 @@
                               $designation_name = $this->session->userdata('designation_name');
                               if($designation_name=='Researcher')
                               {
-                                 if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement'){?>
+                                 if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'){?>
                                     <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php }elseif(strtolower($staff_list_val['dispositions']) == 'staff left' || strtolower($staff_list_val['dispositions']) == 'duplicate' || strtolower($staff_list_val['dispositions']) == 'no answer'){?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
@@ -1090,7 +1060,7 @@
                                  <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'staff left' || strtolower($staff_list_val['voice_dispositions']) == 'duplicate' || strtolower($staff_list_val['voice_dispositions']) == 'no answer'){
                                     ?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
-                                <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result'){
                                  ?>
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
@@ -1142,8 +1112,8 @@
          var link = document.getElementById('link');
          link.addEventListener('click', function() {
            var one = $("#company_name").val()+', '+$("#first_name").val()+' '+$("#last_name").val();
-            // var country = $("#country option:selected").val();
-            var country=$('#country').val();
+            var country = $("#country option:selected").text();
+            console.log(country);
             var company_country = $("#company_name").val()+', '+country;
             var website_url = $('#website_url').val();
             var web_url = new URL(website_url);
@@ -1359,9 +1329,9 @@ select: function( event , ui ) {
                ca3:$('#ca3').val(), 
                ca4:$('#ca4').val(), 
                ca5:$('#ca5').val(), 
-               company_disposition:$("#company_disposition option:selected").val(), 
-               company_web_dispositon:$("#company_web_dispositon option:selected").val(), 
-               company_voice_disposition:$("#company_voice_disposition option:selected").val(),
+               company_disposition:$("#company_disposition").val(), 
+               company_web_dispositon:$("#company_web_dispositon").val(), 
+               company_voice_disposition:$("#company_voice_disposition").val(),
                company_genaral_notes:$('#company_genaral_notes').val(),
                company_remark:$('#company_remark').val(),
                country_code:$('#country_code').val(),

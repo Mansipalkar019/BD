@@ -434,8 +434,7 @@ class Projects extends CI_Controller
     public function ProjectInfo($id){
          $id=base64_decode($id);
          $data['id'] = $id;
-          $designation_name = $this->session->userdata('designation_name');
-
+         $designation_name = $this->session->userdata('designation_name');
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
          $data['designation_name'] =$designation_name;
@@ -481,17 +480,18 @@ class Projects extends CI_Controller
             $id= $this->input->post('id');
             $slot_count= $this->input->post('slot_count');
             $workalloc= $this->input->post('workalloc');
-         
-            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc); 
-
-            
+            $user_id=$this->session->userdata('id');
+        
+           $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc); 
+           
             if(!empty($ProjectInfo)){
                foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
                         $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
                          $total_count[]=$ProjectInfo_row['staff_count'];
                          $ProjectInfo[$ProjectInfo_key]['completed_updated_status']=$completed_status_count['completed_updated_status'];
                          $ProjectInfo[$ProjectInfo_key]['created_date']=date(('d-m-Y h:i A'),strtotime($ProjectInfo_row['created_date']));
-               }     
+            }     
+             
             }
             $response['data']=$ProjectInfo;
             $response['total_staff_count'] = array_sum($total_count);
@@ -649,11 +649,11 @@ class Projects extends CI_Controller
         $ca4=$this->input->post('ca4');
         $ca5=$this->input->post('ca5');
         $company_disposition=$this->input->post('company_disposition');
-        $company_disposition_id = $this->model->selectWhereData('bdcrm_company_disposition', array('company_dispostion' => $company_disposition), array('id'));
+        //$company_disposition_id = $this->model->selectWhereData('bdcrm_company_disposition', array('company_dispostion' => $company_disposition), array('id'));
         $company_web_dispositon=$this->input->post('company_web_dispositon');
-        $company_web_dispositon_id = $this->model->selectWhereData('bdcrm_web_disposition', array('web_disposition_name' => $company_web_dispositon), array('id'));
+        //$company_web_dispositon_id = $this->model->selectWhereData('bdcrm_web_disposition', array('web_disposition_name' => $company_web_dispositon), array('id'));
         $company_voice_disposition=$this->input->post('company_voice_disposition');
-        $company_voice_disposition_id = $this->model->selectWhereData('bdcrm_caller_disposition', array('caller_disposition' => $company_voice_disposition), array('id'));
+        //$company_voice_disposition_id = $this->model->selectWhereData('bdcrm_caller_disposition', array('caller_disposition' => $company_voice_disposition), array('id'));
         $company_genaral_notes=$this->input->post('company_genaral_notes');
         $company_remark=$this->input->post('company_remark');
         $country_code=$this->input->post('country_code');
@@ -676,9 +676,9 @@ class Projects extends CI_Controller
         $staff_direct_tel=$this->input->post('staff_direct_tel');
         $staff_mobile=$this->input->post('staff_mobile');
         $web_staff_disposition=$this->input->post('web_staff_disposition');
-        $web_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_web_disposition', array('dispositions' => $web_staff_disposition), array('id'));
+        //$web_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_web_disposition', array('dispositions' => $web_staff_disposition), array('id'));
         $voice_staff_disposition=$this->input->post('voice_staff_disposition');
-        $voice_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_voice_dispositions', array('voice_dispositions' => $voice_staff_disposition), array('id'));
+        //$voice_staff_disposition_id = $this->model->selectWhereData('bdcrm_staff_voice_dispositions', array('voice_dispositions' => $voice_staff_disposition), array('id'));
         $staff_linkedin_con=$this->input->post('staff_linkedin_count');
         $staff_note=$this->input->post('staff_note');
         $staff_remark=$this->input->post('staff_remark');
@@ -710,9 +710,9 @@ class Projects extends CI_Controller
             'ca3'=>$ca3,
             'ca4'=>$ca4,
             'ca5'=>$ca5,
-            'company_disposition'=>$company_disposition_id['id'],
-            'web_disposition'=>$company_web_dispositon_id['id'],
-            'voice_staff_disposition'=>$voice_staff_disposition_id['id'],
+            'company_disposition'=>$company_disposition,
+            'web_disposition'=>$company_web_dispositon,
+            'voice_staff_disposition'=>$voice_staff_disposition,
             'genral_notes'=>$company_genaral_notes,
             'remarks'=>$company_remark,
             'tel_number'=>$tel_number,
@@ -732,10 +732,10 @@ class Projects extends CI_Controller
             'staff_url'=>$staff_url,
             'assumed_email'=>$assumed_email,
             'staff_email_harvesting'=>$staff_email_harvesting,
-            'voice_disposition'=>$company_voice_disposition_id['id'],
+            'voice_disposition'=>$company_voice_disposition,
             'staff_direct_tel'=>$staff_direct_tel,
             'staff_mobile'=>$staff_mobile,
-            'web_staff_disposition'=>$web_staff_disposition_id['id'],
+            'web_staff_disposition'=>$web_staff_disposition,
             'staff_linkedin_con'=>$staff_linkedin_con,
             'staff_note'=>$staff_note,
             'staff_remark'=>$staff_remark,
@@ -889,6 +889,7 @@ class Projects extends CI_Controller
         $staff_info = $this->input->post('staff_info');
         $assignee_users = $this->input->post('users');
         $company_name = $this->input->post('company_name');
+        $total_count = $this->input->post('count');
         $perUser = count($assignee_users);
        
         $break = round(count($staff_info) / $perUser);
@@ -896,30 +897,57 @@ class Projects extends CI_Controller
             $user_list_last_key = array_key_last($assignee_users);
              $start = 0;
             foreach ($assignee_users as $user_list_key => $user_list_row) {
-               // echo $user_list_last_key;
-                if($user_list_last_key == $user_list_key){
-                   //print_r($staff_info);
+               if($user_list_last_key == $user_list_key){
+                  
                     if(!empty($staff_info)){
                         foreach ($staff_info as $staff_info_key => $staff_info_row) {
-                            $data1=array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
+                            $insert_data=array('project_id'=>$project_id,'user_id'=>$user_list_row,'reassigned_to'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0','total_count'=>$total_count);
+                            $update_data=array('project_status'=>'1','is_final_submited'=>'1');
+                            $check_assigned_task = $this->Projects_model->getallocationdetails($project_id,$staff_info_row,$this->session->userdata('id'));
+                            
+                            if(!empty($check_assigned_task))
+                            { 
+                                foreach($check_assigned_task as $key => $value)
+                                {
+                                $reassignstaff= $this->model->updateData("companywise_allocation",$update_data,array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'assigned_by'=>$this->session->userdata('id')));
+                                $insert_data1=array('project_id'=>$project_id,'user_id'=>$value['user_id'],'reassigned_to'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0','total_count'=>$total_count);
+                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data1); 
+                                }
+                            }else{
+                              
+                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data);
+                            }
                            
-                            $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
                         }
-                       
+
                     }
+                 
                     break;
                 }else{
                    
                     for ($i=$start; $i < $break ; $i++) { 
                         if(!empty($staff_info)){
-                            $data1=array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info[$i],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'));
-                            $addProjectInfo  = $this->model->insertData('companywise_allocation', $data1);
-                          
+                            $insert_data=array('project_id'=>$project_id,'user_id'=>$user_list_row,'reassigned_to'=>$user_list_row,'staff_id'=>$staff_info[$i],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0','total_count'=>$total_count);
+                            $update_data=array('project_status'=>'1','is_final_submited'=>'1');
+                            $check_assigned_task = $this->Projects_model->getallocationdetails($project_id,$staff_info[$i],$this->session->userdata('id'));
+                            
+                            if(!empty($check_assigned_task))
+                            {
+                                foreach($check_assigned_task as $key => $value)
+                                {
+                                $reassignstaff= $this->model->updateData("companywise_allocation",$update_data,array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'assigned_by'=>$this->session->userdata('id')));
+                                $insert_data1=array('project_id'=>$project_id,'user_id'=>$value['user_id'],'reassigned_to'=>$user_list_row,'staff_id'=>$staff_info[$i],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0','total_count'=>$total_count);
+                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data1);    
+                                }
+                            }else{
+                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data);
+                            }
+                           
                         }
                         unset($staff_info[$i]);
                      
                     }
-                    
+                 
                     $start = $start+$break;
                     $break = $break+$break; 
                   
@@ -1135,14 +1163,11 @@ class Projects extends CI_Controller
         $user_id=$this->session->userdata('id');
          if(!empty($project_id) && !empty($user_id)){
         $assigned_records=$this->Projects_model->get_final_submit_record($project_id,$user_id);
-          //$assigned_records = $this->model->getData('companywise_allocation', array('project_id'=>$project_id,'user_id'=>$user_id,'status' => '1'));
-        //  echo "<pre>";
-        // print_r($assigned_records);die();
+      
          if(!empty($assigned_records)){
           $date = date('Y-m-d H:i:s');
           foreach($assigned_records as $key => $values){
              $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$values['project_id'],'user_id'=>$values['user_id'],'staff_id'=>$values['staff_id'],'status'=>'1'));
-            
          }
           $this->model->updateData('companywise_allocation',array('project_status'=>'1'),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
           $this->session->set_flashdata("success", "Successfully Project Submited.");  

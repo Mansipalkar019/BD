@@ -27,7 +27,7 @@ $(document).ready(function (e) {
                  return display_status_name;
          },
          },
-    {
+         {
 
             "data": "completed_updated_status"
          },

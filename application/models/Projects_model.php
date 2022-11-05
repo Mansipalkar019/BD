@@ -79,7 +79,7 @@ class Projects_Model extends CI_Model
     $this->db->join('users us','bmp.created_by = us.id','left');
     if(($designation_name=='Researcher') || $designation_name=='Caller'){
        $this->db->join('companywise_allocation ca','bmp.id = ca.project_id','left');
-       $this->db->where('ca.user_id',$user_id);
+       $this->db->where('ca.reassigned_to',$user_id);
        $this->db->where('ca.project_status',0);
        $this->db->group_by('bmp.id');
     }
@@ -147,7 +147,7 @@ class Projects_Model extends CI_Model
      $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
      $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
      $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-     $this->db->join('users us','ca.user_id=us.id','left');
+     $this->db->join('users us','ca.reassigned_to=us.id','left');
      $this->db->join('users usd','ca.assigned_by=usd.id','left');
      $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
      $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
@@ -245,7 +245,7 @@ class Projects_Model extends CI_Model
         return $this->db->count_all_results();     
     }
     function getProjectInfo($project_id="",$slot_count="",$workalloc=""){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,count(buf.updated_status) as completed_updated_status,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name');
+        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,count(buf.updated_status) as completed_updated_status,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name,COUNT(companywise_allocation.total_count) as total_count');
         $this->db->from('bdcrm_uploaded_feildss as buf');
         $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
         $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
@@ -341,17 +341,18 @@ class Projects_Model extends CI_Model
     //     return $datas =  $querys->result_array();
     // }
 
-    // function getCompanyInfoDetails($project_id,$cmp_name){
+    function getallocationdetails($project_id,$staff_id,$assigned_by){
      
-    //     $this->db->select('buf.id,buf.received_company_name,buf.project_id,count(buf.received_company_name) as staffcount');
-    //     $this->db->distinct('received_company_name');
-    //     $this->db->from('bdcrm_uploaded_feildss buf');
-    //     $this->db->where('project_id',$project_id);
-    //     $this->db->group_by('received_company_name');
-    //     $querys=$this->db->get();
-    //     // echo $this->db->last_query();die();
-    //     return $datas =  $querys->result_array();
-    // }
+        $this->db->select('ca.*');
+        $this->db->from('companywise_allocation ca');
+        $this->db->where('project_id',$project_id);
+        $this->db->where('assigned_by',$assigned_by);
+        $this->db->where('staff_id',$staff_id);
+        $this->db->where('is_final_submited',0);
+        $querys=$this->db->get();
+        //echo $this->db->last_query();die();
+        return $datas =  $querys->result_array();
+    }
     function getCompanyInfoDetails($project_id,$cmp_name){
           $designation_name = $this->session->userdata('designation_name');
         $user_id = $this->session->userdata('id');
@@ -480,12 +481,45 @@ class Projects_Model extends CI_Model
         $this->db->from('companywise_allocation ca');
         $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
         $this->db->where('ca.project_id',$project_id);
-        $this->db->where('ca.user_id',$user_id);
+        $this->db->where('ca.reassigned_to',$user_id);
         $this->db->where('ca.status','1');
         $this->db->where('buf.updated_status','Updated');
         $querys=$this->db->get();
         //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
+
+    function get_completed_count($project_id,$user_id){
+        $this->db->select('ca.*,COUNT(buf.updated_status) as total_status_count');
+        $this->db->from('companywise_allocation ca');
+        $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
+        $this->db->where('ca.project_id',$project_id);
+        //$this->db->where('ca.reassigned_to',$user_id);
+        $this->db->where('ca.status','1');
+        $this->db->where('buf.updated_status','Updated');
+        $querys=$this->db->get();
+        //echo $this->db->last_query();die();
+        return $datas =  $querys->result_array();
+    }
+
+    // function get_completed_count($project_id="",$user_id=""){
+    //     $this->db->select('count(buf.updated_status) as total_count');
+    //     $this->db->from('bdcrm_uploaded_feildss as buf');
+    //     $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
+    //     $this->db->join('users','companywise_allocation.user_id = users.id','left');
+    //     $this->db->where('bmp.id',$project_id);
+    //     $this->db->where('bmp.status',1);
+    //       $designation_name = $this->session->userdata('designation_name');
+    //       $user_id = $this->session->userdata('id');
+    //       if(($designation_name=='Researcher') || $designation_name=='Caller'){
+    //          $this->db->where('companywise_allocation.user_id',$user_id);
+    //          $this->db->where('companywise_allocation.status',1);
+    //       }
+
+    //     $this->db->group_by('buf.received_company_name');
+    //     $query=$this->db->get();
+    //     echo $this->db->last_query();die();
+    //     return $data = $query->result_array();
+    // }
     
 }

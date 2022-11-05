@@ -170,16 +170,27 @@ $(document).ready(function (e) {
             }
          }
          table.column( 21 ).visible( false );
+         if (users == "") {
+            Swal.fire({
+               title: 'Warning',
+               text: "Please Select User",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#FD7E14',
+               confirmButtonText: 'OK!',
+            });
+         } else {
          if (staff_info) {
                $.ajax({
                   dataType: 'json',
                   type: 'POST',
                   url: bases_url + 'projects/getsInfo',
                   data: {
-                    staff_info: staff_info,
+                     staff_info: staff_info,
                      users: users,
                      project_id: project_id,
                      company_name:company_name,
+                     count:count,
                   },
                   success: function (response) {
                   	if(response.status=='success'){
@@ -211,6 +222,7 @@ $(document).ready(function (e) {
                   }
                });
             }
+        }
 });    
 
 
