@@ -43,6 +43,7 @@
                            <option value="">Select Work Type</option>
                            <option value="Assigned">Assigned</option>
                            <option value="Unassigned">Unassigned</option>
+                           <option value="Pending">Pending</option>
                         </select>
                      </div>
                   </div>
@@ -85,7 +86,7 @@
                      // }?>
                            <th>Company Received</th>
                            <th>Created At</th>
-                           <th>Assigned By</th>
+                           <th>Assigned To</th>
                            <th>Action</th>
                         </tr>
                      </thead>

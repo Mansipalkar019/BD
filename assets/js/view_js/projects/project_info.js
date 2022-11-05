@@ -9,6 +9,7 @@ $(document).ready(function (e) {
             var id = $('#id').val();
             var slot_count = $('#slot_allocation').val();
             var workalloc = $('#workalloc').val();
+
             // Append to data
             data.id = id;
             data.slot_count = slot_count;
@@ -113,6 +114,7 @@ $(document).ready(function (e) {
       var slot_allocation = $('#slot_allocation').val();
       var user_list = $('#user_list').val();
       var id = $('#id').val();
+      var total_staff_count=$('#total_staff_count').val();
       if (slot_allocation == "") {
           Swal.fire({
                title: 'Warning',
@@ -139,7 +141,6 @@ $(document).ready(function (e) {
                var td_text = td.innerHTML;
                company_name.push(td_text);
                // }
-               console.log(company_name);
             }
          }
          if (user_list == "") {
@@ -153,10 +154,7 @@ $(document).ready(function (e) {
             });
          } else {
             if (company_name) {
-               console.log("in");
-               console.log(company_name);
-               console.log(user_list);
-               console.log(id);
+              
                $.ajax({
                   dataType: 'json',
                   type: 'POST',
@@ -165,6 +163,7 @@ $(document).ready(function (e) {
                      company_name: company_name,
                      user_list: user_list,
                      project_id: id,
+                     total_staff_count:total_staff_count,
                   },
                   success: function (response) {
                      if(response.status=='success'){
