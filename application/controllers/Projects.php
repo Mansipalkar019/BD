@@ -649,6 +649,7 @@ class Projects extends CI_Controller
         $ca3=$this->input->post('ca3');
         $ca4=$this->input->post('ca4');
         $ca5=$this->input->post('ca5');
+        $title=$this->input->post('title');
         $company_disposition=$this->input->post('company_disposition');
         $company_web_dispositon=$this->input->post('company_web_dispositon');
         $company_voice_disposition=$this->input->post('company_voice_disposition');
@@ -743,6 +744,7 @@ class Projects extends CI_Controller
             'sa4'=>$sa4,
             'sa5'=>$sa5,
             'website_url'=>$website_url,
+            'suffix'=>$title,
             'updated_status'=>'Updated',
         );
         // echo "<pre>";
@@ -843,12 +845,12 @@ class Projects extends CI_Controller
                                 foreach($check_assigned_task as $key => $value)
                                 {
                                 $reassignstaff= $this->model->updateData("companywise_allocation",$update_data,array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'assigned_by'=>$this->session->userdata('id')));
-                                $addProjectInfo  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'staff_id'=>$staff_info_row,'user_id'=>$user_list_row,'assigned_by'=>$this->session->userdata('id')));    
+                                $insert_companywise_allocation_history  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'staff_id'=>$staff_info_row,'user_id'=>$user_list_row,'assigned_by'=>$this->session->userdata('id')));    
                                 }
                             }else{
                               
-                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data);
-                                $addProjectInfo  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id')));
+                                $insert_companywise_allocation  = $this->model->insertData('companywise_allocation', $insert_data);
+                                $insert_companywise_allocation_history  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info_row,'assigned_by'=>$this->session->userdata('id')));
                             }
                            
                         }
@@ -869,11 +871,11 @@ class Projects extends CI_Controller
                                 foreach($check_assigned_task as $key => $value)
                                 {
                                 $reassignstaff= $this->model->updateData("companywise_allocation",$update_data,array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'assigned_by'=>$this->session->userdata('id')));
-                                $addProjectInfo  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'user_id'=>$value['user_id'])); 
+                                $insert_companywise_allocation_history  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$value['project_id'],'staff_id'=>$value['staff_id'],'user_id'=>$value['user_id'])); 
                                 }
                             }else{
-                                $addProjectInfo  = $this->model->insertData('companywise_allocation', $insert_data);
-                                $addProjectInfo  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info[$i]));
+                                $insert_companywise_allocation  = $this->model->insertData('companywise_allocation', $insert_data);
+                                $insert_companywise_allocation_history  = $this->model->insertData('bdcrm_allocation_history',array('project_id'=>$project_id,'user_id'=>$user_list_row,'staff_id'=>$staff_info[$i]));
                             }
                            
                         }
@@ -956,15 +958,7 @@ class Projects extends CI_Controller
                         $company_name_id_info = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('received_company_name' => $company_name[$i],'project_id'=>$project_id),array('id','project_id'),false);
                         if(!empty($company_name_id_info[0])){
                             foreach ($company_name_id_info as $company_name_id_info_key => $company_name_id_info_row) {
-                                // $insert_companywise_allocation = array(
-                                //     'project_id'=> $project_id,
-                                //     'staff_id' =>$company_name_id_info_row['id'],
-                                //     'user_id'=> $user_list_row,
-                                //     'assigned_by'=> $this->session->userdata('id') ,
-                                // );
-                               
-                                // $this->model->insertData('companywise_allocation',$insert_companywise_allocation);
-                                $check_assigned_task = $this->Projects_model->getallocationdetails($project_id,$company_name_id_info_row['id'],$this->session->userdata('id'));
+                                 $check_assigned_task = $this->Projects_model->getallocationdetails($project_id,$company_name_id_info_row['id'],$this->session->userdata('id'));
                                 if(!empty($check_assigned_task))
                                 {   
                                     $update_companywise_allocation=array('project_id'=>$project_id,'reassigned_to'=>$user_list_row,'staff_id'=>$company_name_id_info_row['id'],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0');
