@@ -498,6 +498,7 @@ class Projects extends CI_Controller
             $response['total_staff_count'] = array_sum($total_count);
             echo json_encode($response);  
     }
+
     public function get_staff_info(){
          $data['id']=base64_decode($_GET['id']);
          $data['received_company_name'] = base64_decode($_GET['received_company_name']);
@@ -1206,7 +1207,7 @@ class Projects extends CI_Controller
           foreach($assigned_records as $key => $values){
              $this->model->updateData('companywise_allocation',array('is_final_submited'=>'1','submission_date'=>$date),array('project_id'=>$values['project_id'],'user_id'=>$values['user_id'],'staff_id'=>$values['staff_id'],'status'=>'1'));
          }
-          $this->model->updateData('companywise_allocation',array('project_status'=>'1'),array('project_id'=>$project_id,'user_id'=>$user_id,'status'=>'1'));
+          $this->model->updateData('companywise_allocation',array('project_status'=>'1'),array('project_id'=>$project_id,'reassigned_to'=>$user_id,'status'=>'1'));
           $this->session->set_flashdata("success", "Successfully Project Submited.");  
          }
          $this->session->set_flashdata("error", "Something Went Wrong.");  

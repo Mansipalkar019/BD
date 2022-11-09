@@ -187,7 +187,7 @@ class Projects_Model extends CI_Model
         $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
         $this->db->join('companywise_allocation cmpallo','buf.id = cmpallo.staff_id','left');
         $this->db->join('users users','cmpallo.assigned_by=users.id','left');
-        $this->db->join('users us','cmpallo.user_id=us.id','left');
+        $this->db->join('users us','cmpallo.reassigned_to=us.id','left');
         $this->db->join('master_designation md','md.id=users.designation','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
@@ -220,7 +220,7 @@ class Projects_Model extends CI_Model
         $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
         $this->db->join('companywise_allocation cmpallo','buf.id = cmpallo.staff_id','left');
         $this->db->join('users users','cmpallo.assigned_by=users.id','left');
-        $this->db->join('users us','cmpallo.user_id=us.id','left');
+        $this->db->join('users us','cmpallo.reassigned_to=us.id','left');
         $this->db->join('master_designation md','md.id=users.designation','left');
         $this->db->where('buf.project_id',$project_id);
         $this->db->where('buf.received_company_name',$received_company_name);
@@ -255,7 +255,8 @@ class Projects_Model extends CI_Model
           $user_id = $this->session->userdata('id');
           if(($designation_name=='Researcher') || $designation_name=='Caller'){
              $this->db->where('companywise_allocation.reassigned_to',$user_id);
-             $this->db->where('companywise_allocation.status',1);
+             $this->db->where('companywise_allocation.is_final_submited',0);
+             $this->db->where('companywise_allocation.project_status',0);
           }
         if($workalloc=="Assigned"){
              $this->db->where('companywise_allocation.assigned_by !=""');
@@ -483,7 +484,7 @@ class Projects_Model extends CI_Model
         $this->db->where('ca.project_id',$project_id);
         $this->db->where('ca.reassigned_to',$user_id);
         $this->db->where('ca.status','1');
-        $this->db->where('buf.updated_status','Updated');
+        //$this->db->where('buf.updated_status','Updated');
         $querys=$this->db->get();
         //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();

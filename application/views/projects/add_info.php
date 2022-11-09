@@ -280,7 +280,7 @@
                      <label for="company_disposition" class="col-form-label">Co. Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_disposition"  name='company_disposition'>
+                  <select class='form-control form-control-sm' id="company_disposition"  name='company_disposition' tabindex="24">
                         <option value=''>Select Co. Disposition</option>
                         <?php 
                      foreach ($compDispo as $key => $val) { ?>
@@ -302,7 +302,7 @@
                      <label for="company_web_dispositon" class="col-form-label">Co. Web Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon'>
+                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon' tabindex="25">
                         <option value=''>Select Web Disposition</option>
                         <?php 
                            foreach ($webDispo as $key => $val) { ?>
@@ -325,7 +325,7 @@
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
+                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition' tabindex="26">
                         <option value=''>Select Voice Disposition</option>
                         <?php 
                            foreach ($VoiceDispo as $key => $val) { ?>
@@ -346,7 +346,7 @@
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition'>
+                  <select class='form-control form-control-sm' id="company_voice_disposition"  name='company_voice_disposition' tabindex="27">
                         <option value=''>Select Voice Disposition</option>
                         <?php 
                            foreach ($VoiceDispo as $key => $val) { ?>
@@ -812,7 +812,7 @@
                      <label for="web_staff_disposition" class="col-form-label">Web Staff Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="web_staff_disposition"  name='web_staff_disposition'>
+                  <select class='form-control form-control-sm' id="web_staff_disposition"  name='web_staff_disposition' tabindex="44">
                         <option value=''>select Web Disposition</option>
                         <?php 
                         foreach ($webDispos as $key => $val) { ?>
@@ -836,7 +836,7 @@
                      <label for="voice_staff_disposition" class="col-form-label">Voice Staff Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="voice_staff_disposition"  name='voice_staff_disposition'>
+                  <select class='form-control form-control-sm' id="voice_staff_disposition"  name='voice_staff_disposition' tabindex="45">
                         <option value=''>select Voice Staff Disposition</option>
                         <?php 
                         foreach ($VoiceDispos as $key => $val) { ?>
@@ -1075,7 +1075,7 @@
                               $designation_name = $this->session->userdata('designation_name');
                               if($designation_name=='Researcher')
                               {
-                                 if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement'){?>
+                                 if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'|| strtolower($staff_list_val['dispositions']) == 'replacement'){?>
                                     <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php }elseif(strtolower($staff_list_val['dispositions']) == 'staff left' || strtolower($staff_list_val['dispositions']) == 'duplicate' || strtolower($staff_list_val['dispositions']) == 'no answer'){?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
@@ -1090,7 +1090,7 @@
                                  <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'staff left' || strtolower($staff_list_val['voice_dispositions']) == 'duplicate' || strtolower($staff_list_val['voice_dispositions']) == 'no answer'){
                                     ?>
                                     <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
-                                <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result'|| strtolower($staff_list_val['voice_dispositions']) == 'not verified'){
                                  ?>
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
