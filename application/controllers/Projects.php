@@ -409,13 +409,19 @@ class Projects extends CI_Controller
         $data['staff_list']=$this->Projects_model->getStaffInfoDetails($project_id,$data['allInfo'][0]['received_company_name']);
         $data['company_list']=$this->Projects_model->getCompanyInfoDetails($project_id,$cmp_name);
         $data['allstaffinfo'] = $this->Projects_model->getAllStaffInfoDetails($project_id,$cmp_name);
+        // foreach($allstaffinfo as $allstaffinfokey => $allstaffinfoval)
+        // {
+        //     $project_type=$allstaffinfoval['project_type'];
+        //     $data['users'] = $this->model->getData('users', array('status' => '1'));
+        // }
+        // die();
         $data['minmax'] =  $this->Projects_model->getPreLastInfo($project_id,$rowid,$cmp_name);          
         $data['minmax']['current'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['current'];
         $data['minmax']['prev'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['prev'];
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['allInfo']);die();u144953935_u144953935stz
+        // print_r($data['allstaffinfo']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){

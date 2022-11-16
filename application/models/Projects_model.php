@@ -108,6 +108,8 @@ class Projects_Model extends CI_Model
                     $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
                     $this->db->where('ca.reassigned_to',$user_id);
                     $this->db->where('ca.status',1);
+                    $this->db->where('ca.is_final_submited',0);
+                    $this->db->where('ca.project_status',0);
                 }
             $this->db->where('buf.project_id',$project_id);
             $querys=$this->db->get();
@@ -367,6 +369,8 @@ class Projects_Model extends CI_Model
              $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
              $this->db->where('ca.reassigned_to',$user_id);
              $this->db->where('ca.status',1);
+             $this->db->where('ca.is_final_submited',0);
+             $this->db->where('ca.project_status',0);
              $where = '(ca.status IS NULL OR ca.status=1)';
              $this->db->where($where);
           }
@@ -388,6 +392,9 @@ class Projects_Model extends CI_Model
              $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
              $this->db->where('ca.reassigned_to',$user_id);
              $this->db->where('ca.status',1);
+             $this->db->where('ca.is_final_submited',0);
+             $this->db->where('ca.project_status',0);
+             
              $where = '(ca.status IS NULL OR ca.status=1)';
              $this->db->where($where);
           }
@@ -399,11 +406,12 @@ class Projects_Model extends CI_Model
     }
 
     function getAllStaffInfoDetails($project_id){
-         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id,bswd.dispositions,bsvd.voice_dispositions');
+         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id,bswd.dispositions,bsvd.voice_dispositions,bmps.project_type');
         $this->db->from('bdcrm_uploaded_feildss buf');
         $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
         $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
         $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
+        $this->db->join('bdcrm_master_projects bmps','buf.project_id=bmps.id','left');
 
           $designation_name = $this->session->userdata('designation_name');
           $user_id = $this->session->userdata('id');
@@ -411,6 +419,8 @@ class Projects_Model extends CI_Model
              $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
              $this->db->where('ca.reassigned_to',$user_id);
              $this->db->where('ca.status',1);
+             $this->db->where('ca.is_final_submited',0);
+             $this->db->where('ca.project_status',0);
              $where = '(ca.status IS NULL OR ca.status=1)';
              $this->db->where($where);
           }
@@ -464,9 +474,7 @@ class Projects_Model extends CI_Model
         if($this->db->table_exists($tablename)){
             $this->db->select("*");
             $this->db->from($tablename);
-    
-            $this->db->like("LOWER(".$field_name.")", $search_term);
-           
+            $this->db->like("LOWER(".$field_name.")", $search_term, 'after');
             $this->db->group_by($field_name);
             $query = $this->db->get();
             //echo $this->db->last_query();die();

@@ -9,6 +9,8 @@
                     <ul class="metismenu" id="side-menu">
                         <?php 
                           $menu = get_sidebar_menu(); 
+                        //   echo "<pre>";
+                        //   print_r($menu);die();
                           foreach ($menu as $key => $value) {
                             if(empty($value['submenu'])){
                                 $child = "";
