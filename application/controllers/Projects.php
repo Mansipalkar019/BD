@@ -921,7 +921,7 @@ class Projects extends CI_Controller
                             if(!empty($company_name_id_info[0])){
                                 foreach ($company_name_id_info as $company_name_id_info_key => $company_name_id_info_row) {
                                     $check_assigned_task = $this->Projects_model->getallocationdetails($project_id,$company_name_id_info_row['id'],$this->session->userdata('id'));
-                                    if(!empty($check_assigned_task))
+                                    if(!empty($ ))
                                     {   
                                         $update_companywise_allocation=array('project_id'=>$project_id,'reassigned_to'=>$user_list_row,'staff_id'=>$company_name_id_info_row['id'],'assigned_by'=>$this->session->userdata('id'),'assigned_at'=>date('Y-m-d H:i:s'),'project_status'=>'0');
                                         foreach($check_assigned_task as $key => $value)
