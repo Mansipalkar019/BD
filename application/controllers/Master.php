@@ -20,6 +20,16 @@ class Master  extends CI_Controller
         $this->load->view("includes/template", $data);
     }
 
+    public function add_project_types($id=0){
+
+        if($id!='' AND $id!=0){
+            $data['getFormProjects'] = $this->model->getData('bdcrm_project_types', array('status' => '1','id'=>$id))[0];  
+         }
+         $data['getProjectTypes'] = $this->model->getData('bdcrm_project_types', array('status' => '1'));  
+         $data['main_content'] = "main/add_project_types";
+         $this->load->view("includes/template", $data);
+    }
+
     public function submit_departments(){
         if (empty($_POST['id'])) {
             $this->form_validation->set_rules("department_name", "Department Name", "trim|is_unique[master_department.dept_name]|min_length[2]|max_length[100]|xss_clean", array("required" => "%s is required"));
@@ -593,6 +603,41 @@ class Master  extends CI_Controller
 
     }
 
+    public function submit_project_types(){
+
+        $this->form_validation->set_rules("project_type","Project Type","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
+        if($this->form_validation->run()==true){
+            $project_type = $this->security->xss_clean($this->input->post("project_type"));
+            $data = array(
+                "project_type" => $project_type,
+            );
+
+            $project_type_id = $this->input->post("project_type_id");
+            if(empty($project_type_id)){
+                $addProjectType = $this->model->insertData('bdcrm_project_types',$data);
+                if($addProjectType){
+                    $this->session->set_flashdata("success","Successfullly Project Type Added");
+                }
+            }else{
+                $updateProjectType = $this->model->updateData("bdcrm_project_types", $data, array('id' => $project_type_id));
+                if($updateProjectType){
+                    $this->session->set_flashdata("success","Project Type Successfullly Updated.");
+                }
+
+            }
+            
+        }
+        else
+        {
+            $data = array(
+                'error' => validation_errors()
+            );
+            $this->session->set_flashdata("error",$data['error']);
+        }
+         redirect(base_url("master/add_project_types"));
+
+    }
+
     public function DeleteProjectType($id=0){
         if($id!='' && $id!=0){
          if(!empty($id)){
@@ -606,7 +651,18 @@ class Master  extends CI_Controller
        redirect(base_url("master/add_project_type"));
     }
 
-
+    public function DeleteProjectTypes($id=0){
+        if($id!='' && $id!=0){
+         if(!empty($id)){
+            $DeleteProjectType = $this->model->updateData("bdcrm_project_types", array('status'=>0),
+            array('id' => $id));
+            if($DeleteProjectType){
+               $this->session->set_flashdata("success","Project Type has been successfullly deleted.");
+            }
+         }
+        }
+       redirect(base_url("master/add_project_types"));
+    }
 
     
 

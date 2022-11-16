@@ -17,11 +17,10 @@
             $row = $query->result_array();
             foreach ($row as $key => $menus) {
                 $id = $menus['menu_id'];
-
                 $submenu = "SELECT bs.* from bdscrm_submenu_access as bsa 
                 left join bdscrm_submenus as bs on bsa.submenu_id = bs.id
                 WHERE bs.status=1 AND bs.menu_id=$id AND bsa.designation_id = $designation_id";
-
+                
 
                 $querys = $ci->db->query($submenu);
                 $submenu = $querys->result_array();

@@ -73,12 +73,12 @@
          }
          .ui-menu .ui-menu-item-wrapper {
          font-size: 12px !important;
-        
+         font-weight: 1000 !important;
          }
          .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
             opacity: 0.6 !important;
          }
-        
+      
       </style>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -227,8 +227,6 @@
                   <div class="col">
                   <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
                      <div class="input-group " >
-                     
-                   
                      <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm" tabindex="10">
                      <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" ><span class="fa fa-arrow-right">-></span></a>
                   </div>
@@ -297,12 +295,13 @@
                   $access4 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access4; ?>>
-                  <?php if(in_array('company_web_dispositon',$project_info)){ ?>
+                  <?php if(in_array('company_web_dispositon',$project_info)){ 
+                      if($userinfo == 3){?>
                   <div class="col">
                      <label for="company_web_dispositon" class="col-form-label">Co. Web Disposition:</label>
                   </div>
                   <div class="col">
-                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon' tabindex="25">
+                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon' tabindex="25" disabled>
                         <option value=''>Select Web Disposition</option>
                         <?php 
                            foreach ($webDispo as $key => $val) { ?>
@@ -311,7 +310,21 @@
                            ?>
                      </select>
                   </div>
-                  <?php } ?>
+                  <?php }else{?>
+                  <div class="col">
+                     <label for="company_web_dispositon" class="col-form-label">Co. Web Disposition:</label>
+                  </div>
+                  <div class="col">
+                  <select class='form-control form-control-sm' id="company_web_dispositon"  name='company_web_dispositon' tabindex="25" >
+                        <option value=''>Select Web Disposition</option>
+                        <?php 
+                           foreach ($webDispo as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_disposition']==$val['id']){?>selected<?php } ?>><?= $val['web_disposition_name']; ?></option>
+                        <?php }
+                           ?>
+                     </select>
+                  </div>
+                  <?php } } ?>
                </div>
                <!-- check input access for company_voice_disposition -->
                <?php 
@@ -449,13 +462,13 @@
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12">
+                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" onkeypress="return isNumber(event)">
                   </div>
                   <?php } ?>
                   <?php if(in_array('alternate_number',$project_info)){ ?>
                   <div class="col">
                      <label for="alternate_number" class="col-form-label">Alternate Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm" style="width:160px;" tabindex="13">
+                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm" style="width:160px;" tabindex="13" onkeypress="return isNumber(event)">
                   </div>
                   <?php } ?>
                </div>
@@ -680,10 +693,11 @@
                   </div>
                   <div class="col">
                      <div class="input-group">
-                        <input type="email" value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm" tabindex="37">
+                        <input  value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm" tabindex="37">
                         <div class="input-group-text">
                            <input class="form-check-input mt-0" type="checkbox" value="" id="staff_email_verified" >
                         </div>
+                        <span class="error" id="invalid_email"></span>
                      </div>
                   </div>
                   <?php } ?>
@@ -807,8 +821,24 @@
                   $access21 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access21; ?>>
-                  <?php if(in_array('web_staff_disposition',$project_info)){ ?>
+                  <?php if(in_array('web_staff_disposition',$project_info)){ 
+                      if($userinfo == 3){?>
                   <div class="col">
+                     <label for="web_staff_disposition" class="col-form-label">Web Staff Disposition:</label>
+                  </div>
+                  <div class="col">
+                  <select class='form-control form-control-sm' id="web_staff_disposition"  name='web_staff_disposition' tabindex="44" disabled>
+                        <option value=''>select Web Disposition</option>
+                        <?php 
+                        foreach ($webDispos as $key => $val) { ?>
+                        <option value='<?= $val['id']; ?>' <?php if($allInfo[0]['web_staff_disposition']==$val['id']){?>selected<?php } ?>><?= $val['dispositions']; ?></option>
+                        <?php }
+                           ?>
+                        <option value='Duplicate'>Duplicate</option>
+                     </select>
+                  </div>
+                  <?php }else{?>
+                     <div class="col">
                      <label for="web_staff_disposition" class="col-form-label">Web Staff Disposition:</label>
                   </div>
                   <div class="col">
@@ -822,7 +852,7 @@
                         <option value='Duplicate'>Duplicate</option>
                      </select>
                   </div>
-                  <?php } ?>
+                  <?php } }?>
                </div>
                <!-- check input access for voice_staff_disposition -->
                <?php
@@ -987,10 +1017,10 @@
                <br><br><br>
             </div>
 
-            
-            
             <div class="col">
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <div id="valid_error">
+            </div>
+               <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:15px;">
                <li class="nav-item" role="presentation">
                      <button style='font-size:12px' class="nav-link active" id="company-tab1" data-bs-toggle="tab" data-bs-target="#company1" type="button" role="tab" aria-controls="company1" aria-selected="true"><?php if(!empty($allstaffinfo)){ echo 'All ('.count($allstaffinfo).')'; }else{ 'All (0)'; } ?></button>
                   </li>
@@ -1003,7 +1033,7 @@
                </ul>
                <div class="tab-content" id="myTabContent">
                <div class="tab-pane fade show active" id="company1" role="tabpanel" aria-labelledby="company-tab1">
-                     <div class='table-responsive' style='height:333px;font-size:12px'>
+                     <div class='table-responsive' style='height:155px;font-size:12px'>
                         <table class="table table-hover table-bordered table-sm p-0 m-0" width="100%" cellspacing="0" id="company_table">
                            <tr>
                               <th>#</th>
@@ -1044,6 +1074,27 @@
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
                               }elseif($designation_name=='Superadmin'){
+                                 if($allstaffinfo_val['project_type'] == 1){
+                                    if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'staff left' || strtolower($allstaffinfo_val['dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'no result'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php } 
+                                 }
+                                 elseif($allstaffinfo_val['project_type'] == 3)
+                                 {
+                                    if(strtolower($allstaffinfo_val['voice_dispositions']) == 'verified' || strtolower($allstaffinfo_val['voice_dispositions']) == 'required' || strtolower($allstaffinfo_val['voice_dispositions']) == 'added' || strtolower($allstaffinfo_val['voice_dispositions']) == 'acquired'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'replaced'){?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'staff left' || strtolower($allstaffinfo_val['voice_dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['voice_dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result' || strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                    ?>
+                                    <span class="badge bg-danger" style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php }
+                                 }
                               }
                               ?>
                               </td>
@@ -1126,6 +1177,7 @@
                   </div>
                </div>
             </div>
+            
          </div>
          <?php echo form_close() ?>
       </main>
@@ -1441,15 +1493,26 @@ document.addEventListener('keydown', e => {
   }
 });
 
-$(function() {
-  var availableTags = ["1-10 Employees","11-50 Employees","51-200 Employees","201-500 Employees","501-1000 Employees","1001-5000 Employees","10,001 + Employees"];
-  $("#no_of_emp").autocomplete({
-    source: availableTags,
-    select: function(e, ui) {
-      $('#no_of_emp').val(availableTags[availableTags.indexOf(ui.item.value)]);
+var acList = ["1-10 Employees","11-50 Employees","51-200 Employees","201-500 Employees","501-1000 Employees","1001-5000 Employees","10,001 + Employees"];
+$('#no_of_emp').autocomplete({
+    source: function (request, response) {
+        var matches = $.map(acList, function (acItem) {
+            if (acItem.toUpperCase().indexOf(request.term.toUpperCase()) === 0) {
+                return acItem;
+            }
+        });
+        response(matches);
     }
-  });
 });
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+   }
       </script>
    </body>
 </html>
