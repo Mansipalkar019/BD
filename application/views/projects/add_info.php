@@ -462,7 +462,7 @@
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" onkeypress="return isNumber(event)">
+                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm"  style="width:170px;" tabindex="12" onkeypress="return isNumber(event)">
                   </div>
                   <?php } ?>
                   <?php if(in_array('alternate_number',$project_info)){ ?>
@@ -780,7 +780,7 @@
                   <?php if(in_array('staff_direct_tel',$project_info)){ ?>
                   <div class="col">
                      <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" tabindex="42" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" tabindex="42" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm" onkeypress="return isNumber(event)">
                   </div>
 
                   <!-- <div class="col">
@@ -789,7 +789,7 @@
                      </div> -->
                   <div class="col">
                      <label for="staff_mobile" class="col-form-label">Mobile:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_mobile'])) ?  $allInfo[0]['staff_mobile'] : ''  ?>" title="" id="staff_mobile"  name='staff_mobile' class="form-control form-control-sm" tabindex="43">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_mobile'])) ?  $allInfo[0]['staff_mobile'] : ''  ?>" title="" id="staff_mobile"  name='staff_mobile' class="form-control form-control-sm" tabindex="43" onkeypress="return isNumber(event)">
                   </div>
                   <?php } ?>
                </div>
@@ -1513,6 +1513,12 @@ function isNumber(evt) {
     }
     return true;
    }
+
+   const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
       </script>
    </body>
 </html>
