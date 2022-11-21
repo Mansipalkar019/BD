@@ -483,7 +483,8 @@
                      <label for="fax_number" class="col-form-label">Fax Number:</label>
                      <input type="number" value="" title="" id="fax_number"  name='fax_number' class="form-control form-control-sm">
                      </div> -->
-                  <?php if(in_array('website_url',$project_info)){ ?>
+                  <?php 
+                  // if(in_array('website_url',$project_info)){ ?>
                   <div class="col">
                     
                   <label for="website_url" class="col-form-label">Website URL:</label>
@@ -493,7 +494,8 @@
                      <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right">-></span></a>
                     </div>
                   </div>
-                  <?php } ?>
+                  <?php 
+               // } ?>
                   <!-- check input access for email_address,no_of_employees -->
                   <?php 
                      $div_count=div_access($project_info,array('email_address','no_of_employee'));
@@ -1199,10 +1201,16 @@
             var company_country = $("#company_name").val()+', '+country;
             var website_url = $('#website_url').val();
             var web_url = new URL(website_url);
+            console.log(web_url);
             let result = web_url['host'].substr(0, 4);
             if(result=="www."){
             }else{
                web_url['host'] = "www."+web_url['host'];
+            }
+            if(web_url['protocol']== "http"){
+               web_url['protocol'] ="https";
+            }else{
+               web_url['protocol'] =web_url['protocol'];
             }
             var redirect_url = web_url['protocol']+"//"+web_url['host'];
             var domain_name = redirect_url.split("http://www.");
