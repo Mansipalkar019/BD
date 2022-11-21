@@ -132,6 +132,7 @@
                      <input type="text" value="<?=  (!empty($allInfo[0]['received_company_name'])) ?  $allInfo[0]['received_company_name'] : ''  ?>" title="" id="company_received"  name='company_received' class="form-control form-control-sm" readonly>
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['project_id'])) ?  $allInfo[0]['project_id'] : ''  ?>" title="" id="project_id"  name='project_id' class="form-control form-control-sm">
                      <input type="hidden" value="<?=  (!empty($allInfo[0]['id'])) ?  $allInfo[0]['id'] : ''  ?>" title="" id="staff_id"  name='staff_id' class="form-control form-control-sm">
+                     <input type="hidden" value="<?= $userinfo; ?>" title="" id="session_user_id"  name='session_user_id' class="form-control form-control-sm">
                   </div>
                </div>
                <?php } ?>
@@ -142,7 +143,7 @@
                      <label for="company_name" class="col-form-label">Co. Name:</label>
                   </div>
                   <div class="col">
-                     <input type="text" value="<?=  (!empty($allInfo[0]['company_name'])) ?  $allInfo[0]['company_name'] : ''  ?>" title="" id="company_name"  name='company_name' class="form-control form-control-sm" tabindex="1">
+                     <input type="text" value="<?=  (!empty($allInfo[0]['company_name'])) ?  $allInfo[0]['company_name'] : $allInfo[0]['received_company_name']  ?>" title="" id="company_name"  name='company_name' class="form-control form-control-sm" tabindex="1">
                   </div>
                </div>
                <?php } ?>
@@ -228,7 +229,7 @@
                   <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
                      <div class="input-group " >
                      <input type="text" value="<?=  (!empty($allInfo[0]['address_souce_url'])) ?  $allInfo[0]['address_souce_url'] : ''  ?>" title="" id="address_source_url"  name='address_source_url' class="form-control form-control-sm" tabindex="10">
-                     <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank" ><span class="fa fa-arrow-right">-></span></a>
+                     <a href="<?= $allInfo[0]['address_souce_url'] ?>" class="btn-sm btn-primary input-group-text" id="addressurl" target="_blank" tabindex="10"><span class="fa fa-arrow-right" >-></span></a>
                   </div>
                   </div>
                   <?php } ?>
@@ -455,14 +456,16 @@
                   <?php if(in_array('country_code',$project_info)){ ?>
                   <div class="col">
                      <label for="country_code" class="col-form-label">Country Code:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly style="width:50px;" tabindex="11">
+                     <input type="" value="<?=  (!empty($allInfo[0]['country_code'])) ?  $allInfo[0]['country_code'] : ''  ?>" title="" id="country_code"  name='country_code' class="form-control form-control-sm" readonly style="width:50px;" tabindex="11">
                   </div>
                   <?php } ?>
                  
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" onkeypress="return isNumber(event)">
+                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" >
+                     <span id="spndirecttelError" style="color: Red; display: none">*Enter Valid characters: Numbers & space.</span>
+               
                   </div>
                   <?php } ?>
                   <?php if(in_array('alternate_number',$project_info)){ ?>
@@ -483,17 +486,17 @@
                      <label for="fax_number" class="col-form-label">Fax Number:</label>
                      <input type="number" value="" title="" id="fax_number"  name='fax_number' class="form-control form-control-sm">
                      </div> -->
-                  <?php if(in_array('website_url',$project_info)){ ?>
+                  <?php //if(in_array('website_url',$project_info)){ ?>
                   <div class="col">
                     
                   <label for="website_url" class="col-form-label">Website URL:</label>
                     <div class="input-group">
                
                      <input type="text" value="<?=  (!empty($allInfo[0]['website_url'])) ?  $allInfo[0]['website_url'] : ''  ?>" title="" id="website_url"  name='website_url' class="form-control form-control-sm" tabindex="14">
-                     <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right">-></span></a>
+                     <a href="<?= $allInfo[0]['website_url'] ?>" class="btn-sm btn-primary input-group-text" id="websiteurl" target="_blank" tabindex="14"><span class="fa fa-arrow-right" >-></span></a>
                     </div>
                   </div>
-                  <?php } ?>
+                  <?php //} ?>
                   <!-- check input access for email_address,no_of_employees -->
                   <?php 
                      $div_count=div_access($project_info,array('email_address','no_of_employee'));
@@ -693,7 +696,7 @@
                   </div>
                   <div class="col">
                      <div class="input-group">
-                        <input  value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm" tabindex="37">
+                        <input type="email" value="<?=  (!empty($allInfo[0]['provided_staff_email'])) ?  $allInfo[0]['provided_staff_email'] : ''  ?>" title="" id="staff_email"  name='staff_email' class="form-control form-control-sm" tabindex="37">
                         <div class="input-group-text">
                            <input class="form-check-input mt-0" type="checkbox" value="" id="staff_email_verified" >
                         </div>
@@ -731,7 +734,7 @@
                   <div class="input-group mb-3">
                
                   <input type="text" class="form-control" value="<?=  (!empty($allInfo[0]['staff_url'])) ?  $allInfo[0]['staff_url'] : ''  ?>" title="" id="staff_url"  name='staff_url'  aria-describedby="basic-addon1" tabindex="39">
-                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                   <a href="<?= $allInfo[0]['staff_url'] ?>" class="btn-sm btn-primary input-group-text" id="staffurl" target="_blank" tabindex="39"><span class="fa fa-arrow-right"style="margin-top:5px;" >-></span></a>
                   </div>
                   </div>
                   
@@ -766,7 +769,7 @@
                   <div class="input-group mb-3">
                
                   <input type="text" value="<?=  (!empty($allInfo[0]['staff_email_harvesting'])) ?  $allInfo[0]['staff_email_harvesting'] : ''  ?>" title="Clearbit" id="staff_email_harvesting"  name='staff_email_harvesting' class="form-control form-control-sm" tabindex="41">
-                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn-sm btn-primary input-group-text" id="basic-addon1" target="_blank"><span class="fa fa-arrow-right"style="margin-top:5px;">-></span></a>
+                 <a href="<?= $allInfo[0]['staff_email_harvesting'] ?>" class="btn-sm btn-primary input-group-text" id="staffemailharvesting" target="_blank" tabindex="41"><span class="fa fa-arrow-right"style="margin-top:5px;" >-></span></a>
                </div>
                      </div>
                   <?php } ?>
@@ -781,6 +784,7 @@
                   <div class="col">
                      <label for="staff_direct_tel" class="col-form-label">Direct Tel:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['staff_direct_tel'])) ?  $allInfo[0]['staff_direct_tel'] : ''  ?>" title="" tabindex="42" id="staff_direct_tel"  name='staff_direct_tel' class="form-control form-control-sm">
+                     <span id="spnError" style="color: Red; display: none">*Enter Valid characters: Numbers X Number.</span>
                   </div>
 
                   <!-- <div class="col">
@@ -789,7 +793,9 @@
                      </div> -->
                   <div class="col">
                      <label for="staff_mobile" class="col-form-label">Mobile:</label>
-                     <input type="text" value="<?=  (!empty($allInfo[0]['staff_mobile'])) ?  $allInfo[0]['staff_mobile'] : ''  ?>" title="" id="staff_mobile"  name='staff_mobile' class="form-control form-control-sm" tabindex="43">
+                     <input type="" value="<?=  (!empty($allInfo[0]['staff_mobile'])) ?  $allInfo[0]['staff_mobile'] : ''  ?>" title="" id="staff_mobile"  name='staff_mobile' class="form-control form-control-sm" tabindex="43">
+                     <span id="spnmobileError" style="color: Red; display: none">*Enter Valid characters: Numbers & Space.</span>
+               
                   </div>
                   <?php } ?>
                </div>
@@ -1493,6 +1499,88 @@ document.addEventListener('keydown', e => {
   }
 });
 
+$('#link').keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  
+  {
+   var link = document.getElementById('link');
+
+   var one = $("#company_name").val()+', '+$("#first_name").val()+' '+$("#last_name").val();
+   // var country = $("#country option:selected").val();
+   var country=$('#country').val();
+   var company_country = $("#company_name").val()+', '+country;
+   var website_url = $('#website_url').val();
+   var web_url = new URL(website_url);
+   let result = web_url['host'].substr(0, 4);
+   if(result=="www."){
+   }else{
+      web_url['host'] = "www."+web_url['host'];
+   }
+   var redirect_url = web_url['protocol']+"//"+web_url['host'];
+   var domain_name = redirect_url.split("http://www.");
+   var email = '"'+'* * * * * @'+domain_name[1]+'"'+' '+"email";
+   var email1 = 'Email "'+'* * * * * @'+domain_name[1]+'"'+' '+$("#first_name").val()+' '+$("#last_name").val();
+   var data = [one,company_country,email,email1];
+   for (var i = 0; i < data.length; i++) {
+         var two = 'https://www.google.com/search?q=' + encodeURIComponent(data[i]);
+         var redirectWindow = window.open(two, '_blank');
+   }
+         
+    return false;  
+  }
+});  
+
+$('#addressurl').keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  
+  {
+      var address_source_url = $('#address_source_url').val();
+      if(address_source_url != ''){
+         var redirectWindow = window.open(address_source_url, '_blank');
+      }
+    
+    return false;  
+  }
+}); 
+
+$('#websiteurl').keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  
+  {
+      var website_url = $('#website_url').val();
+      if(website_url != ''){
+         var redirectWindow = window.open(website_url, '_blank');
+      }
+    
+    return false;  
+  }
+}); 
+
+$('#staffurl').keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  
+  {
+      var staff_url = $('#staff_url').val();
+      if(staff_url != ''){
+         var redirectWindow = window.open(staff_url, '_blank');
+      }
+    return false;  
+  }
+}); 
+
+$('#staffemailharvesting').keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  
+  {
+      var staff_email_harvesting = $('#staff_email_harvesting').val();
+      if(staff_email_harvesting != '')
+      {
+         var redirectWindow = window.open(staff_email_harvesting, '_blank');
+      }
+    return false;  
+  }
+}); 
+
 var acList = ["1-10 Employees","11-50 Employees","51-200 Employees","201-500 Employees","501-1000 Employees","1001-5000 Employees","10,001 + Employees"];
 $('#no_of_emp').autocomplete({
     source: function (request, response) {
@@ -1513,6 +1601,30 @@ function isNumber(evt) {
     }
     return true;
    }
+
+$("#staff_direct_tel").keypress(function (e) {
+   var isValid = false;
+   var regex = /^[Xx0-9\s]*$/;
+   isValid = regex.test($("#staff_direct_tel").val());
+   $("#spnError").css("display", !isValid ? "block" : "none");
+   return isValid;
+});
+
+$("#tel_number").keypress(function (e) {
+   var isValid = false;
+   var regex = /^[0-9\s]*$/;
+   isValid = regex.test($("#tel_number").val());
+   $("#spndirecttelError").css("display", !isValid ? "block" : "none");
+   return isValid;
+});
+
+$("#staff_mobile").keypress(function (e) {
+   var isValid = false;
+   var regex = /^[0-9\s]*$/;
+   isValid = regex.test($("#staff_mobile").val());
+   $("#spnmobileError").css("display", !isValid ? "block" : "none");
+   return isValid;
+});
       </script>
    </body>
 </html>

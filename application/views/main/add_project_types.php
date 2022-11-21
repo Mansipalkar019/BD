@@ -34,6 +34,16 @@
                                 <input type="text" name="project_type" class="form-control" 
                                 placeholder="Project Type.." required="" value="<?= $project_type; ?>" >
                             </div>
+                            <div class="form-group">
+                                <label>Select Activity</label>
+                                <select class="form-control" required="" name="task_type" id="task_type" onchange="gettasktype(this.value)" id="task_type">
+                                    <option value="">Please Select Activity</option>
+                                    <option value="">web</option>
+                                    <option value="">voice</option>
+                                    <option value="">web & voice</option>
+
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-purple waves-effect waves-light"><?= $button;?></button>
                         </form>
                     </div>

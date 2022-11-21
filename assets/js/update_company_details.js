@@ -3,109 +3,195 @@ $("#update_company_details_form").submit(function(e) {
     e.preventDefault();
     var formData = new FormData($("#update_company_details_form")[0]);
     var attributeForm = $(this);
-    var txtemail = $("#staff_email").val();
+    var session_user_id=$('#session_user_id').val();
+    // var txtemail = $("#staff_email").val();
     var country = $("#country").val();
-    var region_name = $("#region_name").val();
-    var company_name=$('#company_name').val();
+    // var region_name = $("#region_name").val();
+    // var company_name=$('#company_name').val();
     var address_1=$('#address_1').val();
+    
     var city_name=$('#city_name').val();
-    var postal_code=$('#postal_code').val();
+    // var postal_code=$('#postal_code').val();
     var state_name=$('#state_name').val();         
     var address_source_url=$('#address_source_url').val(); 
-    var ca1=$('#ca1').val(); 
-    var ca2=$('#ca2').val(); 
-    var ca3=$('#ca3').val(); 
-    var ca4=$('#ca4').val(); 
-    var ca5=$('#ca5').val(); 
-    var company_disposition=$("#company_disposition option:selected").val(); 
-    var company_web_dispositon=$("#company_web_dispositon option:selected").val(); 
-    var company_voice_disposition=$("#company_voice_disposition option:selected").val();
-    var company_genaral_notes=$('#company_genaral_notes').val();
     var company_remark=$('#company_remark').val();
-    var country_code=$('#country_code').val();
-    var tel_number=$('#tel_number').val();
-    var alternate_number=$('#alternate_number').val();
-    var industry=$("#industry").val(); 
-    var revenue=$('#revenue').val();
-    var revenue_cur=$("#revenue_cur option:selected").val(); 
-    var no_of_emp=$("#no_of_emp").val(); 
+    var staff_email=$('#staff_email').val();
+    var staff_email_harvesting=$('#staff_email_harvesting').val();
+    var assumed_email=$('#assumed_email').val();
+    var job_title=$("#job_title").val();
+    var title=$("#title").val(); 
     var website_url=$("#website_url").val();
-    if(txtemail == '') {
-        var email="Please Enter Email";
-        class_list.push(email);
-	}
-    if (IsEmail(txtemail) == false && txtemail != '') {
+    var staff_direct_tel=$("#staff_direct_tel").val();
+
+    
+    if (IsEmail(staff_email) == false && staff_email != '') {
         var class_name="Email is not valid";
         class_list.push(class_name);
 	}
-    if(country == '') {
-        var country="Please Enter Country";
-        class_list.push(country);
+
+    if (staff_tel(staff_direct_tel) == false && staff_direct_tel != '') {
+        var class_name="*Enter Valid Direct Tel: Numbers X Number.";
+        class_list.push(class_name);
+    }
+   
+    if (address_1 != '') {
+        if (country == '') {
+            var country="Country is required";
+            class_list.push(country);
+        }
+        
 	}
-    if (region_name == '') {
-        var region_name="Please Enter Region";
-        class_list.push(region_name);
-	}
-    if (company_name == '') {
-        var company_name="Please Enter Company Name";
-        class_list.push(company_name);
-	}
-    if (address_1 == '') {
-        var address_1="Please Enter Address";
-        class_list.push(address_1);
-	}
-    if (city_name == '') {
-        var city_name="Please Enter City Name";
-        class_list.push(city_name);
-	}
-    if (postal_code == '') {
-        var postal_code="Please Enter Postal Code";
-        class_list.push(postal_code);
-	}
-    if (state_name == '') {
-        var state_name="Please Enter State Name";
-        class_list.push(state_name);
-	}
-    if (address_source_url == '') {
-        var address_source_url="Please Enter Address Source URL";
+
+    if(country == 'USA')
+    {
+        if(state_name == '')
+        {
+            var state_name="State/County is required";
+            class_list.push(state_name);
+        }
+        if (address_1 == '') {
+            var address_1="Address is required";
+            class_list.push(address_1);
+        }
+    }else if(country == 'Canada')
+    {
+        if(state_name == '')
+        {
+            var state_name="State/County is required";
+            class_list.push(state_name);
+        }
+        if (address_1 == '') {
+            var address_1="Address is required";
+            class_list.push(address_1);
+        }
+    }else if(country == 'United Kingdom')
+    {
+        if(state_name == '')
+        {
+            var state_name="State/County is required";
+            class_list.push(state_name);
+        }
+        if (address_1 == '') {
+            var address_1="Address is required";
+            class_list.push(address_1);
+        }  
+    }else if(country == 'India')
+    {
+        if(state_name == '')
+        {
+            var state_name="State/County is required";
+            class_list.push(state_name);
+        }
+        if (address_1 == '') {
+            var address_1="Address is required";
+            class_list.push(address_1);
+        }
+    }else if(country == 'Australia')
+    {
+        if(state_name == '')
+        {
+            var state_name="State/County is required";
+            class_list.push(state_name);
+        }
+        if (address_1 == '') {
+            var address_1="Address is required";
+            class_list.push(address_1);
+        }
+    }
+   
+    
+    if(session_user_id == 3 || session_user_id == 6)
+    {
+        if (city_name == '') {
+            var city_name="City Name is required";
+            class_list.push(city_name);
+        }
+        if (address_1 != '' && address_source_url == '') {
+            var address_source_url="Address Source URL is Required";
+            class_list.push(address_source_url);
+	    }
+    }
+
+    if (address_1 != '' && address_source_url == '') {
+        var address_source_url="Address Source URL is Required";
         class_list.push(address_source_url);
+    }
+
+    if (address_1 == '' || website_url == '') {
+        if(company_remark != '')
+        {
+            var company_remark="Co. Remark is Required";
+            class_list.push(company_remark);
+        }
 	}
-    if (ca1 == '') {
-        var ca1="Please Enter ca1";
-        class_list.push(ca1);
+
+ //    if (address_1 != '' || company_remark == '') {
+ //        if (website_url == '') {
+ //            var website_url="Website URL is required";
+ //            class_list.push(website_url);
+ //        }
+      
+	// }
+
+ //    if (website_url != '' && company_remark == '') {
+ //        if (address_1 == '') {
+ //            var address_1="Address is required";
+ //            class_list.push(address_1);
+ //        }
+      
+	// }
+    if (job_title == '') {
+        var job_title="Job Title is required";
+        class_list.push(job_title);
 	}
-    if (ca2 == '') {
-        var ca2="Please Enter ca2";
-        class_list.push(ca2);
+    if (title == '') {
+        var title="Title is required";
+        class_list.push(title);
 	}
-    if (ca3 == '') {
-        var ca3="Please Enter ca3";
-        class_list.push(ca3);
-	}
-    if (ca4 == '') {
-        var ca4="Please Enter ca4";
-        class_list.push(ca4);
-	}
-    if (ca5 == '') {
-        var ca5="Please Enter ca5";
-        class_list.push(ca5);
-	}
-    if (company_disposition == '') {
-        var company_disposition="Please Enter Company Disposition";
-        class_list.push(company_disposition);
-	}
-    if (company_web_dispositon == '') {
-        var company_web_dispositon="Please Enter Company Web Dispositon";
-        class_list.push(company_web_dispositon);
-	}
-    if (company_voice_disposition == '') {
-        var company_voice_disposition="Please Enter Company voice Disposition";
-        class_list.push(company_voice_disposition);
-	}
-    if (company_genaral_notes == '') {
-        var company_genaral_notes="Please Enter Company General Notes";
-        class_list.push(company_genaral_notes);
-	}
+    if (staff_email == '' && assumed_email == '') {
+        var staff_remark1="Staff Email is Required";
+        class_list.push(staff_remark1);
+        
+    }
+     if (staff_email == '') {
+        var staff_remark2="Staff Remark is Required";
+        class_list.push(staff_remark2);
+        
+    }
+      if (assumed_email == '') {
+        var staff_remark2="Staff Remark is Required";
+        class_list.push(staff_remark2);
+        
+    }
+
+    // if (staff_email == '' && assumed_email == '') {
+    //     var staff_email="Staff Email is Required";
+    //     class_list.push(staff_email);
+    //     var assumed_email="Assumed Email is Required";
+    //     class_list.push(assumed_email);
+    // }
+    // if (staff_email != '' && assumed_email == '') {
+    //     var assumed_email="Assumed Email URL is Required";
+    //     class_list.push(assumed_email);
+    // }
+    // if (staff_email == '' && assumed_email != '') {
+    //     var staff_email="Staff Email is Required";
+    //     class_list.push(staff_email);
+    // }
+   if (address_1 == '') {
+        var address_1="Address is required";
+        class_list.push(address_1);
+    }
+    if (staff_email_harvesting == '') {
+        var staff_email_harvesting="Email Source URL is required";
+        class_list.push(staff_email_harvesting);
+    }
+    // if (website_url == '') {
+    //     var website_url="Website Url is required";
+    //     class_list.push(website_url);
+    // }
+
+    
 
     if(class_list != '')
     {
@@ -135,6 +221,7 @@ $("#update_company_details_form").submit(function(e) {
                
             },
             success: function(response) {
+                console.log(response);
               if (response.status == 'success') {
                  swal({
                   title: "success",
@@ -171,3 +258,10 @@ $("#update_company_details_form").submit(function(e) {
         return true;
     }
 }
+
+function staff_tel(telno){
+    var isValid = false;
+    var regex = /^[Xx0-9\s]*$/;
+    isValid = regex.test(telno);
+    return isValid;
+   }

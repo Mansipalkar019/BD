@@ -6,6 +6,9 @@
 .grey-bg {  
 background-color: #F5F7FA;
 }
+/* #doc_list_datatable tr td {
+line-height: 0px !important;
+} */
 </style>
 <div class="content-page">
 <div class="content">
@@ -63,18 +66,18 @@ background-color: #F5F7FA;
                         <td><span><a class="badge rounded-pill bg-success" href="#"><?= $value['company_count'];?></a></span></td>
                         <td><span><a class="badge rounded-pill bg-dark" href="#"><?= $value['no_of_staff'];?></a></span></td>
                         <td><?= $value['project_type'];?></td>
-                        <td><?= $value['task_type'];?></td>
-                        <td><?= $value['project_breif'];?></td>
+                        <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['task_type'];?></p></td>
+                        <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['project_breif'];?><p></td>
                         <td><?= $value['username'];?></td>
-                        <td><?= date(('d-m-Y h:i A'),strtotime($value['created_at']));?></td>
+                        <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= date(('d-m-Y h:i A'),strtotime($value['created_at']));?></p></td>
                         <td></td>
                          <?php 
                          if(($designation_name!='Researcher') AND $designation_name!='Caller'){ ?>
                            <td>
                             <!-- <a href="<?= base_url().$value['file_path']; ?>" title='Download File'><i class="fas fa-download"></i></a> -->
                            <a href="<?= base_url().$value['file_path']; ?>"><i class="fa-solid fa-pen-to-square"></i></i></a>
-                           &nbsp; <a onclick=" return confirm('are you sure you want to delete this project')" href="<?= base_url().'Projects/DeleteProjects/'.$value['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                           &nbsp; <a href="<?= base_url().'Projects/excel_download?id='.base64_encode($value['id']); ?>"><i class="fas fa-download"></i></i></a>
+                            <a onclick=" return confirm('are you sure you want to delete this project')" href="<?= base_url().'Projects/DeleteProjects/'.$value['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="<?= base_url().'Projects/excel_download?id='.base64_encode($value['id']); ?>"><i class="fas fa-download"></i></i></a>
                         </td>
                          <?php } ?>
                         

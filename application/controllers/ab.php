@@ -1,446 +1,173 @@
-<?php
+$("#update_company_details_form").submit(function(e) {
+    var class_list =[]
+    e.preventDefault();
+    var formData = new FormData($("#update_company_details_form")[0]);
+    var attributeForm = $(this);
+    var txtemail = $("#staff_email").val();
+    var country = $("#country").val();
+    var region_name = $("#region_name").val();
+    var company_name=$('#company_name').val();
+    var address_1=$('#address_1').val();
+    var city_name=$('#city_name').val();
+    var postal_code=$('#postal_code').val();
+    var state_name=$('#state_name').val();         
+    var address_source_url=$('#address_source_url').val(); 
+    var ca1=$('#ca1').val(); 
+    var ca2=$('#ca2').val(); 
+    var ca3=$('#ca3').val(); 
+    var ca4=$('#ca4').val(); 
+    var ca5=$('#ca5').val(); 
+    var company_disposition=$("#company_disposition option:selected").val(); 
+    var company_web_dispositon=$("#company_web_dispositon option:selected").val(); 
+    var company_voice_disposition=$("#company_voice_disposition option:selected").val();
+    var company_genaral_notes=$('#company_genaral_notes').val();
+    var company_remark=$('#company_remark').val();
+    var country_code=$('#country_code').val();
+    var tel_number=$('#tel_number').val();
+    var alternate_number=$('#alternate_number').val();
+    var industry=$("#industry").val(); 
+    var revenue=$('#revenue').val();
+    var revenue_cur=$("#revenue_cur option:selected").val(); 
+    var no_of_emp=$("#no_of_emp").val(); 
+    var website_url=$("#website_url").val();
+    if(txtemail == '') {
+        var email="Please Enter Email";
+        class_list.push(email);
+	}
+    if (IsEmail(txtemail) == false && txtemail != '') {
+        var class_name="Email is not valid";
+        class_list.push(class_name);
+	}
+    if(country == '') {
+        var country="Please Enter Country";
+        class_list.push(country);
+	}
+    if (region_name == '') {
+        var region_name="Please Enter Region";
+        class_list.push(region_name);
+	}
+    if (company_name == '') {
+        var company_name="Please Enter Company Name";
+        class_list.push(company_name);
+	}
+    if (address_1 == '') {
+        var address_1="Please Enter Address";
+        class_list.push(address_1);
+	}
+    if (city_name == '') {
+        var city_name="Please Enter City Name";
+        class_list.push(city_name);
+	}
+    if (postal_code == '') {
+        var postal_code="Please Enter Postal Code";
+        class_list.push(postal_code);
+	}
+    if (state_name == '') {
+        var state_name="Please Enter State Name";
+        class_list.push(state_name);
+	}
+    if (address_source_url == '') {
+        var address_source_url="Please Enter Address Source URL";
+        class_list.push(address_source_url);
+	}
+    if (ca1 == '') {
+        var ca1="Please Enter ca1";
+        class_list.push(ca1);
+	}
+    if (ca2 == '') {
+        var ca2="Please Enter ca2";
+        class_list.push(ca2);
+	}
+    if (ca3 == '') {
+        var ca3="Please Enter ca3";
+        class_list.push(ca3);
+	}
+    if (ca4 == '') {
+        var ca4="Please Enter ca4";
+        class_list.push(ca4);
+	}
+    if (ca5 == '') {
+        var ca5="Please Enter ca5";
+        class_list.push(ca5);
+	}
+    if (company_disposition == '') {
+        var company_disposition="Please Enter Company Disposition";
+        class_list.push(company_disposition);
+	}
+    if (company_web_dispositon == '') {
+        var company_web_dispositon="Please Enter Company Web Dispositon";
+        class_list.push(company_web_dispositon);
+	}
+    if (company_voice_disposition == '') {
+        var company_voice_disposition="Please Enter Company voice Disposition";
+        class_list.push(company_voice_disposition);
+	}
+    if (company_genaral_notes == '') {
+        var company_genaral_notes="Please Enter Company General Notes";
+        class_list.push(company_genaral_notes);
+	}
 
-class Projects_Model extends CI_Model
-{
-    public function __construct()
+    if(class_list != '')
     {
-        parent::__construct();
-        $designation_name = $this->session->userdata('designation_name');
-        $user_id = $this->session->userdata('id');
+        $("#valid_error").empty();
+        jQuery.each(class_list, (index, item) => {
+            
+          $("#valid_error").css("padding","20px");
+          $("#valid_error").css("border","1px solid #D0D0D0");
+          $("#valid_error").css("font-size","13px");
+          $("#valid_error").css("font-weight","700");
+          $("#valid_error").css("overflow","scroll");
+          $("#valid_error").css("height","100px");
+          $("#valid_error").append("<span class='label label-important' style='color:#FF0000'>"+item+'</span><br>');
+        });
     }
-
-    public function getAll()
-    {
-        try {
-            $query = $this->db->select("*")
-                ->from("master_department")
-                ->where("status", 0)
-                ->get();
-                
-            if ($query->num_rows() > 0) {
-                $rows = $query->result_array();
-                return $rows;
-            } else {
-                return false;
-            }
-        } catch (Exception $e) {
-            return false;
-        }
+    else{
+        jQuery.ajax({
+            dataType: "json",
+            type: "POST",
+            url: attributeForm.attr("action"),
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            mimeType: "multipart/form-data",
+            beforeSend: function() {
+               
+            },
+            success: function(response) {
+              if (response.status == 'success') {
+                 swal({
+                  title: "success",
+                  text: response.status.msg,
+                  icon: "success",
+                  dangerMode: true,
+                  timer: 1500
+               });
+               location.reload();
+                } else if (response.status == 'failure') {
+                 error_msg(response.error);
+                 swal({
+                  title: "Warning",
+                  text: response.error.msg,
+                  icon: "warning",
+                  dangerMode: true,
+                  timer: 1500
+               });
+                }  
+            },
+            error: function(error, message) {},
+        });
     }
+   
+    return false;
+ });
 
-
-    public function get_task_fields($tasktypeid){
-        $this->db->select('id,label_name');
-        $this->db->from('bdcrm_feilds');
-        $this->db->where('status','1');
-        $this->db->order_by("sort_order");
-
-        $query=$this->db->get();
-        $data =  $query->result_array();
-
-        foreach ($data as $key => $value) {
-            $feild_id= $value['id'];
-            $label_name = $value['label_name'];
-            $this->db->select('id,feild_id,task_type_id');
-            $this->db->from('bdcrm_default_feilds_access');
-            $this->db->where('feild_id',$feild_id);
-            $this->db->where('task_type_id',$tasktypeid);
-            $this->db->where('status',1);
-
-            $querys=$this->db->get();
-            $datas =  $querys->row_array();
-          
-            if(!empty($datas)){
-                $fdata[$key]= $datas;
-                $fdata[$key]['access'] = 1;
-                $fdata[$key]['label_name'] = $label_name;
-            }else{
-                $fdata[$key]['id'] = $feild_id;
-                $fdata[$key]['feild_id'] = $feild_id;
-                $fdata[$key]['task_type_id'] = $tasktypeid;
-                $fdata[$key]['access'] = 0;
-                $fdata[$key]['label_name'] = $label_name;
-            }
-
-        }
-
-        return $fdata;
+ function IsEmail(email) {
+    var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+    if (!pattern.test(email)) {
+        return false;
     }
-
-
-    function getprojectrecord(){
-        
-    $designation_name = $this->session->userdata('designation_name');
-    $user_id = $this->session->userdata('id');
-    $this->db->select('bmp.id,bmp.project_name,bmp.project_breif,bpt.project_type,bpts.project_type as task_type,bmp.created_at,bmp.created_by,bmp.file_name,bmp.file_path,us.username');
-    $this->db->from('bdcrm_master_projects as bmp');
-    $this->db->join('bdcrm_project_type bpt','bmp.task_type = bpt.id','left');
-    $this->db->join('bdcrm_project_types bpts','bmp.project_type = bpts.id','left');
-    $this->db->join('users us','bmp.created_by = us.id','left');
-    if(($designation_name=='Researcher') || $designation_name=='Caller'){
-       $this->db->join('companywise_allocation ca','bmp.id = ca.project_id','left');
-       $this->db->where('ca.user_id',$user_id);
-       $this->db->group_by('bmp.id');
+    else {
+        return true;
     }
-    $this->db->where('bmp.status','1');
-    $this->db->order_by("bmp.id", "DESC");
-    $query=$this->db->get();
-    $this->db->last_query(); 
-    $data = $query->result_array();
-    $fData=[];
-    foreach ($data as $key => $value) {
-        $project_id = $value['id'];
-        $info = $this->getCompanyInfoByProjectId($project_id);
-        $value['company_count'] = $info['company_count'];
-        $value['no_of_staff'] = $info['no_of_staff'];
-        $fData[] = $value;
-    }
- return $fData;
-}
-
-
-    function getCompanyInfoByProjectId($project_id){
-            $this->db->select('COUNT(DISTINCT buf.received_company_name) as company_count,COUNT(buf.id) as no_of_staff');
-            $this->db->from('bdcrm_uploaded_feildss buf');
-            $designation_name = $this->session->userdata('designation_name');
-            $user_id = $this->session->userdata('id');
-            if(($designation_name=='Researcher') || $designation_name=='Caller'){
-                    $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-                    $this->db->where('ca.user_id',$user_id);
-                    $this->db->where('ca.status',1);
-                }
-            $this->db->where('buf.project_id',$project_id);
-            $querys=$this->db->get();
-            $this->db->last_query(); 
-            return $datas =  $querys->row_array();
-    }
-
-
-    function get_project_input_fields($project_id)
-    {
-		$this->db->select('bdcrm_master_projects_fields.field_id,bdcrm_feilds.label_name,bdcrm_feilds.input_name');
-		$this->db->from('bdcrm_master_projects_fields');
-        $this->db->join('bdcrm_feilds','bdcrm_feilds.id=bdcrm_master_projects_fields.field_id','left');
-        $this->db->where('bdcrm_master_projects_fields.project_id',$project_id);	
-		$this->db->group_by('bdcrm_master_projects_fields.id');
-        $this->db->order_by('bdcrm_master_projects_fields.id');
-		$query=$this->db->get();
-        $this->db->last_query(); 
-
-        $data=$query->result_array();
-        foreach($data as $data_key =>$data_val)
-        {
-            $fdata[]=$data_val['input_name'];
-           
-        }
-        return $fdata;
-    }
-
-
-    function get_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-    $this->db->select('bmp.id as project_id,bmp.project_name,bmp.project_breif,buf.received_company_name,bin.Industries as industry,buf.provided_job_title,buf.city,buf.address1,
-     bc.name as country_name,buf.region,bswd.dispositions as web_staff_disposition,buf.provided_staff_email,bcd.company_dispostion as company_disposition,bwd.web_disposition_name as web_disposition,buf.website_url,buf.no_of_emp,buf.revenue,bsvd.voice_dispositions as voice_staff_disposition,buf.id as staff_id,bnp.prefix as salutation,buf.first_name,buf.last_name,CONCAT(us.first_name,us.last_name) as assigned_to,CONCAT(usd.first_name,usd.last_name) as assigned_by,ca.status,buf.created_date,ca.created_at as assigned_at');
-     $this->db->from('bdcrm_uploaded_feildss as buf');
-     $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-     $this->db->join('bdcrm_countries bc','buf.provided_country = bc.id','left');
-     $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
-     $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-     $this->db->join('users us','ca.user_id=us.id','left');
-     $this->db->join('users usd','ca.assigned_by=usd.id','left');
-     $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
-     $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
-     $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
-     $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
-     $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
-     $where = '((ca.status IS NULL OR ca.status=1) AND (bmp.status=1))';
-     $this->db->where('buf.received_company_name',$received_company_name);
-     ;
-     $designation_name = $this->session->userdata('designation_name');
-     $user_id = $this->session->userdata('id');
-     if(($designation_name=='Researcher') || $designation_name=='Caller'){
-        $this->db->where('ca.user_id',$user_id);
-     }
-     $this->db->where($where);
-     if($workstatus==1)
-     {
-         $this->db->where('ca.assigned_by !=""');
-     }
-     elseif($workstatus==2){
-         $this->db->where('ca.assigned_by IS NULL');
-     }
-     $this->db->limit($rowperpage,$rowno);
-     $this->db->group_by('buf.id');
-      $query=$this->db->get();
-     return $data = $query->result_array();
- }
-    
-    function get_no_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-         $this->db->select('cmpallo.status as assigne_status,cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,CONCAT(us.first_name," ",us.last_name) as assigned_to,users.username,md.designation_name');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
-        $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
-        $this->db->join('companywise_allocation cmpallo','buf.id = cmpallo.staff_id','left');
-        $this->db->join('users users','cmpallo.assigned_by=users.id','left');
-        $this->db->join('users us','cmpallo.user_id=us.id','left');
-        $this->db->join('master_designation md','md.id=users.designation','left');
-        $this->db->where('buf.project_id',$project_id);
-        $this->db->where('buf.received_company_name',$received_company_name);
-        $this->db->where('bmp.status',1);
-        if($this->session->userdata('designation_id') != 8)
-        {
-            $this->db->where('users.designation',$this->session->userdata('designation_id'));  
-        }
-        if($workstatus==1)
-        {
-            $this->db->where('cmpallo.assigned_by !=""');  
-        }
-        elseif($workstatus==2){
-            $this->db->where('cmpallo.assigned_by IS NULL');   
-        }
-        $this->db->limit($rowperpage,$rowno);
-        $this->db->group_by('buf.id');
-        $query=$this->db->get();
-        $result = $query->row_array();
-        return $result;
-    }
-
-    function get_all_staff_info($project_id="",$received_company_name="",$rowno="",$rowperpage="",$workstatus=""){
-         $this->db->select('cmpallo.status as assigne_status,cmpallo.*,buf.*,bmp.project_name,bcn.name as country_name,bnp.prefix as salutation,CONCAT(us.first_name," ",us.last_name) as assigned_to,users.username,md.designation_name');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->join('bdcrm_countries bcn','buf.provided_country = bcn.id','left');
-        $this->db->join('bdcrm_name_prefix bnp','buf.suffix = bnp.id','left');
-        $this->db->join('companywise_allocation cmpallo','buf.id = cmpallo.staff_id','left');
-        $this->db->join('users users','cmpallo.assigned_by=users.id','left');
-        $this->db->join('users us','cmpallo.user_id=us.id','left');
-        $this->db->join('master_designation md','md.id=users.designation','left');
-        $this->db->where('buf.project_id',$project_id);
-        $this->db->where('buf.received_company_name',$received_company_name);
-        $this->db->where('bmp.status',1);
-        if($this->session->userdata('designation_id') != 8)
-        {
-            $this->db->where('users.designation',$this->session->userdata('designation_id'));  
-        }
-        if($workstatus==1)
-        {
-            $this->db->where('cmpallo.assigned_by !=""');  
-        }
-        elseif($workstatus==2){
-            $this->db->where('cmpallo.assigned_by IS NULL');   
-        }
-        $this->db->limit($rowperpage,$rowno);
-        $this->db->group_by('buf.id');
-        $query=$this->db->get();
-        return $this->db->count_all_results();     
-    }
-  function getProjectInfo($project_id="",$slot_count="",$workalloc=""){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,count(buf.updated_status) as completed_updated_status,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
-        $this->db->join('users','companywise_allocation.user_id = users.id','left');
-        $this->db->where('bmp.id',$project_id);
-        $this->db->where('bmp.status',1);
-          $designation_name = $this->session->userdata('designation_name');
-          $user_id = $this->session->userdata('id');
-          if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->where('companywise_allocation.user_id',$user_id);
-             $this->db->where('companywise_allocation.status',1);
-          }
-
-        
-        if($workalloc=="Assigned"){
-             $this->db->where('companywise_allocation.assigned_by !=""');
-        }
-         if($workalloc=="Unassigned"){
-             $this->db->where('companywise_allocation.assigned_by IS NULL');
-        }
-        $this->db->group_by('buf.received_company_name');
-        if(!empty($slot_count)){
-            $this->db->limit($slot_count);
-        }
-        $query=$this->db->get();
-        return $data = $query->result_array();
-    }
-
-
-    function getProjectInfoByStaffId($pid,$sid){
-
-        $this->db->select('buf.*,bmp.project_name,bmp.project_breif');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->where('buf.project_id',$pid);
-        $this->db->where('buf.id',$sid);
-        $this->db->where('bmp.status',1);
-        $query=$this->db->get();
-        $data = $query->result_array();
-        $info = $this->getCompanyInfoByProjectId($pid);
-        $data[0]['company_count']=$info['company_count'];
-        $data[0]['no_of_staff']=$info['no_of_staff'];
-        return $data;
-    }
-
-    // function getStaffInfoDetails($project_id,$company_name){
-    //     $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-    //     $this->db->from('bdcrm_uploaded_feildss buf');
-    //     $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-    //     $this->db->where('buf.project_id',$project_id);
-    //     $this->db->where('buf.received_company_name',$company_name);
-        
-    //     $querys=$this->db->get();
-    //     return $datas =  $querys->result_array();
-    // }
-
-    // function getAllStaffInfoDetails($project_id,$company_name){
-        
-    //     // $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-    //     // $this->db->from('companywise_allocation ca');
-    //     // $this->db->join('bdcrm_uploaded_feildss buf','ca.staff_id = buf.id','left');
-    //     // $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-    //     // if($this->session->userdata('designation_name') != 'Superadmin' && $this->session->userdata('designation_name') != 'Project Manger' && $this->session->userdata('designation_name') != 'Team Leader')
-    //     // {
-    //     //     $this->db->where('ca.user_id',$this->session->userdata('id'));
-    //     //     $this->db->where('ca.status','1');
-    //     // }
-    //     // $this->db->where('buf.project_id',$project_id);
-    //     // $this->db->where('buf.received_company_name',$company_name);
-    //     // $querys=$this->db->get();
-    //     // //echo $this->db->last_query();die();
-    //     // return $datas =  $querys->result_array();
-
-    //      $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-    //     $this->db->from('bdcrm_uploaded_feildss buf');
-    //     $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-    //     $this->db->where('buf.project_id',$project_id);
-    //     $this->db->where('buf.received_company_name',$company_name);
-        
-    //     $querys=$this->db->get();
-    //     return $datas =  $querys->result_array();
-    // }
-
-    function getCompanyInfoDetails($project_id,$cmp_name){
-          $designation_name = $this->session->userdata('designation_name');
-        $user_id = $this->session->userdata('id');
-        $this->db->select('bmp.*,bmap.project_name,GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(bmp.id) as staffcount,buf.updated_status,count(buf.received_company_name) as staffcount,buf.project_id,buf.id');
-        // $this->db->distinct('received_company_name');
-        $this->db->from('bdcrm_uploaded_feildss buf');
-        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-        $this->db->join('bdcrm_master_projects bmap','buf.project_id = bmap.id','left');
-
-          if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-             $this->db->where('ca.user_id',$user_id);
-             $this->db->where('ca.status',1);
-             $where = '(ca.status IS NULL OR ca.status=1)';
-             $this->db->where($where);
-          }
-        $this->db->where('buf.project_id',$project_id);
-        // $this->db->where('received_company_name',$cmp_name);
-        $this->db->group_by('buf.received_company_name');
-        $querys=$this->db->get();
-        return $datas =  $querys->result_array();
-    }
-    function getStaffInfoDetails($project_id,$company_name){
-        $designation_name = $this->session->userdata('designation_name');
-          $user_id = $this->session->userdata('id');
-        $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-        $this->db->from('bdcrm_uploaded_feildss buf');
-        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');          
-          if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-             $this->db->where('ca.user_id',$user_id);
-             $this->db->where('ca.status',1);
-             $where = '(ca.status IS NULL OR ca.status=1)';
-             $this->db->where($where);
-          }
-        
-        $this->db->where('buf.project_id',$project_id);
-        $this->db->where('buf.received_company_name',$company_name);   
-        $querys=$this->db->get();
-        return $datas =  $querys->result_array();
-    }
-
-    function getAllStaffInfoDetails($project_id){
-         $this->db->select('bmp.*,buf.first_name,buf.last_name,buf.updated_status,buf.received_company_name as comp_name,buf.project_id,buf.id');
-        $this->db->from('bdcrm_uploaded_feildss buf');
-        $this->db->join('bdcrm_company_disposition bmp','buf.company_disposition = bmp.id','left');
-
-          $designation_name = $this->session->userdata('designation_name');
-          $user_id = $this->session->userdata('id');
-          if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->join('companywise_allocation ca','buf.id = ca.staff_id','left');
-             $this->db->where('ca.user_id',$user_id);
-             $this->db->where('ca.status',1);
-             $where = '(ca.status IS NULL OR ca.status=1)';
-             $this->db->where($where);
-          }
-        
-        $this->db->where('buf.project_id',$project_id);
-        // $this->db->where('buf.received_company_name',$company_name);  
-        $querys=$this->db->get();
-        return $datas =  $querys->result_array();
-    }
-
-    // function getCompanyInfoDetails($project_id,$cmp_name){
-     
-    //     $this->db->select('buf.id,buf.received_company_name,buf.project_id,count(buf.received_company_name) as staffcount');
-    //     $this->db->distinct('received_company_name');
-    //     $this->db->from('bdcrm_uploaded_feildss buf');
-    //     $this->db->where('project_id',$project_id);
-    //     $this->db->group_by('received_company_name');
-    //     $querys=$this->db->get();
-    //     // echo $this->db->last_query();die();
-    //     return $datas =  $querys->result_array();
-    // }
-
-    function getPreLastInfo($project_id="",$rowid="",$cmp_name=""){
-            $this->db->select('min(bdcrm_uploaded_feildss.id) as myfirst,max(bdcrm_uploaded_feildss.id) as mylast,bdcrm_uploaded_feildss.project_id,bdcrm_uploaded_feildss.received_company_name');
-            $this->db->from('bdcrm_uploaded_feildss');
-            $designation_name = $this->session->userdata('designation_name');
-          $user_id = $this->session->userdata('id');
-          if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->join('companywise_allocation ca','bdcrm_uploaded_feildss.id = ca.staff_id','left');
-             $this->db->where('ca.user_id',$user_id);
-             $this->db->where('ca.status',1);
-             $where = '(ca.status IS NULL OR ca.status=1)';
-             // $this->db->where($where);
-          }
-            $this->db->where('bdcrm_uploaded_feildss.project_id',$project_id);
-            // $this->db->where('received_company_name',$cmp_name);
-            $querys=$this->db->get();
-            //echo $this->db->last_query();die();
-            return $datas =  $querys->row_array();  
-    }
-
-    function get_maxproject_id(){
-        $this->db->select('max(bdcrm_uploaded_feildss.id)');
-        $this->db->from('bdcrm_uploaded_feildss');
-        $querys=$this->db->get();
-        //echo $this->db->last_query();die();
-        return $datas =  $querys->row_array();  
-    }
-
-	function excel_download($product_id="")
-    {
-        $this->db->select('bmp.*,buf.*,bin.Industries,bswd.dispositions,bsvd.voice_dispositions,bcd.company_dispostion,bwd.web_disposition_name,bdcrm_name_prefix.prefix,bdcrm_countries.name as countryname,bdcrm_countries.region');
-        $this->db->from('bdcrm_master_projects bmp');
-		$this->db->join('bdcrm_uploaded_feildss buf','buf.project_id=bmp.id','left');
-		$this->db->join('bdcrm_countries','bdcrm_countries.id=buf.provided_country','left');
-        $this->db->join('bdcrm_name_prefix','bdcrm_name_prefix.id=buf.suffix','left');
-        $this->db->join('bdcrm_industries bin','buf.industry=bin.id','left');
-        $this->db->join('bdcrm_staff_web_disposition bswd','buf.web_staff_disposition=bswd.id','left');
-        $this->db->join('bdcrm_staff_voice_dispositions bsvd','buf.voice_staff_disposition=bsvd.id','left');
-        $this->db->join('bdcrm_company_disposition bcd','buf.company_disposition=bcd.id','left');
-        $this->db->join('bdcrm_web_disposition bwd','buf.web_disposition=bwd.id','left');
-       
-        
-        
-		$this->db->where('bmp.id',$product_id);
-        $this->db->where('bmp.status',1);
-		$query=$this->db->get();
-        //echo $this->db->last_query();die();
-        return $query->result_array();
-    }
-    
 }
