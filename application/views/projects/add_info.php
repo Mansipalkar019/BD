@@ -1362,10 +1362,16 @@
             var company_country = $("#company_name").val()+', '+country;
             var website_url = $('#website_url').val();
             var web_url = new URL(website_url);
+            console.log(web_url);
             let result = web_url['host'].substr(0, 4);
             if(result=="www."){
             }else{
                web_url['host'] = "www."+web_url['host'];
+            }
+            if(web_url['protocol']== "http"){
+               web_url['protocol'] ="https";
+            }else{
+               web_url['protocol'] =web_url['protocol'];
             }
             var redirect_url = web_url['protocol']+"//"+web_url['host'];
             var domain_name = redirect_url.split("http://www.");
