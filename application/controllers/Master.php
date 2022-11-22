@@ -608,8 +608,10 @@ class Master  extends CI_Controller
         $this->form_validation->set_rules("project_type","Project Type","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
         if($this->form_validation->run()==true){
             $project_type = $this->security->xss_clean($this->input->post("project_type"));
+            $activity_type = $this->security->xss_clean($this->input->post("activity_type"));
             $data = array(
                 "project_type" => $project_type,
+                "activity_type" => $activity_type,
             );
 
             $project_type_id = $this->input->post("project_type_id");

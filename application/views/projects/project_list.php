@@ -6,6 +6,10 @@
 .grey-bg {  
 background-color: #F5F7FA;
 }
+
+.dataTable tr td{
+    height:-0px;
+}
 /* #doc_list_datatable tr td {
 line-height: 0px !important;
 } */
@@ -35,7 +39,7 @@ line-height: 0px !important;
 <div class="grey-bg container-fluid">
 <section id="minimal-statistics">
 <div style="overflow-y: auto;"><br>
-    <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
+    <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%" style="height:400px;">
     <div class="form-group" style="float:right;">
     </div>
     <thead>
@@ -65,10 +69,10 @@ line-height: 0px !important;
                         <td><span><a href='<?= base_url().'Projects/ProjectInfo/'.base64_encode($value['id']); ?>'class="badge btn btn-primary btn-sm" href="#"><?= $value['project_name'];?></a></span></td>
                         <td><span><a class="badge rounded-pill bg-success" href="#"><?= $value['company_count'];?></a></span></td>
                         <td><span><a class="badge rounded-pill bg-dark" href="#"><?= $value['no_of_staff'];?></a></span></td>
-                        <td><?= $value['project_type'];?></td>
+                        <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['project_type'];?></p></td>
                         <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['task_type'];?></p></td>
                         <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['project_breif'];?><p></td>
-                        <td><?= $value['username'];?></td>
+                        <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= $value['username'];?></p></td>
                         <td><p style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;"><?= date(('d-m-Y h:i A'),strtotime($value['created_at']));?></p></td>
                         <td></td>
                          <?php 
@@ -97,12 +101,12 @@ line-height: 0px !important;
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script> -->
 <script type="text/javascript">
     var simpletable = $('#doc_list_datatable').DataTable();
     window.onload = function exampleFunction() {

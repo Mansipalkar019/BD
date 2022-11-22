@@ -171,3 +171,22 @@ $("#update_company_details_form").submit(function(e) {
         return true;
     }
 }
+
+
+                                    if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'staff left' || strtolower($allstaffinfo_val['dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'no result'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php } 
+
+                                    if(strtolower($allstaffinfo_val['voice_dispositions']) == 'verified' || strtolower($allstaffinfo_val['voice_dispositions']) == 'required' || strtolower($allstaffinfo_val['voice_dispositions']) == 'added' || strtolower($allstaffinfo_val['voice_dispositions']) == 'acquired'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'replaced'){?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'staff left' || strtolower($allstaffinfo_val['voice_dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['voice_dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result' || strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php }

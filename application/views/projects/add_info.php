@@ -463,15 +463,16 @@
                   <?php if(in_array('tel_number',$project_info)){ ?>
                   <div class="col">
                      <label for="tel_number" class="col-form-label">Telephone Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" >
-                     <span id="spndirecttelError" style="color: Red; display: none">*Enter Valid characters: Numbers & space.</span>
+                     <input type="" value="<?=  (!empty($allInfo[0]['tel_number'])) ?  $allInfo[0]['tel_number'] : ''  ?>" title="2 2403 3856" id="tel_number"  name='tel_number' class="form-control form-control-sm" style="width:170px;" tabindex="12" >
+                     <span id="spndirecttelError" style="color: Red; display: none">*Enter Valid characters: only Numbers & space.</span>
                
                   </div>
                   <?php } ?>
                   <?php if(in_array('alternate_number',$project_info)){ ?>
                   <div class="col">
                      <label for="alternate_number" class="col-form-label">Alternate Number:</label>
-                     <input type="number" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm" style="width:160px;" tabindex="13" onkeypress="return isNumber(event)">
+                     <input type="" value="<?=  (!empty($allInfo[0]['alternate_number'])) ?  $allInfo[0]['alternate_number'] : ''  ?>" title="" id="alternate_number"  name='alternate_number' class="form-control form-control-sm" style="width:160px;" tabindex="13">
+                     <span id="spnaltnoError" style="color: Red; display: none;font-size:10px;">*Enter Valid characters: only Numbers & space.</span>
                   </div>
                   <?php } ?>
                </div>
@@ -751,7 +752,7 @@
                      <label for="assumed_email" class="col-form-label">Assumed Email:</label>
                   </div>
                   <div class="col">
-                     <input type="email" value="<?=  (!empty($allInfo[0]['assumed_email'])) ?  $allInfo[0]['assumed_email'] : ''  ?>" title="" id="assumed_email"  name='assumed_email' class="form-control form-control-sm" tabindex="40">
+                     <input type="" value="<?=  (!empty($allInfo[0]['assumed_email'])) ?  $allInfo[0]['assumed_email'] : ''  ?>" title="" id="assumed_email"  name='assumed_email' class="form-control form-control-sm" tabindex="40">
                   </div>
                   <?php } ?>
                </div>
@@ -794,7 +795,7 @@
                   <div class="col">
                      <label for="staff_mobile" class="col-form-label">Mobile:</label>
                      <input type="" value="<?=  (!empty($allInfo[0]['staff_mobile'])) ?  $allInfo[0]['staff_mobile'] : ''  ?>" title="" id="staff_mobile"  name='staff_mobile' class="form-control form-control-sm" tabindex="43">
-                     <span id="spnmobileError" style="color: Red; display: none">*Enter Valid characters: Numbers & Space.</span>
+                     <span id="spnmobileError" style="color: Red; display: none">*Enter Valid characters: only Numbers & Space.</span>
                
                   </div>
                   <?php } ?>
@@ -1045,9 +1046,40 @@
                               <th>#</th>
                               <th>Staff Name</th>
                               <th>Company Name<span class="badge badge-pill badge-dark"></span></th>
-                              <th>Co. Disposition</th>
-                              <th>Status</th>
-                            
+                              <?php $designation_name = $this->session->userdata('designation_name');  if($designation_name=='Researcher'){ ?>
+                                 <th>web Staff Disposition</th>
+                              <?php }else if($designation_name=='Caller'){?>
+                                 <th>voice Staff Disposition</th>
+                              <?php }else{
+                                 if($allInfo[0]['activity_type'] == "web")
+                                 {?>
+                                 <th>web Staff Disposition</th>
+                                 <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <th>voice Staff Disposition</th>
+                                 <?php }else{?>
+                                 <th>web Staff Disposition</th>
+                                 <th>voice Staff Disposition</th> 
+                                 <?php }?>
+         
+                              <?php } ?>
+
+                              <?php if($designation_name=='Researcher'){ ?>
+                                 <th>Status</th>
+                              <?php }else if($designation_name=='Caller'){?>
+                                 <th>Status</th>
+                              <?php }else{
+                                 if($allInfo[0]['activity_type'] == "web")
+                                 {?>
+                                 <th>Status</th>
+                                 <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <th>Status</th>
+                                 <?php }else{?>
+                                 <th>web Status</th>
+                                 <th>voice Status</th> 
+                                 <?php }?>
+         
+                              <?php } ?>
+                             
                            </tr>
                            <?php 
                            foreach($allstaffinfo as $allstaffinfo_key => $allstaffinfo_val) {?>
@@ -1056,10 +1088,21 @@
                               <td><?= $allstaffinfo_val['first_name'].' '.$allstaffinfo_val['last_name']; ?></td>
                               <td><?= $allstaffinfo_val['comp_name']; ?></td>
    
-                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
+                              <td><?php  if($designation_name=='Researcher'){ ?>
+                                 <?= $allstaffinfo_val['dispositions']; ?>
+                              <?php }elseif($designation_name=='Caller'){?>
+                                 <?= $allstaffinfo_val['voice_dispositions']; ?>
+                              <?php }else{ if($allInfo[0]['activity_type'] == "web"){?>
+                                 <?= $allstaffinfo_val['dispositions']; ?>
+                              <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <?= $allstaffinfo_val['voice_dispositions']; ?>
+                              <?php }else{?>
+                                 <?= $allstaffinfo_val['dispositions']; ?>
+                                 <td><?= $allstaffinfo_val['voice_dispositions']; ?></td>
+                              <?php } } ?></td>
                               <td>
                               <?php
-                              $designation_name = $this->session->userdata('designation_name');
+                              
                               if($designation_name=='Researcher')
                               {
                                  if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
@@ -1080,7 +1123,7 @@
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
                               }elseif($designation_name=='Superadmin'){
-                                 if($allstaffinfo_val['project_type'] == 1){
+                                 if($allInfo[0]['activity_type'] == "web"){
                                     if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
                                        <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                     <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'staff left' || strtolower($allstaffinfo_val['dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['dispositions']) == 'no answer'){?>
@@ -1090,7 +1133,7 @@
                                     <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php } 
                                  }
-                                 elseif($allstaffinfo_val['project_type'] == 3)
+                                 elseif($allInfo[0]['activity_type'] == "voice")
                                  {
                                     if(strtolower($allstaffinfo_val['voice_dispositions']) == 'verified' || strtolower($allstaffinfo_val['voice_dispositions']) == 'required' || strtolower($allstaffinfo_val['voice_dispositions']) == 'added' || strtolower($allstaffinfo_val['voice_dispositions']) == 'acquired'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'replaced'){?>
                                        <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
@@ -1098,9 +1141,35 @@
                                        <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                    <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result' || strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
                                     ?>
-                                    <span class="badge bg-danger" style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                                  <?php }
                                  }
+                                 else{ ?>
+                                   
+                                    <?php 
+                                     if(strtolower($allstaffinfo_val['dispositions']) == 'verified' || strtolower($allstaffinfo_val['dispositions']) == 'required' || strtolower($allstaffinfo_val['dispositions']) == 'added' || strtolower($allstaffinfo_val['dispositions']) == 'acquired' || strtolower($allstaffinfo_val['dispositions']) == 'replaced'|| strtolower($allstaffinfo_val['dispositions']) == 'replacement') {?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'staff left' || strtolower($allstaffinfo_val['dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['dispositions']) == 'no result'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php } 
+                                    ?>
+                                  
+                                   <td>
+                                    <?php 
+                                      if(strtolower($allstaffinfo_val['voice_dispositions']) == 'verified' || strtolower($allstaffinfo_val['voice_dispositions']) == 'required' || strtolower($allstaffinfo_val['voice_dispositions']) == 'added' || strtolower($allstaffinfo_val['voice_dispositions']) == 'acquired'|| strtolower($allstaffinfo_val['voice_dispositions']) == 'replaced'){?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'staff left' || strtolower($allstaffinfo_val['voice_dispositions']) == 'duplicate' || strtolower($allstaffinfo_val['voice_dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($allstaffinfo_val['voice_dispositions']) == 'no result' || strtolower($allstaffinfo_val['voice_dispositions']) == 'not verified'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php }
+                                    ?>
+                                   </td>
+                                <?php }
                               }
                               ?>
                               </td>
@@ -1116,8 +1185,40 @@
                            <tr>
                               <th>#</th>
                               <th>Staff Name</th>
-                              <th>Co. Disposition</th>
-                              <th>Status</th>   
+                              <?php $designation_name = $this->session->userdata('designation_name');  if($designation_name=='Researcher'){ ?>
+                                 <th>web Staff Disposition</th>
+                              <?php }else if($designation_name=='Caller'){?>
+                                 <th>voice Staff Disposition</th>
+                              <?php }else{
+                                 if($allInfo[0]['activity_type'] == "web")
+                                 {?>
+                                 <th>web Staff Disposition</th>
+                                 <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <th>voice Staff Disposition</th>
+                                 <?php }else{?>
+                                 <th>web Staff Disposition</th>
+                                 <th>voice Staff Disposition</th> 
+                                 <?php }?>
+         
+                              <?php } ?>
+
+                              <?php if($designation_name=='Researcher'){ ?>
+                                 <th>Status</th>
+                              <?php }else if($designation_name=='Caller'){?>
+                                 <th>Status</th>
+                              <?php }else{
+                                 if($allInfo[0]['activity_type'] == "web")
+                                 {?>
+                                 <th>Status</th>
+                                 <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <th>Status</th>
+                                 <?php }else{?>
+                                 <th>web Status</th>
+                                 <th>voice Status</th> 
+                                 <?php }?>
+         
+                              <?php } ?>
+                             
                            </tr>
                            <?php 
                            foreach($staff_list as $staff_list_key => $staff_list_val) {
@@ -1126,7 +1227,18 @@
                               <tr  <?php if($staff_list_val['id'] == $allInfo[0]['id']){ ?>style="background: yellow;" <?php } ?>>
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($staff_list_val['project_id']).'/'.base64_encode($staff_list_val['id']).'/'.base64_encode($staff_list_val['comp_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $staff_list_val['first_name'].' '.$staff_list_val['last_name']; ?></td>
-                              <td><?= $staff_list_val['company_dispostion']; ?></td>
+                              <td><?php  if($designation_name=='Researcher'){ ?>
+                                 <?= $staff_list_val['dispositions']; ?>
+                              <?php }elseif($designation_name=='Caller'){?>
+                                 <?= $staff_list_val['voice_dispositions']; ?>
+                              <?php }else{ if($allInfo[0]['activity_type'] == "web"){?>
+                                 <?= $staff_list_val['dispositions']; ?>
+                              <?php }else if($allInfo[0]['activity_type'] == "voice"){?>
+                                 <?= $staff_list_val['voice_dispositions']; ?>
+                              <?php }else{?>
+                                 <?= $staff_list_val['dispositions']; ?>
+                                 <td><?= $staff_list_val['voice_dispositions']; ?></td>
+                              <?php } } ?></td>
                               <td>
                               <?php
                               $designation_name = $this->session->userdata('designation_name');
@@ -1152,6 +1264,53 @@
                                  <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
                               <?php }
                               }elseif($designation_name=='Superadmin'){
+                                 if($allInfo[0]['activity_type'] == "web"){
+                                    if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'|| strtolower($staff_list_val['dispositions']) == 'replacement') {?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($staff_list_val['dispositions']) == 'staff left' || strtolower($staff_list_val['dispositions']) == 'duplicate' || strtolower($staff_list_val['dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($staff_list_val['dispositions']) == 'no result'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php } 
+                                 }
+                                 elseif($allInfo[0]['activity_type'] == "voice")
+                                 {
+                                    if(strtolower($staff_list_val['voice_dispositions']) == 'verified' || strtolower($staff_list_val['voice_dispositions']) == 'required' || strtolower($staff_list_val['voice_dispositions']) == 'added' || strtolower($staff_list_val['voice_dispositions']) == 'acquired'|| strtolower($staff_list_val['voice_dispositions']) == 'replaced'){?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'staff left' || strtolower($staff_list_val['voice_dispositions']) == 'duplicate' || strtolower($staff_list_val['voice_dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result' || strtolower($staff_list_val['voice_dispositions']) == 'not verified'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php }
+                                 }
+                                 else{ ?>
+                                   
+                                    <?php 
+                                     if(strtolower($staff_list_val['dispositions']) == 'verified' || strtolower($staff_list_val['dispositions']) == 'required' || strtolower($staff_list_val['dispositions']) == 'added' || strtolower($staff_list_val['dispositions']) == 'acquired' || strtolower($staff_list_val['dispositions']) == 'replaced'|| strtolower($staff_list_val['dispositions']) == 'replacement') {?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($staff_list_val['dispositions']) == 'staff left' || strtolower($staff_list_val['dispositions']) == 'duplicate' || strtolower($staff_list_val['dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($staff_list_val['dispositions']) == 'no result'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php } 
+                                    ?>
+                                  
+                                   <td>
+                                    <?php 
+                                      if(strtolower($staff_list_val['voice_dispositions']) == 'verified' || strtolower($staff_list_val['voice_dispositions']) == 'required' || strtolower($staff_list_val['voice_dispositions']) == 'added' || strtolower($staff_list_val['voice_dispositions']) == 'acquired'|| strtolower($staff_list_val['voice_dispositions']) == 'replaced'){?>
+                                       <span class="badge bg-success " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                    <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'staff left' || strtolower($staff_list_val['voice_dispositions']) == 'duplicate' || strtolower($staff_list_val['voice_dispositions']) == 'no answer'){?>
+                                       <span class="badge bg-warning " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                   <?php }elseif(strtolower($staff_list_val['voice_dispositions']) == 'no result' || strtolower($staff_list_val['voice_dispositions']) == 'not verified'){
+                                    ?>
+                                    <span class="badge bg-danger " style="padding: 5px;border-radius: 20px;"><i class="glyphicon glyphicon-ok"><span class="fa fa-check"></span></span>
+                                 <?php }
+                                    ?>
+                                   </td>
+                                <?php }
                               }
                               ?>
                               </td>
@@ -1167,7 +1326,6 @@
                               <th>#</th>
                               <th>Company Name</th>
                               <th>No. of Staff</th>
-                              <th>Co. Disposition</th>
                            </tr>
                            <?php 
                            foreach($company_list as $allstaffinfo_key => $allstaffinfo_val) {?>
@@ -1175,7 +1333,6 @@
                               <td><a href="<?php echo base_url().'Projects/my_projects/'.base64_encode($allstaffinfo_val['project_id']).'/'.base64_encode($allstaffinfo_val['id']).'/'.base64_encode($allstaffinfo_val['received_company_name']);?>"><i class="fas fa-eye"></i></a></td>
                               <td><?= $allstaffinfo_val['received_company_name']; ?></td>
                               <td><?= $allstaffinfo_val['staffcount']; ?></td>
-                              <td><?= $allstaffinfo_val['company_dispostion']; ?></td>
                            </tr>
                            <?php } ?>
                         </table>
@@ -1623,6 +1780,14 @@ $("#staff_mobile").keypress(function (e) {
    var regex = /^[0-9\s]*$/;
    isValid = regex.test($("#staff_mobile").val());
    $("#spnmobileError").css("display", !isValid ? "block" : "none");
+   return isValid;
+});
+
+$("#alternate_number").keypress(function (e) {
+   var isValid = false;
+   var regex = /^[,0-9\s]*$/;
+   isValid = regex.test($("#alternate_number").val());
+   $("#spnaltnoError").css("display", !isValid ? "block" : "none");
    return isValid;
 });
       </script>

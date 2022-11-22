@@ -36,11 +36,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Select Activity</label>
-                                <select class="form-control" required="" name="task_type" id="task_type" onchange="gettasktype(this.value)" id="task_type">
-                                    <option value="">Please Select Activity</option>
-                                    <option value="">web</option>
-                                    <option value="">voice</option>
-                                    <option value="">web & voice</option>
+                                <select class="form-control" required="" name="activity_type" id="activity_type" onchange="gettasktype(this.value)" id="task_type">
+                                    <option value="">Select Activity</option>
+                                    <option value="web">web</option>
+                                    <option value="voice">voice</option>
+                                    <option value="web & voice">web & voice</option>
 
                                 </select>
                             </div>
@@ -56,6 +56,7 @@
                                 <tr>
                                     <th>Sr</th>
                                     <th>Project Type</th>
+                                    <th>Activity Type</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -70,6 +71,7 @@
                                         <tr>
                                             <td><?php echo $key+1;?></td>
                                             <td><?php echo $value['project_type']?></td>
+                                            <td><?php echo $value['activity_type']?></td>
                                             <td>
                                                <a href="<?php echo base_url('master/add_project_types').'/'.$value['id'];?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                                 &nbsp;
