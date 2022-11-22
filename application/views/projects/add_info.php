@@ -246,7 +246,7 @@
                         if(!empty($project_id) && !empty($user_id)){
                             $url = "projects/FinalSubmit/".$project_id.'/'.$user_id; 
                             ?>
-                            <a  onclick="return confirm('Do you want to submit this project..?')" href="<?php echo base_url().$url; ?>" class='btn btn-purple btn-sm waves-effect waves-light' style="float:left;background-color: #0e6efb;margin-top:-4px;margin-right:1%;color:white;" >Submit</i></a>
+                            <a  onclick="return confirm('Do you want to submit this project..?')" href="<?php echo base_url().$url; ?>" class='btn btn-purple btn-sm waves-effect waves-light' style="float:left;background-color: #6a0563;margin-top:-4px;margin-right:1%;color:white;" > Company Submit</i></a>
                             <?php
                         }
                     
