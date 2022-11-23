@@ -241,8 +241,8 @@
                      <?php
                    
                         $project_id = $allInfo[0]['project_id'];
-                        $user_id = $allInfo[0]['assigned_to'];
-                       //$user_id=$this->session->userdata('id');
+                        //$user_id = $allInfo[0]['assigned_to'];
+                        $user_id=$this->session->userdata('id');
                         if(!empty($project_id) && !empty($user_id)){
                             $url = "projects/FinalSubmit/".$project_id.'/'.$user_id; 
                             ?>

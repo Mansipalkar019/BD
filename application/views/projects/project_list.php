@@ -39,7 +39,7 @@ line-height: 0px !important;
 <div class="grey-bg container-fluid">
 <section id="minimal-statistics">
 <div style="overflow-y: auto;"><br>
-    <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%" style="height:400px;">
+    <table id="doc_list_datatable" class="table table-striped table-bordered data-table"  cellspacing="0" width="100%">
     <div class="form-group" style="float:right;">
     </div>
     <thead>

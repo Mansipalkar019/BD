@@ -639,6 +639,7 @@ class Master  extends CI_Controller
          redirect(base_url("master/add_project_types"));
 
     }
+    
 
     public function DeleteProjectType($id=0){
         if($id!='' && $id!=0){
@@ -945,13 +946,62 @@ class Master  extends CI_Controller
     }
 
 
+    public function add_company_remark($id=0){
 
+        if($id!='' AND $id!=0){
+            $data['getFormProjects'] = $this->model->getData('bdcrm_company_remark', array('status' => '1','id'=>$id))[0];  
+         }
+         $data['getProjectTypes'] = $this->model->getData('bdcrm_company_remark', array('status' => '1'));  
+         $data['main_content'] = "main/add_company_remark";
+         $this->load->view("includes/template", $data);
+    }
 
+    public function Deletecompanyremark($id=0){
+        if($id!='' && $id!=0){
+         if(!empty($id)){
+            $DeleteProjectType = $this->model->updateData("bdcrm_company_remark", array('status'=>0),
+            array('id' => $id));
+            if($DeleteProjectType){
+               $this->session->set_flashdata("success","Remark has been successfullly deleted.");
+            }
+         }
+        }
+       redirect(base_url("master/add_company_remark"));
+    }
 
+    public function submit_company_remark(){
+        
+        $this->form_validation->set_rules("company_remark","Company Remark","trim|required|min_length[2]|max_length[100]|xss_clean",array("required"=>"%s is required"));
+        if($this->form_validation->run()==true){
+            $project_type = $this->security->xss_clean($this->input->post("company_remark"));
+            $data = array(
+                "company_remark" => $project_type,
+            );
 
-    
+            $project_type_id = $this->input->post("company_remark_id");
+            if(empty($project_type_id)){
+                $addProjectType = $this->model->insertData('bdcrm_company_remark',$data);
+                if($addProjectType){
+                    $this->session->set_flashdata("success","Successfullly Added Company Remark");
+                }
+            }else{
+                $updateProjectType = $this->model->updateData("bdcrm_company_remark", $data, array('id' => $project_type_id));
+                if($updateProjectType){
+                    $this->session->set_flashdata("success","Company Remark Successfullly Updated.");
+                }
 
+            }
+            
+        }
+        else
+        {
+            $data = array(
+                'error' => validation_errors()
+            );
+            $this->session->set_flashdata("error",$data['error']);
+        }
+         redirect(base_url("master/add_company_remark"));
 
-
+    }
 
 }
