@@ -1,4 +1,15 @@
 $(document).ready(function (e) {
+   $.ajax({
+      url: bases_url + 'projects/get_all_input_fields',
+      type: 'post',
+      dataType: "json",
+      
+      success: function (response) {
+         //console.log(response);
+         $('#projectid').html(response);
+      },
+   });
+
    $('#user_list').select2();
    var table = $('#company_staff_count_datatable').DataTable({
       'ajax': {
@@ -199,3 +210,30 @@ $(document).ready(function (e) {
       }
    });
 });
+
+$('#addRows1').click(function() {   
+   $.ajax({
+      url: bases_url + 'projects/get_all_input_fields',
+      type: 'post',
+      dataType: "json",
+      
+      success: function (response) {
+      html2=""; 
+      html2 += '<div id="inputFormRow">';
+      html2 += '<div class="input-group mb-3">';         
+      html2 += '<div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id">'+response+'</select></div><div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id" style="margin-left:15px;width:200px;"><option value="=">=</option><option value="!=">!=</option><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option></select></div><div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id" style="margin-left:15px;width:200px;"><option value="=">=</option><option value="!=">!=</option><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option></select></div><button class="btn btn-danger btn-sm" id="removeRow" style="margin-left:15px;height: 30px;"><i class="fa fa-trash"></i></button>';   
+      html2 += '</div>';
+      html2 += '</div>';
+      $('#newRow').append(html2);
+      },
+   });
+});
+
+$(document).on('click', '#removeRow', function() {
+   $(this).closest("div").remove();      
+});
+
+    // remove row
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('#inputFormRow').remove();
+    });

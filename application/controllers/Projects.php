@@ -440,6 +440,12 @@ class Projects extends CI_Controller
          $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
          $data['designation_name'] =$designation_name;
+         $data['projectid'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1'),array('DISTINCT(id)'),false);
+         $data['received_company_name'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
+         $data['web_disposition'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
+         $data['voice_disposition'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
+         //   echo "<pre>";
+        //  print_r($data['received_company_name']);die();
          $data['main_content'] = "projects/project_info"; 
          $this->load->view("includes/template", $data);
     }
@@ -1218,5 +1224,16 @@ class Projects extends CI_Controller
  
          
      }
+
+      public function get_all_input_fields() {
+        $html="";
+        $data=$this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1'),array('DISTINCT(id)'),false);
+        if (!empty($data)) {
+            foreach ($data as $data_key => $data_row) {
+                $html .= "<option value='".$data_row['id']."'>".$data_row['id']."</option>";
+            }
+        }
+        echo json_encode($html);
+    }
 
 }
