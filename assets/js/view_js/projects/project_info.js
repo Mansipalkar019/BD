@@ -349,7 +349,7 @@ $("form").on("submit", function(event){
      var table = $('#company_staff_count_datatable').DataTable({
          data: data,
          "columns": [{
-            "data": null,     
+            "data": null,       
          },
          {
             "data": "staff_count",     
