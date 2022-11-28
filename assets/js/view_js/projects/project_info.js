@@ -1,17 +1,29 @@
 $(document).ready(function (e) {
+   var label_name=1;
+   $.ajax({
+      dataType: 'json',
+      type: 'POST',
+      url: bases_url + 'projects/get_input_type',
+      data: {
+         label_name: label_name,
+      },
+      success: function (response) {
+         $('#input_type').html(response);
+      }
+   });
    $.ajax({
       url: bases_url + 'projects/get_all_input_fields',
       type: 'post',
       dataType: "json",
       
       success: function (response) {
-         //console.log(response);
-         $('#projectid').html(response);
+         $('#project_id').html(response);
       },
    });
 
    $('#user_list').select2();
    var table = $('#company_staff_count_datatable').DataTable({
+       retrieve: true,
       'ajax': {
          'url': bases_url + 'projects/display_all_company_staff',
          'type': "POST",
@@ -209,31 +221,174 @@ $(document).ready(function (e) {
          }
       }
    });
+   
+   $('.project_id').on('change',function(e){
+      var optionnselected=$("#project_id").val();
+      var label_name=optionnselected;
+      $.ajax({
+         dataType: 'json',
+         type: 'POST',
+         url: bases_url + 'projects/get_input_type',
+         data: {
+            label_name: label_name,
+         },
+         success: function (response) {
+            $('#input_type').html(response);
+         }
+      });
+   });
 });
-
+var i=1;
 $('#addRows1').click(function() {   
+   var label_name=1;
+   
+   i++;
    $.ajax({
       url: bases_url + 'projects/get_all_input_fields',
       type: 'post',
       dataType: "json",
-      
+     
       success: function (response) {
       html2=""; 
       html2 += '<div id="inputFormRow">';
-      html2 += '<div class="input-group mb-3">';         
-      html2 += '<div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id">'+response+'</select></div><div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id" style="margin-left:15px;width:200px;"><option value="=">=</option><option value="!=">!=</option><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option></select></div><div class="form-group"><select  class="form-control project_id" id="project_id" name="project_id" style="margin-left:15px;width:200px;"><option value="=">=</option><option value="!=">!=</option><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option></select></div><button class="btn btn-danger btn-sm" id="removeRow" style="margin-left:15px;height: 30px;"><i class="fa fa-trash"></i></button>';   
+      html2 += '<div class="input-group">';         
+      html2 += '<div class="form-group"><select  class="form-control form-control-sm assign_id_'+i+'" id="assign_id_'+i+'" name="assignment[]" style="width:100px;"><option value="AND">AND</option><option value="OR">OR</option></select></div><div class="form-group"><select class="form-control project_id_'+i+' form-control-sm" id="project_id_'+i+'" name="input_field[]" style="width:200px;margin-left:15px;" onchange="onchangeinput('+i+')">'+response+'</select></div><div class="form-group"><select  class="form-control form-control-sm project_id" id="project_id" name="operator[]" style="margin-left:15px;width:200px;"><option value="=">=</option><option value="!=">!=</option><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="NULL">NULL</option></select></div><div class="form-group"><span id="input_type_'+i+'"></span></div><button class="btn btn-danger btn-sm" id="removeRow" style="margin-left:25px;height: 30px;"><i class="fa fa-trash"></i></button>';   
       html2 += '</div>';
       html2 += '</div>';
       $('#newRow').append(html2);
+      $.ajax({
+         dataType: 'json',
+         type: 'POST',
+         url: bases_url + 'projects/get_input_type',
+         data: {
+            label_name: label_name,
+         },
+         success: function (response) {
+            $('#input_type_'+i).html(response);
+         }
+      });
+
       },
    });
 });
-
+function onchangeinput(val)
+{
+   var label_name=$("#project_id_"+val).val();
+   $.ajax({
+      dataType: 'json',
+      type: 'POST',
+      url: bases_url + 'projects/get_input_type',
+      data: {
+         label_name: label_name,
+      },
+      success: function (response) {
+         $('#input_type_'+val).html(response);
+      }
+   });
+}
 $(document).on('click', '#removeRow', function() {
-   $(this).closest("div").remove();      
+   $(this).closest('#inputFormRow').remove();
 });
 
-    // remove row
-    $(document).on('click', '#removeRow', function() {
-        $(this).closest('#inputFormRow').remove();
-    });
+$("form").on("submit", function(event){
+   event.preventDefault();
+  var formValues = $(this).serialize();
+  
+   var frm_data =  JSON.stringify($('form').serializeArray());
+   console.log(frm_data);
+   $('#company_staff_count_datatable').DataTable().clear().destroy();
+   // var table = $('#company_staff_count_datatable').DataTable({
+   //     retrieve: true,
+   //    'ajax': {
+   //       'url': bases_url + 'projects/display_all_company_staff',
+   //       'type': "POST",
+   //       'data': function (data) {
+   //         $('form').serialize()
+   //       }
+   //    },
+   //    "columns": [{
+   //          "data": null
+   //       },
+   //       {
+   //          "data": "staff_count",     
+
+   //            render: function (data, type, row) {               
+   //               let staff_count = row.staff_count;
+   //                 var display_status_name = '<span><a href=' + bases_url + 'Projects/get_staff_info?id="' + btoa(row['project_id']) + '"&received_company_name="' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + '" class="badge btn btn-primary btn-sm">' + staff_count + '</a></span>';
+   //               return display_status_name;
+   //       },
+   //       },
+   //       {
+
+   //          "data": "completed_updated_status"
+   //       },
+   //       {
+   //          "data": "received_company_name"
+   //       },
+   //       {
+   //          "data": "created_date"
+   //       },
+   //       {
+   //          "data": "user_name"
+   //       },
+   //       {
+   //          "data": "project_id",
+   //          render: function (data, type, row) {
+   //             let project_id = row.project_id;
+   //             var display_status_name = "<a href=" + bases_url + 'Projects/my_projects/' + btoa(row['project_id']) + '/' + btoa(row['id']) + '/' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + "><i class='fa-solid fa-eye'></i></i></a>";
+   //             return display_status_name;
+   //          },
+   //       },
+   //    ],
+   //    "order": [
+   //       [0, 'desc']
+   //    ]
+   // });
+  $.post(bases_url +"Projects/display_all_company_staff",formValues, function(data){
+   console.log(data);
+     var table = $('#company_staff_count_datatable').DataTable({
+         data: data,
+         "columns": [{
+            "data": null,     
+         },
+         {
+            "data": "staff_count",     
+
+              render: function (data, type, row) {               
+                 let staff_count = row.staff_count;
+                   var display_status_name = '<span><a href=' + bases_url + 'Projects/get_staff_info?id="' + btoa(row['project_id']) + '"&received_company_name="' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + '" class="badge btn btn-primary btn-sm">' + staff_count + '</a></span>';
+                 return display_status_name;
+         },
+         },
+         {
+            "data": "completed_updated_status"
+         },
+         {
+            "data": "received_company_name"
+         },
+         {
+            "data": "created_date"
+         },
+         {
+            "data": "user_name"
+         },
+         {
+            "data": "project_id",
+            render: function (data, type, row) {
+               let project_id = row.project_id;
+               var display_status_name = "<a href=" + bases_url + 'Projects/my_projects/' + btoa(row['project_id']) + '/' + btoa(row['id']) + '/' + btoa(unescape(encodeURIComponent(row['received_company_name']))) + "><i class='fa-solid fa-eye'></i></i></a>";
+               return display_status_name;
+            },
+         },
+      ],
+      "order": [
+         [0, 'desc']
+      ]  
+      });
+ });
+});
+
+$("#slot_allocation").on("change", function(event){
+  $slot_allocation=$('#slot_allocation').val();
+  $('#company_count').val($slot_allocation);
+});

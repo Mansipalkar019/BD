@@ -415,7 +415,7 @@ class Projects extends CI_Controller
         $data['minmax']['next'] = $this->getIndexInfo($data['allstaffinfo'],$rowid)['next'];
         $data['userinfo']=$this->session->userdata('designation_id');
         // echo "<pre>";
-        // print_r($data['staff_list']);die();
+        // print_r($data['project_info']);die();
         $this->load->view("projects/add_info", $data);
     }
     public function getIndexInfo($staff,$rowid){
@@ -437,72 +437,78 @@ class Projects extends CI_Controller
          $designation_name = $this->session->userdata('designation_name');
          $user_id=$this->session->userdata('id');
          $data['getcompletedstatus']=$this->Projects_model->get_completed_count($id,$user_id);
-         $data['ProjectInfo'] = $this->Projects_model->getProjectInfo($id);
          $data['user_list'] = $this->model->selectWhereData('users',array('status'=>'1','username !='=>'superadmin'),array('id','first_name','last_name'),false);
          $data['designation_name'] =$designation_name;
-         $data['projectid'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1'),array('DISTINCT(id)'),false);
+         $data['projectid'] = $this->model->selectWhereData('bdcrm_feilds', array('field_status' => '1'),array('DISTINCT(label_name),id'),false);
          $data['received_company_name'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
          $data['web_disposition'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
          $data['voice_disposition'] = $this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1','project_id'=>$id),array('DISTINCT(received_company_name)'),false);
-         //   echo "<pre>";
-        //  print_r($data['received_company_name']);die();
          $data['main_content'] = "projects/project_info"; 
          $this->load->view("includes/template", $data);
     }
-    // public function display_all_company_staff($id="") {
-    //     // $id=$id;
-    //     $data[] = $_POST;
-    //    // echo '<pre>'; print_r($data); exit;
-    //     $id = $data[0]['id'];
-    //     // $from_date = $data[0]['from_date'];
-    //     // $to_date = $data[0]['to_date'];
-    //     // $payment_type = $data[0]['payment_type'];
-    //     // $order_source = $data[0]['order_source'];
-    //     // $member_type = $data[0]['member_type'];
-    //     $rowno = $data[0]['start'];
-    //     $rowperpage = $data[0]['length'];
-    //     $search_text = $data[0]['search']['value'];
-      
-    //     $this->load->model('company_staff_model');
-    //     $company_staff = $this->company_staff_model->getData($id,$search_text,$rowno,$rowperpage);
-    //     $count = $this->company_staff_model->getrecordCount($id,$search_text,$rowno,$rowperpage);
-    //     $data2 = array();
-    //     if (!empty($company_staff)) {
-    //         $sr_no = 1;
-    //         foreach ($company_staff as $company_staff_key => $company_staff_row) {
-    //            $count_data ="<span><a href='".base_url().'Projects/get_staff_info?id='.base64_encode($company_staff_row['project_id']).'&received_company_name='.base64_encode($company_staff_row['received_company_name'])."'class='badge btn btn-primary btn-sm'>".$company_staff_row['staff_count']."</a></span>";
-    //            $view ="<a href='".base_url().'Projects/my_projects/'.base64_encode($company_staff_row['project_id']).'/'.base64_encode($company_staff_row['id']).'/'.base64_encode($company_staff_row['received_company_name'])."'><i class='fa-solid fa-eye'></i></i></a>";
-    //             $sub_array = array();
-    //             $sub_array[] = $sr_no++;
-    //             $sub_array[] = $count_data;
-    //             $sub_array[] = $company_staff_row['received_company_name'];
-    //             $sub_array[] = date(('d-m-Y h:i A'),strtotime($company_staff_row['created_date']));
-    //             $sub_array[] = $view;                
-    //             $data2[] = $sub_array;
-    //         }
-    //     }
-    //     $output = array("draw" => intval($_POST["draw"]), "recordsTotal" => $count, "recordsFiltered" => $count, "data" => $data2);
-    //     echo json_encode($output);
+    
+
+
+    // public function setInputs(){
+    //     $this->display_all_company_staff($_POST);
     // }
      public function display_all_company_staff(){
-            $id= $this->input->post('id');
-            $slot_count= $this->input->post('slot_count');
-            $workalloc= $this->input->post('workalloc');
+        // if(!empty($data)){
+
+        //     $_POST = $data;
+        //     echo "<pre>"; 
+        //     //print_r($_POST);die();
+        // }
+   
+        $input_field=$this->input->post('input_field');
+        $operator=$this->input->post('operator');
+        $assignment=$this->input->post('assignment');
+        $input_types=$this->input->post('input_types');
+        $company_count=$this->input->post('company_count');
+        $project_id=$this->input->post('id');
+        $table_name=$this->input->post('table_name');
+        foreach($input_field as $input_field_key => $input_field_row){
+             $input_field=$input_field_row;
+             $operators=$operator[$input_field_key];
+             $assignments=$assignment[$input_field_key];
+             $inputtypes=$input_types[$input_field_key];
+             $table_names=$table_name[$input_field_key];
+             $insert_record[] = array(
+                 'input_field' =>$input_field_row,
+                 'operator'=>$operators,
+                 'inputtype'=>$inputtypes,
+                 'table_name'=>$table_names,
+                 'assignment'=>$assignments,
+                 
+             );
+        }
+        $sql="";
+        foreach($insert_record as $k =>$val){
+             $feild_name = "bdcrm_uploaded_feildss.".$val['input_field']."";
+             $operator = $val['operator'];
+             $inputtype = "'".$val['inputtype']."'";
+             $assignment = $val['assignment'];
+ 
+             $sql .= $feild_name.' '.$operator.' '.$inputtype.' '.$assignment.' ';
+        }
+         $new_sql=$sql;
+         $id= $this->input->post('id');
+         $slot_count= $this->input->post('slot_count');
+         $workalloc= $this->input->post('workalloc');
+         $ProjectInfo = $this->Projects_model->getProjectInfo($new_sql,$id,$slot_count,$workalloc); 
          
-            $ProjectInfo = $this->Projects_model->getProjectInfo($id,$slot_count,$workalloc); 
-            
-            
-            if(!empty($ProjectInfo)){
-               foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
-                        $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
+         if(!empty($ProjectInfo)){
+             foreach ($ProjectInfo as $ProjectInfo_key => $ProjectInfo_row) {
+                     $completed_status_count = $this->model->selectWhereData('bdcrm_uploaded_feildss',array('updated_status'=>'Updated','received_company_name'=>$ProjectInfo_row['received_company_name']),array('count(updated_status) as completed_updated_status')); 
                          $total_count[]=$ProjectInfo_row['staff_count'];
                          $ProjectInfo[$ProjectInfo_key]['completed_updated_status']=$completed_status_count['completed_updated_status'];
                          $ProjectInfo[$ProjectInfo_key]['created_date']=date(('d-m-Y h:i A'),strtotime($ProjectInfo_row['created_date']));
-               }     
-            }
-            $response['data']=$ProjectInfo;
-            $response['total_staff_count'] = array_sum($total_count);
-            echo json_encode($response);  
+             }     
+         }
+         $response['data']=$ProjectInfo;
+         $response['total_staff_count'] = array_sum($total_count);
+      // print_r($response);die();
+         echo json_encode($response);  
     }
 
     public function get_staff_info(){
@@ -1227,13 +1233,76 @@ class Projects extends CI_Controller
 
       public function get_all_input_fields() {
         $html="";
-        $data=$this->model->selectWhereData('bdcrm_uploaded_feildss', array('status' => '1'),array('DISTINCT(id)'),false);
+        //$datas=array();
+        $data=$this->model->selectWhereData('bdcrm_feilds', array('field_status' => '1'),array('DISTINCT(label_name),id,input_name'),false);
         if (!empty($data)) {
             foreach ($data as $data_key => $data_row) {
-                $html .= "<option value='".$data_row['id']."'>".$data_row['id']."</option>";
+                $selected = ($data_key==0) ? 'selected' : '' ;
+                $html .= "<option value='".$data_row['input_name']."' ".$selected.">".$data_row['label_name']."</option>";
             }
         }
         echo json_encode($html);
     }
 
+    public function get_input_type() {
+        $id=$this->input->post('label_name');
+        $html="";
+        $data=$this->model->selectWhereData('bdcrm_feilds', array('input_name' => $id),array('*'),false);
+       
+        if($data[0]['input_type']=='text')
+        {
+            $html="<input type='text' value='' title='' id='received_company_name_key'  name='input_types[]' class='form-control form-control-sm' style='margin-left:15px;'><input type='hidden' value='".$data[0]['table_name']."' title='' id='table_name'  name='table_name[]' class='form-control form-control-sm' style='margin-left:15px;'>";
+        }
+        else if($data[0]['input_type']=='select'){
+            $html="<input type='hidden' value='".$data[0]['table_name']."' title='' id='table_name'  name='table_name[]' class='form-control form-control-sm' style='margin-left:15px;'>";
+            $html .="<select  class='form-control received_company_name_key form-control-sm' id='received_company_name_key' name='input_types[]' style='margin-left:15px;width:200px;'><option value=''>Select Option</option>";
+            $master_record=$this->Projects_model->get_master_record($data[0]['table_name']);
+            foreach($master_record as $master_record_key => $master_record_val)
+            {
+            $html.="<option value='".$master_record_val['id']."'>".$master_record_val['disposition']."</option>";
+            }
+            $html.="</select>";
+        }
+       
+        echo json_encode($html);
+    }
+
+    public function submit_advance_search() {
+       $input_field=$this->input->post('input_field');
+       $operator=$this->input->post('operator');
+       $assignment=$this->input->post('assignment');
+       $input_types=$this->input->post('input_types');
+       $company_count=$this->input->post('company_count');
+       $project_id=$this->input->post('id');
+       $table_name=$this->input->post('table_name');
+       foreach($input_field as $input_field_key => $input_field_row){
+            $input_field=$input_field_row;
+            $operators=$operator[$input_field_key];
+            $assignments=$assignment[$input_field_key];
+            $inputtypes=$input_types[$input_field_key];
+            $table_names=$table_name[$input_field_key];
+            $insert_record[] = array(
+                'input_field' =>$input_field_row,
+                'operator'=>$operators,
+                'inputtype'=>$inputtypes,
+                'table_name'=>$table_names,
+                'assignment'=>$assignments,
+                
+            );
+       }
+       $sql="";
+       foreach($insert_record as $k =>$val){
+            $feild_name = "bdcrm_uploaded_feildss.".$val['input_field']."";
+            $operator = $val['operator'];
+            $inputtype = "'".$val['inputtype']."'";
+            $assignment = $val['assignment'];
+
+            $sql .= $feild_name.' '.$operator.' '.$inputtype.' '.$assignment.' ';
+           
+   
+       }
+       $new_sql='('.$sql.')';
+       $getrecords=$this->Projects_model->advance_search_record($new_sql,$company_count,$project_id);
+       
+    }
 }

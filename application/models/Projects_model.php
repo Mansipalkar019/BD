@@ -113,7 +113,7 @@ class Projects_Model extends CI_Model
                 }
             $this->db->where('buf.project_id',$project_id);
             $querys=$this->db->get();
-            $this->db->last_query(); 
+            //$this->db->last_query(); 
             return $datas =  $querys->row_array();
     }
 
@@ -178,6 +178,7 @@ class Projects_Model extends CI_Model
      $this->db->limit($rowperpage,$rowno);
      $this->db->group_by('buf.id');
      $query=$this->db->get();
+     //echo $this->db->last_query();die();
      return $data = $query->result_array();
  }
     
@@ -245,37 +246,35 @@ class Projects_Model extends CI_Model
         $query=$this->db->get();
         return $this->db->count_all_results();     
     }
-    function getProjectInfo($project_id="",$slot_count="",$workalloc=""){
-        $this->db->select('GROUP_CONCAT(DISTINCT(buf.received_company_name)) as received_company_name,count(buf.received_company_name) as staff_count,count(buf.updated_status) as completed_updated_status,buf.created_date,GROUP_CONCAT(DISTINCT(buf.project_id)) as project_id,buf.id,bmp.project_name,GROUP_CONCAT(buf.id) as bdcrm_uploaded_feildss_id,GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by,CONCAT(users.first_name," ",users.last_name) as user_name,COUNT(companywise_allocation.total_count) as total_count');
-        $this->db->from('bdcrm_uploaded_feildss as buf');
-        $this->db->join('bdcrm_master_projects bmp','buf.project_id = bmp.id','left');
-        $this->db->join('companywise_allocation','buf.id = companywise_allocation.staff_id','left');
-        $this->db->join('users','companywise_allocation.reassigned_to = users.id','left');
-        $this->db->where('bmp.id',$project_id);
-        $this->db->where('bmp.status',1);
+    function getProjectInfo($filter,$project_id="",$slot_count="",$workalloc=""){
+        $sql ="SELECT GROUP_CONCAT(DISTINCT(bdcrm_uploaded_feildss.received_company_name)) as received_company_name,count(bdcrm_uploaded_feildss.received_company_name) as staff_count, count(bdcrm_uploaded_feildss.updated_status) as completed_updated_status, `bdcrm_uploaded_feildss`.`created_date`, GROUP_CONCAT(DISTINCT(bdcrm_uploaded_feildss.project_id)) as project_id, `bdcrm_uploaded_feildss`.`id`, `bdcrm_master_projects`.`project_name`, GROUP_CONCAT(bdcrm_uploaded_feildss.id) as bdcrm_uploaded_feildss_id, GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by, CONCAT(users.first_name,' ',users.last_name) as user_name, COUNT(companywise_allocation.total_count) as total_count FROM `bdcrm_uploaded_feildss` LEFT JOIN `bdcrm_master_projects` ON `bdcrm_uploaded_feildss`.`project_id` = `bdcrm_master_projects`.`id` LEFT JOIN `companywise_allocation` ON `bdcrm_uploaded_feildss`.`id` = `companywise_allocation`.`staff_id` LEFT JOIN `users` ON `companywise_allocation`.`reassigned_to` = `users`.`id` WHERE `bdcrm_master_projects`.`id` = '".$project_id."' AND `bdcrm_master_projects`.`status` = 1";
           $designation_name = $this->session->userdata('designation_name');
           $user_id = $this->session->userdata('id');
           if(($designation_name=='Researcher') || $designation_name=='Caller'){
-             $this->db->where('companywise_allocation.reassigned_to',$user_id);
-             $this->db->where('companywise_allocation.is_final_submited',0);
-             $this->db->where('companywise_allocation.project_status',0);
+            $sql.="LEFT JOIN `users` ON `companywise_allocation`.`reassigned_to` = '".$user_id."' WHERE `bdcrm_master_projects`.`id` = '".$project_id."' AND `bdcrm_master_projects`.`status` = 1";
           }
-        if($workalloc=="Assigned"){
-             $this->db->where('companywise_allocation.assigned_by !=""');
+        // if($workalloc=="Assigned"){
+        //      $this->db->where('companywise_allocation.assigned_by !=""');
+        // }
+        //  if($workalloc=="Unassigned"){
+        //      $this->db->where('companywise_allocation.assigned_by IS NULL');
+        // }
+        // elseif($workalloc=="Pending"){
+        //     $this->db->where('companywise_allocation.is_final_submited',0);
+        // }
+        if($filter != '')
+        {
+            $sql.=' AND'.'('.$filter.')';
+          
         }
-         if($workalloc=="Unassigned"){
-             $this->db->where('companywise_allocation.assigned_by IS NULL');
+        $sql.=" GROUP BY `bdcrm_uploaded_feildss`.`received_company_name`";
+        if(!empty($slot_count))
+        {
+            $sql.=" LIMIT ".$slot_count;
         }
-        elseif($workalloc=="Pending"){
-            $this->db->where('companywise_allocation.is_final_submited',0);
-        }
-        $this->db->group_by('buf.received_company_name');
-        if(!empty($slot_count)){
-            $this->db->limit($slot_count);
-        }
-        $query=$this->db->get();
+        $query = $this->db->query($sql);
         //echo $this->db->last_query();die();
-        return $data = $query->result_array();
+        return $data =  $query->result_array();
     }
 
 
@@ -450,7 +449,6 @@ class Projects_Model extends CI_Model
             $this->db->where('bdcrm_uploaded_feildss.project_id',$project_id);
             // $this->db->where('received_company_name',$cmp_name);
             $querys=$this->db->get();
-            //echo $this->db->last_query();die();
             return $datas =  $querys->row_array();  
     }
 
@@ -470,7 +468,6 @@ class Projects_Model extends CI_Model
         $this->db->where('bmp.status',1);
         $this->db->where('buf.project_id',$product_id);
         $query=$this->db->get();
-        //echo $this->db->last_query();die();
         return $query->result_array();
     }
 
@@ -481,7 +478,6 @@ class Projects_Model extends CI_Model
             $this->db->like("LOWER(".$field_name.")", $search_term, 'after');
             $this->db->group_by($field_name);
             $query = $this->db->get();
-            //echo $this->db->last_query();die();
             $result = $query->result_array();
         }else{
             $result = array();
@@ -498,7 +494,6 @@ class Projects_Model extends CI_Model
         $this->db->where('ca.status','1');
         //$this->db->where('buf.updated_status','Updated');
         $querys=$this->db->get();
-        //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
 
@@ -511,7 +506,6 @@ class Projects_Model extends CI_Model
         $this->db->where('ca.status','1');
         $this->db->where('buf.updated_status','Updated');
         $querys=$this->db->get();
-        //echo $this->db->last_query();die();
         return $datas =  $querys->result_array();
     }
 
@@ -534,5 +528,90 @@ class Projects_Model extends CI_Model
     //     echo $this->db->last_query();die();
     //     return $data = $query->result_array();
     // }
+    public function get_master_record($tablename)
+    {
+        if(trim($tablename) == 'bdcrm_company_disposition')
+        {
+            $this->db->select('id,company_dispostion as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_web_disposition')
+        {
+            $this->db->select('id,web_disposition_name as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_caller_disposition')
+        {
+            $this->db->select('id,caller_disposition as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_countries')
+        {
+            $this->db->select('id,name as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_industries')
+        {
+            $this->db->select('id,Industries as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_staff_web_disposition')
+        {
+            $this->db->select('id,dispositions as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+        else if(trim($tablename) == 'bdcrm_staff_voice_dispositions')
+        {
+            $this->db->select('id,voice_dispositions as disposition');
+            $this->db->from($tablename);
+            $this->db->where('status','1');
+            $querys=$this->db->get();
+            return $datas =  $querys->result_array();
+        }
+       
+    }
+
+    public function advance_search_record($filter,$company_count,$project_id)
+    {
+        $sql ="SELECT GROUP_CONCAT(DISTINCT(bdcrm_uploaded_feildss.received_company_name)) as received_company_name, count(bdcrm_uploaded_feildss.received_company_name) as staff_count, count(bdcrm_uploaded_feildss.updated_status) as completed_updated_status, `bdcrm_uploaded_feildss`.`created_date`, GROUP_CONCAT(DISTINCT(bdcrm_uploaded_feildss.project_id)) as project_id, `bdcrm_uploaded_feildss`.`id`, `bdcrm_master_projects`.`project_name`, GROUP_CONCAT(bdcrm_uploaded_feildss.id) as bdcrm_uploaded_feildss_id, GROUP_CONCAT(companywise_allocation.assigned_by) as assigned_by, CONCAT(users.first_name,' ',users.last_name) as user_name, COUNT(companywise_allocation.total_count) as total_count FROM `bdcrm_uploaded_feildss` LEFT JOIN `bdcrm_master_projects` ON `bdcrm_uploaded_feildss`.`project_id` = `bdcrm_master_projects`.`id` LEFT JOIN `companywise_allocation` ON `bdcrm_uploaded_feildss`.`id` = `companywise_allocation`.`staff_id` LEFT JOIN `users` ON `companywise_allocation`.`reassigned_to` = `users`.`id` WHERE `bdcrm_master_projects`.`id` = '".$project_id."' AND `bdcrm_master_projects`.`status` = 1";
+
+        $designation_name = $this->session->userdata('designation_name');
+        $user_id = $this->session->userdata('id');
+
+        if(($designation_name=='Researcher') || $designation_name=='Caller'){
+            $sql.="LEFT JOIN `users` ON `companywise_allocation`.`reassigned_to` = '".$user_id."' WHERE `bdcrm_master_projects`.`id` = '".$project_id."' AND `bdcrm_master_projects`.`status` = 1 GROUP BY `bdcrm_uploaded_feildss`.`received_company_name`";
+        }
+        if(!empty($filter))
+        {
+            $sql.=' AND'.$filter;
+          
+        }
+        $sql.=" GROUP BY `bdcrm_uploaded_feildss`.`received_company_name`";
+        if(!empty($company_count))
+        {
+            $sql=" LIMIT '".$company_count."'";
+        }
+     
+        $query = $this->db->query($sql);
+        return $data =  $query->result_array();
+    }
     
 }

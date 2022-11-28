@@ -24,6 +24,7 @@
          <?php
             if($this->session->userdata('designation_name') == 'Superadmin' || $this->session->userdata('designation_name') == 'Project Manger' || $this->session->userdata('designation_name') == 'Team Leader') { $style=''; }else{ $style="style='display:none'";} ?> 
          <div id="have_access" <?= $style; ?>>
+        
             <div class="row">
                <input type="hidden" id="id" name="id" value="<?=$id?>">
                <div class="col-md-2">
@@ -34,20 +35,7 @@
                   <label>Total Staff</label>
                   <input type="text" name="" id="total_staff_count" class="form-control company_allocation" value='0' readonly style="width: 100px;">
                </div>
-               <!-- <div class="col-md-2">
-                  <div class="form-group">
-                     <div class="page-title-box">
-                        <label>Select Status</label>
-                        <select  class="form-control company_allocation" id="workalloc" name="workalloc" style="width: 200px;">
-                           <option value="">Select Work Type</option>
-                           <option value="Assigned">Assigned</option>
-                           <option value="Unassigned">Unassigned</option>
-                           <option value="Pending">Pending</option>
-                        </select>
-                       
-                     </div>
-                  </div>
-                  </div> -->
+           
                <div class="col-md-2">
                   <div class="form-group">
                      <div class="page-title-box">
@@ -67,76 +55,46 @@
                         <button class="btn btn-primary btn-sm" id="btn-search-by-date" style='margin-top:10%'>Assign</button>
                         <a class="btn btn-primary btn-sm" id="btn-search-by-date" style='margin-top:10%;color:white;' aria-hidden="true" data-toggle="collapse"
                            data-target="#collapseExample">Advance Search</a>
-                        <!-- <div id="advance_search" class="modal fade" role="dialog">
-                           <div class="modal-dialog">
-                           
-                              <div class="modal-content">
-                                 <div class="modal-header">
-                                    <h4 class="modal-title">Edit Service</h4>
-                                 </div>
-                                 <form id="basicForm" method="post"
-                                    enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate"
-                                    onsubmit="return validate_update_services(this);">
-                                    <div class="modal-body">
-                                    
-                                       <div class="form-group">
-                                         
-                                             <label>Select Project id</label>
-                           
-                                             <select  class="form-control project_id" id="project_id" name="project_id" style="width: 200px;">
-                                             <option value="">Select Project id</option>
-                                             <?php foreach ($id as $id_key => $id_row) { ?>
-                                             <option value="<?=$id_row['id']?>"><?=$id_row['id']?></option>
-                                             <?php }?>
-                                             </select>
-                                         
-                                       </div>
-                                  
-                                    </div>
-                                    <div class="modal-footer">
-                                       <button type="submit" class="btn btn-success">Submit</button>
-                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                              </div>
-                              </form>
-                           </div>
-                           </div> -->
+                       
                      </div>
                   </div>
                </div>
             </div>
+           
          </div>
          <div class="collapse" id="collapseExample">
             <div class="container" id="have_access">
+            <form id="form-submit">
                <div class="row">
                   <div class="">
                      <div class="form-group">
                         <div id="inputFormRow">
                            <div class="input-group mb-3">
-                              <select  class="form-control project_id" id="project_id" name="project_id" style="width:80px;">
-                                    <?php foreach ($projectid as $projectid_key => $projectid_row) { ?>
-                                    <option value="<?=$projectid_row['id']?>"><?=$projectid_row['id']?></option>
-                                    <?php }?>
+                           <input type="hidden" name="company_count" id="company_count" class="form-control company_count">
+                           <input type="hidden" name="id" id="id" value="<?=$id?>" class="form-control id">
+                              <select  class="form-control project_id form-control-sm" id="project_id" name="input_field[]" style="width:200px;">
+                                  
                               </select>
-                              <select  class="form-control operators" id="operators" name="operators" style="margin-left:15px;width:200px;">
+                              <select  class="form-control operators form-control-sm" id="operators" name="operator[]" style="margin-left:15px;width:200px;">
                                  <option value="=">=</option>
                                  <option value="!=">!=</option>
                                  <option value="LIKE">LIKE</option>
                                  <option value="NOT LIKE">NOT LIKE</option>
+                                 <option value="NULL">NULL</option>
                               </select>
-                              <select  class="form-control received_company_name_key" id="received_company_name_key" name="received_company_name_key" style="margin-left:15px;width:200px;">
-                                 <option value="">voice disposition</option>
-                                 <?php foreach ($received_company_name as $received_company_name_key => $received_company_name_row) { ?>
-                                 <option value="<?=$received_company_name_row['received_company_name']?>"><?=$received_company_name_row['received_company_name']?></option>
-                                 <?php }?>
-                              </select>
-                              <button class="btn btn-success btn-sm" id="addRows1" style="margin-left:15px;height: 30px;"><i class="fa fa-plus"></i></button>
+                              <span id="input_type">
+                              
+                              </span>
+                              
+                              <a class="btn btn-success btn-sm" id="addRows1" style="margin-left:25px;height: 30px;color:white;"><i class="fa fa-plus"></i></a>
                            </div>
                         </div>
                         <div id="newRow"></div>
+                        <button class="btn btn-success btn-sm" type="submit" style="margin-left:0px;height: 30px;">submit</button>
                      </div>
                   </div>
                </div>
+            </form>
             </div>
          </div>
       </div>
@@ -162,6 +120,10 @@
                      </tr>
                   </thead>
                </table>
+
+
+
+               
             </div>
          </section>
       </div>

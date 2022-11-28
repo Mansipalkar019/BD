@@ -149,21 +149,21 @@
                <?php } ?>
                <div class="row g-3 align-items-center justify-content-md-center">
                   <!-- check input access for address_1 -->
-                  <?php if(in_array('address_1',$project_info)){ ?>
+                  <?php if(in_array('address1',$project_info)){ ?>
                   <div class="col">
                      <label for="address_1" class="col-form-label">Address:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['address1'])) ?  $allInfo[0]['address1'] : ''  ?>" title="" id="address_1"  name='address_1' class="form-control form-control-sm" tabindex="2">
                   </div>
                   <?php } ?>
                   <!-- check input access for address_2 -->
-                  <?php if(in_array('address_2',$project_info)){ ?>
+                  <?php if(in_array('address2',$project_info)){ ?>
                   <div class="col">
                      <label for="address_2" class="col-form-label">Address 2:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['address2'])) ?  $allInfo[0]['address2'] : ''  ?>" title="" id="address_2"  name='address_2' class="form-control form-control-sm" tabindex="3">
                   </div>
                   <?php } ?>
                   <!-- check input access for address_3 -->
-                  <?php if(in_array('address_3',$project_info)){ ?>
+                  <?php if(in_array('address3',$project_info)){ ?>
                   <div class="col">
                      <label for="address_3" class="col-form-label">Address 3:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['address3'])) ?  $allInfo[0]['address3'] : ''  ?>" title="" id="address_3"  name='address_3' class="form-control form-control-sm" tabindex="4">
@@ -171,12 +171,18 @@
                   <?php } ?>
                </div>
                <?php 
-                  $div_count=div_access($project_info,array('city_name','postal_code','state_name'));
+
+
+// echo "<pre>";
+// print_r($project_info);
+// die;
+                  $div_count=div_access($project_info,array('city','postal_code','state_county'));
+                  // echo $div_count;die();
                   $access = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access; ?>>
                   <!-- check input access for city -->
-                  <?php if(in_array('city_name',$project_info)){ ?>
+                  <?php if(in_array('city',$project_info)){ ?>
                   <div class="col">
                      <label for="city_name" class="col-form-label">City:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['city'])) ?  $allInfo[0]['city'] : ''  ?>" title="" id="city_name"  name='city_name' class="form-control form-control-sm" tabindex="5">
@@ -190,7 +196,7 @@
                   </div>
                   <?php } ?>
                   <!-- check input access for state/country -->
-                  <?php if(in_array('state_name',$project_info)){ ?>
+                  <?php if(in_array('state_county',$project_info)){ ?>
                   <div class="col">
                      <label for="state_name" class="col-form-label">State/County:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['state_county'])) ?  $allInfo[0]['state_county'] : ''  ?>" title="" id="state_name"  name='state_name' class="form-control form-control-sm" tabindex="7">
@@ -198,12 +204,12 @@
                   <?php } ?>
                </div>
                <?php 
-                  $div_count=div_access($project_info,array('country','region_name','address_source_url'));
+                  $div_count=div_access($project_info,array('provided_country','region','address_url'));
                   $access1 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access1; ?>>
                   <!-- check input access for country -->
-                  <?php if(in_array('country',$project_info)){ ?>
+                  <?php if(in_array('provided_country',$project_info)){ ?>
                   <div class="col">
                      <label for="country" class="col-form-label">Country:</label>
 
@@ -217,14 +223,14 @@
                   </div>
                   <?php } ?>
                   <!-- check input access for region -->
-                  <?php if(in_array('region_name',$project_info)){ ?>
+                  <?php if(in_array('region',$project_info)){ ?>
                   <div class="col">
                      <label for="region_name" class="col-form-label">Region:</label>
                      <input type="text" value="<?=  (!empty($allInfo[0]['region'])) ?  $allInfo[0]['region'] : ''  ?>" title="" id="region_name"  name='region_name' class="form-control form-control-sm" tabindex="9">
                   </div>
                   <?php } ?>
                   <!-- check input access for address_url -->
-                  <?php if(in_array('address_source_url',$project_info)){ ?>
+                  <?php if(in_array('address_url',$project_info)){ ?>
                   <div class="col">
                   <label for="address_source_url" class="col-form-label" style="font-size: 0.7rem;">Address Source URL:</label>
                      <div class="input-group " >
@@ -292,11 +298,11 @@
                </div>
                <!-- check input access for company_web_dispositon -->
                <?php 
-                  $div_count=div_access($project_info,array('company_web_dispositon'));
+                  $div_count=div_access($project_info,array('web_disposition'));
                   $access4 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access4; ?>>
-                  <?php if(in_array('company_web_dispositon',$project_info)){ 
+                  <?php if(in_array('web_disposition',$project_info)){ 
                       if($userinfo == 3){?>
                   <div class="col">
                      <label for="company_web_dispositon" class="col-form-label">Co. Web Disposition:</label>
@@ -330,11 +336,11 @@
                <!-- check input access for company_voice_disposition -->
                <?php 
                   if($this->session->userdata('designation_id') == 3){
-                  $div_count=div_access($project_info,array('company_voice_disposition'));
+                  $div_count=div_access($project_info,array('voice_disposition'));
                   $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access5; ?>>
-                  <?php if(in_array('company_voice_disposition',$project_info)){ ?>
+                  <?php if(in_array('voice_disposition',$project_info)){ ?>
                   <div class="col">
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
@@ -351,11 +357,11 @@
                  
                </div>
                <?php } }elseif($this->session->userdata('designation_id') == 8 ){ 
-                   $div_count=div_access($project_info,array('company_voice_disposition'));
+                   $div_count=div_access($project_info,array('voice_disposition'));
                    $access5 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                   <div class="row g-3 align-items-center justify-content-md-center" <?= $access5; ?>>
-                  <?php if(in_array('company_voice_disposition',$project_info)){ ?>
+                  <?php if(in_array('voice_disposition',$project_info)){ ?>
                   <div class="col">
                      <label for="company_voice_disposition" class="col-form-label">Co. Voice Disposition:</label>
                   </div>
@@ -411,11 +417,11 @@
                </div>
                <!-- check input access for company_voice_disposition -->
                <?php 
-                  $div_count=div_access($project_info,array('company_remark'));
+                  $div_count=div_access($project_info,array('remarks'));
                   $access7 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access7; ?>>
-                  <?php if(in_array('company_remark',$project_info)){ ?>
+                  <?php if(in_array('remarks',$project_info)){ ?>
                   <div class="col">
                      <label for="company_remark" class="col-form-label">Co. Remark:</label>
                   </div>
@@ -500,7 +506,7 @@
                   <?php //} ?>
                   <!-- check input access for email_address,no_of_employees -->
                   <?php 
-                     $div_count=div_access($project_info,array('email_address','no_of_employee'));
+                     $div_count=div_access($project_info,array('email_address','no_of_emp'));
                      $access10 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                      ?>
                   <!-- <div class="row g-3 align-items-center justify-content-md-center" <?= $access10; ?>>
@@ -510,7 +516,7 @@
                              <input type="email" value="<?=  (!empty($allInfo[0]['ca5'])) ?  $allInfo[0]['ca5'] : ''  ?>" title="" id="email_address"  name='email_address' class="form-control form-control-sm">
                          </div>
                      <?php } ?> -->
-                  <?php if(in_array('no_of_employee',$project_info)){ ?>
+                  <?php if(in_array('no_of_emp',$project_info)){ ?>
                   <div class="col">
                      <label for="no_of_employee" class="col-form-label">No. of Employees:</label>
          
@@ -616,7 +622,7 @@
             <div class="col">
                <!-- check input access for first_name,last_name -->
                <?php 
-                  $div_count=div_access($project_info,array('first_name','last_name'));
+                  $div_count=div_access($project_info,array('first_name','last_name','suffix'));
                   $access12 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access12; ?>>
@@ -657,11 +663,11 @@
                </div>
                <!-- check input access for job_title -->
                <?php 
-                  $div_count=div_access($project_info,array('job_title'));
+                  $div_count=div_access($project_info,array('provided_job_title'));
                   $access13 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center"  <?= $access13; ?>>
-                  <?php if(in_array('job_title',$project_info)){ ?>
+                  <?php if(in_array('provided_job_title',$project_info)){ ?>
                   <div class="col">
                      <label for="job_title" class="col-form-label">Job Title:</label>
                   </div>
@@ -687,11 +693,11 @@
                </div>
                <!-- check input access for staff_job_function -->
                <?php 
-                  $div_count=div_access($project_info,array('staff_email'));
+                  $div_count=div_access($project_info,array('provided_staff_email'));
                   $access15 = ($div_count < 1) ? "style='display:none;'" :  '' ; 
                   ?>
                <div class="row g-3 align-items-center justify-content-md-center" <?= $access15; ?>>
-                  <?php if(in_array('staff_email',$project_info)){ ?>
+                  <?php if(in_array('provided_staff_email',$project_info)){ ?>
                   <div class="col">
                      <label for="staff_email" class="col-form-label">Staff Email:</label>
                   </div>
